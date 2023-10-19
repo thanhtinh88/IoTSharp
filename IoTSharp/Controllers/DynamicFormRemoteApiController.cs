@@ -21,7 +21,7 @@ namespace IoTSharp.Controllers
             this._context = context;
         }
 
-        //测试动态表单的远程数据源
+        // Test the remote data source of the dynamic form
         [HttpGet]
         public ApiResult<List<NzOption>> GetDeviceListForComboxDataSouce(string q)
         {

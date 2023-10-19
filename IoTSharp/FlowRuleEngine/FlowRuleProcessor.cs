@@ -80,31 +80,31 @@ namespace IoTSharp.FlowRuleEngine
             }
         }
 
-        /// <summary>
-        ///运行指定规则链的规则
-        /// </summary>
-        /// <param name="ruleid"> 规则Id</param>
-        /// <param name="data">数据</param>
-        /// <param name="deviceId">创建者(可以是模拟器(测试)，可以是设备，在EventType中区分一下)</param>
-        /// <param name="type">类型</param>
-        /// <param name="bizId">业务Id(第三方唯一Id，用于取回事件以及记录的标识)</param>
-        /// <returns> 返回所有节点的记录信息，需要保存则保存</returns>
 
+        /// <summary>
+        ///Run the rules of the specified rule chain
+        /// </summary>
+        /// <param name="ruleid"> Rule Id</param>
+        /// <param name="data">data</param>
+        /// <param name="deviceId">Creator (can be a simulator (test) or a device, distinguish it in EventType)</param>
+        /// <param name="type">Type</param>
+        /// <param name="bizId">Business Id (third-party unique Id, used to retrieve event and record identification)</param>
+        /// <returns> Returns the record information of all nodes, save it if needed</returns>
         public async Task<List<FlowOperation>> RunFlowRules(Guid ruleid, object data, Guid deviceId, FlowRuleRunType type, string bizId)
         {
             var _allflowoperation = new List<FlowOperation>();
-             var  cacheRule = await GetFlowRule(ruleid);
+            var  cacheRule = await GetFlowRule(ruleid);
             if (cacheRule.HasValue)
             {
                 FlowRule rule = cacheRule.Value.rule;
                 var _allFlows = cacheRule.Value._allFlows;
-                _logger.LogInformation($"开始执行规则链{rule?.Name}({ruleid})");
+                _logger.LogInformation($"Start executing rule chain {rule?.Name}({ruleid})");
                 var @event = new BaseEvent()
                 {
                     CreaterDateTime = DateTime.UtcNow,
                     Creator = deviceId,
                     EventDesc = $"Event Rule:{rule?.Name}({ruleid}) device is {deviceId}",
-                    EventName = $"开始执行规则链{rule?.Name}({ruleid})",
+                    EventName = $"Start executing rule chain {rule?.Name}({ruleid})",
                     MataData = JsonConvert.SerializeObject(data),
                     FlowRule = rule,
                     Bizid = bizId,
@@ -140,7 +140,7 @@ namespace IoTSharp.FlowRuleEngine
                         Flow = start,
                         Data = JsonConvert.SerializeObject(data),
                         NodeStatus = 1,
-                        OperationDesc = "未能找到启动节点",
+                        OperationDesc = "Unable to find startup node",
                         Step = 1,
                         BaseEvent = @event
                     });
@@ -156,15 +156,15 @@ namespace IoTSharp.FlowRuleEngine
                     Flow = start,
                     Data = JsonConvert.SerializeObject(data),
                     NodeStatus = 1,
-                    OperationDesc = "进入开始节点",
+                    OperationDesc = "Enter start node",
                     Step = 1,
                     BaseEvent = @event
                 };
 
                 _allflowoperation.Add(startoperation);
-                //从“开始节点”上链接的线节点对象进行规则判断，通过线对象上的规则才能进行后续逻辑
+                //Conduct rule judgment from the line node object linked to the "start node", and the subsequent logic can be carried out through the rules on the line object.
                 var nextflows = await ProcessCondition(_allFlows, start.FlowId, data);
-                //获取到的通过规则判断的后续节点列表
+                //Get the list of subsequent nodes judged by rules
                 if (nextflows != null)
                 {
                     var step = startoperation.Step + 1;
@@ -179,7 +179,7 @@ namespace IoTSharp.FlowRuleEngine
                             Flow = item,
                             Data = JsonConvert.SerializeObject(data),
                             NodeStatus = 1,
-                            OperationDesc = "Condition（" + (string.IsNullOrEmpty(item.Conditionexpression)
+                            OperationDesc = "Condition(" + (string.IsNullOrEmpty(item.Conditionexpression)
                                 ? "Empty Condition"
                                 : item.Conditionexpression) + ")",
                             Step = step,
@@ -187,7 +187,7 @@ namespace IoTSharp.FlowRuleEngine
                         };
 
                         _allflowoperation.Add(flowOperation);
-                        //执行节点逻辑
+                        //Execute node logic
                         await Process(_allFlows, _allflowoperation, flowOperation.OperationId, data, deviceId);
                     }
                     return _allflowoperation;
@@ -208,7 +208,7 @@ namespace IoTSharp.FlowRuleEngine
                     {
                         rule = await context.FlowRules.AsNoTracking().FirstOrDefaultAsync(c => c.RuleId == ruleid);
                         allFlows = await context.Flows.AsNoTracking().Where(c => c.FlowRule == rule && c.FlowStatus > 0).ToListAsync();
-                        _logger.LogInformation($"读取规则链{rule?.Name}({ruleid}),子流程共计:{allFlows.Count}");
+                        _logger.LogInformation($"Read rule chain {rule?.Name}({ruleid}), total sub-process: {allFlows.Count}");
                     }
                 }
                 return (rule, _allFlows: allFlows);
@@ -230,7 +230,7 @@ namespace IoTSharp.FlowRuleEngine
                 var flow = _allFlows.FirstOrDefault(c => c.bpmnid == peroperation.Flow.TargetId && c.FlowType != "label");
                 switch (flow.FlowType)
                 {
-                    //线节点对象
+                    // Line node object
                     case "bpmn:SequenceFlow":
                         {
                             var step = peroperation.Step + 1;
@@ -255,7 +255,7 @@ namespace IoTSharp.FlowRuleEngine
                         }
 
                         break;
-                    //中间执行器和脚本节点
+                    //Intermediate executor and script nodes
                     case "bpmn:Task":
                         {
                             var step = peroperation.Step + 1;
@@ -274,7 +274,7 @@ namespace IoTSharp.FlowRuleEngine
                             };
                             _allflowoperation.Add(taskoperation);
 
-                            //脚本处理
+                            // script processing
                             if (!string.IsNullOrEmpty(flow.NodeProcessScriptType) && (!string.IsNullOrEmpty(flow.NodeProcessScript) || !string.IsNullOrEmpty(flow.NodeProcessClass)))
                             {
                                 var scriptsrc = flow.NodeProcessScript;
@@ -291,7 +291,7 @@ namespace IoTSharp.FlowRuleEngine
                                             {
                                                 try
                                                 {
-                                                    //执行器入口 Input上一个节点向当前节点的传参，DeviceId设备编号，ExecutorConfig当前节点在设计时的配置内容
+                                                    //Executor entrance Input the parameters passed from the previous node to the current node, DeviceId device number, ExecutorConfig configuration content of the current node at design time
                                                     var result = await executor.ExecuteAsync(new TaskActionInput()
                                                     {
                                                         Input = taskoperation.Data,
@@ -300,20 +300,20 @@ namespace IoTSharp.FlowRuleEngine
                                                     }
                                                     );
 
-                                                    _logger.Log(LogLevel.Information, "执行器" + flow.NodeProcessClass + "已完成处理");
+                                                    _logger.Log(LogLevel.Information, "executor" + flow.NodeProcessClass + "processing completed");
                                                     obj = result.DynamicOutput;
                                                     taskoperation.OperationDesc += "\r\n" + result.ExecutionInfo;
                                                     if (!result.ExecutionStatus)
                                                     {
                                                         taskoperation.NodeStatus = 2;
                                                         string info = JsonConvert.SerializeObject(result.DynamicOutput);
-                                                        _logger.Log(LogLevel.Information, "执行器执行失败："+ result.ExecutionInfo +"\r\n"+ flow.NodeProcessClass + "未能正确处理:" + info);
+                                                        _logger.Log(LogLevel.Information, "Executor execution failed:"+ result.ExecutionInfo +"\r\n"+ flow.NodeProcessClass + "Failed to process correctly:" + info);
                                                         return;
                                                     }
                                                 }
                                                 catch (Exception ex)
                                                 {
-                                                    _logger.Log(LogLevel.Information, "执行器" + flow.NodeProcessClass + "未能正确处理:" + ex.Source);
+                                                    _logger.Log(LogLevel.Information, "executor" + flow.NodeProcessClass + "Failed to handle correctly:" + ex.Source);
 
                                                     taskoperation.OperationDesc += "\r\n" + ex.Message;
                                                     taskoperation.NodeStatus = 2;
@@ -322,8 +322,8 @@ namespace IoTSharp.FlowRuleEngine
                                             }
                                             else
                                             {
-                                                _logger.Log(LogLevel.Warning, "脚本执行异常,未能实例化执行器");
-                                                taskoperation.OperationDesc += "\r\n" + "脚本执行异常,未能实例化执行器";
+                                                _logger.Log(LogLevel.Warning, "Script execution exception, failed to instantiate the executor");
+                                                taskoperation.OperationDesc += "\r\n" + "Script execution exception, failed to instantiate the executor";
                                                 taskoperation.NodeStatus = 2;
                                                 return;
                                             }
@@ -362,7 +362,7 @@ namespace IoTSharp.FlowRuleEngine
                                                 catch (Exception ex)
                                                 {
 
-                                                    _logger.Log(LogLevel.Warning, "sql脚本执行异常");
+                                                    _logger.Log(LogLevel.Warning, "SQL script execution exception");
                                                     taskoperation.OperationDesc += ex.Message;
                                                     taskoperation.NodeStatus = 2;
                                                 }
@@ -384,7 +384,7 @@ namespace IoTSharp.FlowRuleEngine
                                                 catch (Exception ex)
                                                 {
 
-                                                    _logger.Log(LogLevel.Warning, "lua脚本执行异常");
+                                                    _logger.Log(LogLevel.Warning, "lua script execution exception");
                                                     taskoperation.OperationDesc += ex.Message;
                                                     taskoperation.NodeStatus = 2;
                                                 }
@@ -407,7 +407,7 @@ namespace IoTSharp.FlowRuleEngine
                                                 catch (Exception ex)
                                                 {
 
-                                                    _logger.Log(LogLevel.Warning, "javascript脚本执行异常");
+                                                    _logger.Log(LogLevel.Warning, "javascript script execution exception");
                                                     taskoperation.OperationDesc += ex.Message;
                                                     taskoperation.NodeStatus = 2;
                                                 }
@@ -430,7 +430,7 @@ namespace IoTSharp.FlowRuleEngine
                                                 catch (Exception ex)
                                                 {
 
-                                                    _logger.Log(LogLevel.Warning, "csharp脚本执行异常");
+                                                    _logger.Log(LogLevel.Warning, "csharp script execution exception");
                                                     _logger.Log(LogLevel.Warning, ex.Message);
                                                     taskoperation.OperationDesc += ex.Message;
                                                     taskoperation.NodeStatus = 2;
@@ -472,7 +472,7 @@ namespace IoTSharp.FlowRuleEngine
                                 {
 
                                     taskoperation.NodeStatus = 2;
-                                    _logger.Log(LogLevel.Warning, "脚本未能顺利执行");
+                                    _logger.Log(LogLevel.Warning, "The script failed to execute successfully");
                                 }
                             }
                             else
@@ -503,7 +503,7 @@ namespace IoTSharp.FlowRuleEngine
                         }
 
                         break;
-                    //结束节点
+                    //end node
                     case "bpmn:EndEvent":
 
 
@@ -516,16 +516,16 @@ namespace IoTSharp.FlowRuleEngine
                         end.Flow = flow;
                         end.Data = JsonConvert.SerializeObject(data);
                         end.NodeStatus = 1;
-                        end.OperationDesc = "处理完成";
+                        end.OperationDesc = "Processing completed";
                         end.Step = 1 + _allflowoperation.Max(c => c.Step);
                         end.BaseEvent = peroperation.BaseEvent;
                         _allflowoperation.Add(end);
 
-                        _logger.Log(LogLevel.Warning, "规则链执行完成");
+                        _logger.Log(LogLevel.Warning, "Rule chain execution completed");
 
                         break;
 
-                    //没有终结点的节点必须留个空标签
+                    //Nodes without endpoints must leave an empty label
                     case "label":
 
                         break;
@@ -553,26 +553,27 @@ namespace IoTSharp.FlowRuleEngine
                 }
             }
         }
+
         /// <summary>
-        /// 调用规则引擎，判断当前节点后的连线中的规则是否通过校验，如果验证为真则返回满足条件的线对应的目标节点
+        /// Call the rule engine to determine whether the rules in the connection after the current node pass the verification. If the verification is true, return the target node corresponding to the line that meets the conditions.
         /// </summary>
-        /// <param name="_allFlows">所有的节点</param>
-        /// <param name="flowId">当前节点</param>
-        /// <param name="data">进入到当前节点的数据传参</param>
+        /// <param name="_allFlows">All nodes</param>
+        /// <param name="flowId">Current node</param>
+        /// <param name="data">Enter the data parameters of the current node</param>
         /// <returns></returns>
         public async Task<List<Flow>> ProcessCondition(List<Flow> _allFlows, Guid flowId, object data)
         {
 
             var tt = data.GetType();
             var emptyflow = new List<Flow>();
-            //根据节点Id获取节点信息
+            //Get node information based on node ID
             var flow = _allFlows.FirstOrDefault(c => c.FlowId == flowId);
             if (flow != null)
             {
-                //根据节点Id获取到当前节点与以后节点的线对象列表（一个节点可以存在很多线对象关联到下一级节点）
+                //According to the node ID, obtain the list of line objects of the current node and subsequent nodes (a node can have many line objects associated with the next-level node)
                 var flows = _allFlows.Where(c => c.SourceId == flow?.bpmnid).ToList();
-                //没有逻辑的线节点对象
-                emptyflow = flows.Where(c => c.Conditionexpression == string.Empty||  c.Conditionexpression==null).ToList() ?? new List<Flow>();
+                //Line node object without logic
+                emptyflow = flows.Where(c => c.Conditionexpression == string.Empty|| c.Conditionexpression==null).ToList() ?? new List<Flow>();
                 var tasks = new BaseRuleTask()
                 {
                     Name = flow.Flowname,
@@ -580,7 +581,7 @@ namespace IoTSharp.FlowRuleEngine
                     id = flow.bpmnid,
                     outgoing = new EditableList<BaseRuleFlow>()
                 };
-                foreach (var item in flows.Except(emptyflow))//排除掉没有逻辑的线节点
+                foreach (var item in flows.Except(emptyflow))//Exclude line nodes without logic
                 {
                     var rule = new BaseRuleFlow();
                     rule.id = item.bpmnid;
@@ -600,13 +601,13 @@ namespace IoTSharp.FlowRuleEngine
                             var d = t?.ToObject<ExpandoObject>();
                             if (d != null)
                             {
-                                //执行判断，利用规则引擎执行线对象中的规则
+                                //Perform judgment and use the rule engine to execute the rules in the line object
                                 var result = await flowExcutor.Excute(new FlowExcuteEntity()
                                 {
                                     Params = d,
                                     Task = tasks,
                                 });
-                                //筛选规则通过的线对象
+                                //Line objects passed by filtering rules
                                 var next = result.Where(c => c.IsSuccess).ToList();
                                 foreach (var item in next)
                                 {
@@ -616,9 +617,10 @@ namespace IoTSharp.FlowRuleEngine
                             }
                             else
                             {
-                                _logger.LogWarning($"执行 {flowId}的规则链时遇到data为空。");
+                                _logger.LogWarning($"When executing the rule chain of {flowId}, the data was empty.");
                             }
-                        } else 
+                        }
+                        else
                         if (data.GetType() == typeof(JArray))
                         {
                             var result = await flowExcutor.Excute(new FlowExcuteEntity()
@@ -650,12 +652,12 @@ namespace IoTSharp.FlowRuleEngine
                         }
                         else
                         {
-                            _logger.LogWarning($"执行 {flowId}的规则链时遇到未预期的数据类型:{data.GetType()}");
+                            _logger.LogWarning($"Unexpected data type encountered while executing the rule chain of {flowId}: {data.GetType()}");
                         }
                     }
                     else
                     {
-                        _logger.LogWarning($"执行 {flowId}的规则链时遇到data为空。");
+                        _logger.LogWarning($"When executing the rule chain of {flowId}, the data was empty.");
                         var result = await flowExcutor.Excute(new FlowExcuteEntity()
                         {
                             Params = null,

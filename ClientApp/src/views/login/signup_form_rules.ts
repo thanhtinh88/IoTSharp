@@ -2,11 +2,11 @@ export const signUpRule: any[] = [
     {
         type: 'input',
         field: 'email',
-        title: '邮箱',
+        title: 'Email',
         info: '',
         props: {
             type: 'text',
-            placeholder: '请输入邮箱',
+            placeholder: 'please input your email',
             showPassword: false,
         },
         _fc_drag_tag: 'input',
@@ -15,7 +15,7 @@ export const signUpRule: any[] = [
         validate: [
             {
                 trigger: 'change',
-                message: '请输入正确的邮箱',
+                message: 'please enter your vaild email',
                 pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
                 type: 'email',
                 required: true,
@@ -25,40 +25,40 @@ export const signUpRule: any[] = [
     {
         type: 'input',
         field: 'customerName',
-        title: '用户名',
+        title: 'User name',
         info: '',
         props: {
             type: 'text',
-            placeholder: '用户名',
+            placeholder: 'username',
         },
         _fc_drag_tag: 'input',
         hidden: false,
         display: true,
-        $required: '用户名',
+        $required: 'username',
     },
     {
         type: 'input',
         field: 'password',
-        title: '密码',
+        title: 'Password',
         info: '',
         props: {
             type: 'password',
-            placeholder: '密码',
+            placeholder: 'password',
             showPassword: true,
         },
         _fc_drag_tag: 'input',
         hidden: false,
         display: true,
-        $required: '请输入密码',
+        $required: '',
     },
     {
         type: 'input',
         field: 'passwordCheck',
-        title: '密码确认',
+        title: 'Please enter password',
         info: '',
         props: {
             type: 'password',
-            placeholder: '请再次输入密码',
+            placeholder: 'Please enter password again',
             showPassword: true,
         },
         _fc_drag_tag: 'input',
@@ -70,10 +70,10 @@ export const signUpRule: any[] = [
     {
         type: 'input',
         field: 'tenantName',
-        title: '租户名称',
+        title: 'Tenant name',
         info: '',
         props: {
-            placeholder: '租户名称',
+            placeholder: 'Tenant name',
             showPassword: false,
             type: 'text',
         },
@@ -83,16 +83,16 @@ export const signUpRule: any[] = [
         value: '',
         validate: [{
             required: true,
-            message: '请输入租户名称'
+            message: 'Please enter tenant name'
         }],
     },
     {
         type: 'input',
         field: 'tenantEMail',
-        title: '租户邮箱',
+        title: 'Tenant email',
         info: '',
         props: {
-            placeholder: '租户邮箱',
+            placeholder: 'Tenant email',
             showPassword: false,
             type: 'text',
         },
@@ -103,7 +103,7 @@ export const signUpRule: any[] = [
         validate: [
             {
                 trigger: 'change',
-                message: '请输入正确的租户邮箱地址',
+                message: 'Please enter the correct tenant email address',
                 pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
                 type: 'email',
                 required: true,
@@ -113,10 +113,10 @@ export const signUpRule: any[] = [
     {
         type: 'input',
         field: 'customerEMail',
-        title: '客户邮箱',
+        title: 'Customer email',
         info: '',
         props: {
-            placeholder: '客户邮箱',
+            placeholder: 'Customer email',
             showPassword: false,
             type: 'text',
         },
@@ -127,7 +127,7 @@ export const signUpRule: any[] = [
         validate: [
             {
                 trigger: 'change',
-                message: '请输入正确的客户邮箱',
+                message: 'Please enter the correct customer email address',
                 pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
                 type: 'email',
                 required: true,
@@ -137,10 +137,10 @@ export const signUpRule: any[] = [
     {
         type: 'input',
         field: 'phoneNumber',
-        title: '联系电话',
+        title: 'contact number',
         info: '',
         props: {
-            placeholder: '联系电话',
+            placeholder: 'contact number',
             showPassword: false,
             type: 'text',
         },
@@ -152,7 +152,7 @@ export const signUpRule: any[] = [
             {
                 required: true,
                 trigger: 'blur',
-                message: '请输入正确的手机号',
+                message: 'please enter a valid phone number',
                 pattern: /^(1[3456789]\d{9})$/,
             },
         ],

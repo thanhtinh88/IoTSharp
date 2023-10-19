@@ -23,7 +23,7 @@ using System.Linq.Expressions;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 租户管理
+    /// Tenant management
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -48,7 +48,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 产品列表
+        /// Product List
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
@@ -63,7 +63,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 普通用户用于活的自身的租户信息
+        /// Ordinary users use their own tenant information to live
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -83,8 +83,9 @@ namespace IoTSharp.Controllers
             return new ApiResult<Tenant>(ApiCode.Success, "OK", tenant);
      
         }
+
         /// <summary>
-        /// 修改指定的租户信息， 仅限租户管理员
+        /// Modify the specified tenant information, only for tenant administrators
         /// </summary>
         /// <param name="id"></param>
         /// <param name="tenant"></param>
@@ -128,8 +129,9 @@ namespace IoTSharp.Controllers
 
             return new ApiResult<Tenant>(ApiCode.Success, "Ok", tenant);
         }
+
         /// <summary>
-        /// 新增租户， 仅限系统管理员
+        /// Add new tenant, system administrator only
         /// </summary>
         /// <param name="tenant"></param>
         /// <returns></returns>
@@ -153,8 +155,9 @@ namespace IoTSharp.Controllers
                 return new ApiResult<Tenant>(ApiCode.Exception, ex.Message, tenant);
             }
         }
+
         /// <summary>
-        /// 删除租户，仅限系统用户
+        /// Delete tenant, system users only
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

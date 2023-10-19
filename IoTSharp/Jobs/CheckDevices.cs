@@ -35,7 +35,7 @@ namespace IoTSharp.Jobs
         }
         public async Task Execute(IJobExecutionContext context)
         {
-            //如果中断在mqtt服务器列表中， 则取得最后一次收到消息的时间戳， 
+            //If the interrupt is in the mqtt server list, get the timestamp of the last message received,
             using (var scope = _scopeFactor.CreateScope())
             using (var _dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
             {
@@ -44,18 +44,18 @@ namespace IoTSharp.Jobs
                     var sf = from d in _dbContext.AttributeLatest where (d.KeyName == Constants._Active && d.Value_Boolean == true) select d.DeviceId;
                     if (sf.Any())
                     {
-                        var devids = await sf.ToListAsync();
-                        foreach (var id in devids)
+                        var devices = await sf.ToListAsync();
+                        foreach (var id in devices)
                         {
-                            var dev = await _dbContext.Device.FirstOrDefaultAsync(d=>d.Id== id);
+                            var dev = await _dbContext.Device.FirstOrDefaultAsync(d => d.Id== id);
                             var ladt = from d in _dbContext.AttributeLatest where d.DeviceId == id && d.DataSide == DataSide.ServerSide && d.KeyName == Constants._LastActivityDateTime select d.Value_DateTime;
                             var __LastActivityDateTime = await ladt.FirstOrDefaultAsync();
                             if (dev != null && __LastActivityDateTime!=null)
                             {
-                             
+
                                 if (DateTime.UtcNow.Subtract(__LastActivityDateTime.GetValueOrDefault()).TotalSeconds > dev.Timeout)
                                 {
-                                    _logger.LogInformation($"设备{dev.Name}({dev.Id})现在置非活跃状态，上次活跃时间为{__LastActivityDateTime},超时时间{dev.Timeout}秒");
+                                    _logger.LogInformation($"The device {dev.Name}({dev.Id}) is now inactive, the last active time was {__LastActivityDateTime}, and the timeout was {dev.Timeout} seconds");
                                     await _queue.PublishActive(id, ActivityStatus.Inactivity);
                                 }
                             }
@@ -65,7 +65,7 @@ namespace IoTSharp.Jobs
                 catch (Exception ex)
                 {
 
-                    _logger.LogError(ex, "检查设备在线状态错误。");
+                    _logger.LogError(ex, "Error checking device online status.");
                 }
             }
         }

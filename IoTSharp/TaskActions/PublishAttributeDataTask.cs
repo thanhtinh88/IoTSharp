@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace IoTSharp.TaskActions
 {
-    [DisplayName("属性发布器")]
-    [Description("发布属性至队列")]
+    [DisplayName("Property Publisher")]
+    [Description("Publish properties to queue")]
     public class PublishAttributeDataTask : TaskAction
     {
         private readonly IPublisher _queue;

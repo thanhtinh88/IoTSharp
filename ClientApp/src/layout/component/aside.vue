@@ -37,12 +37,12 @@ export default defineComponent({
 			menuList: [],
 			clientWidth: 0,
 		});
-		// 设置菜单展开/收起时的宽度
+		//Set the width of the menu when it is expanded/collapsed
 		const setCollapseStyle = computed(() => {
 			const { layout, isCollapse, menuBar } = themeConfig.value;
 			const asideBrTheme = ['#FFFFFF', '#FFF', '#fff', '#ffffff'];
 			const asideBrColor = asideBrTheme.includes(menuBar) ? 'layout-el-aside-br-color' : '';
-			// 判断是否是手机端
+			// Determine whether it is a mobile phone
 			if (state.clientWidth <= 1000) {
 				if (isCollapse) {
 					document.body.setAttribute('class', 'el-popup-parent--hidden');
@@ -53,23 +53,23 @@ export default defineComponent({
 					modeDivs.addEventListener('click', closeLayoutAsideMobileMode);
 					return [asideBrColor, 'layout-aside-mobile', 'layout-aside-mobile-open'];
 				} else {
-					// 关闭弹窗
+					//Close pop-up window
 					closeLayoutAsideMobileMode();
 					return [asideBrColor, 'layout-aside-mobile', 'layout-aside-mobile-close'];
 				}
 			} else {
 				if (layout === 'columns') {
-					// 分栏布局，菜单收起时宽度给 1px
+					// Column layout, the width is 1px when the menu is collapsed
 					if (isCollapse) return [asideBrColor, 'layout-aside-pc-1'];
 					else return [asideBrColor, 'layout-aside-pc-220'];
 				} else {
-					// 其它布局给 64px
+					// Other layouts give 64px
 					if (isCollapse) return [asideBrColor, 'layout-aside-pc-64'];
 					else return [asideBrColor, 'layout-aside-pc-220'];
 				}
 			}
 		});
-		// 关闭移动端蒙版
+		// Close the mobile mask
 		const closeLayoutAsideMobileMode = () => {
 			const el = document.querySelector('.layout-aside-mobile-mode');
 			el?.setAttribute('style', 'animation: error-img-two 0.3s');
@@ -80,17 +80,17 @@ export default defineComponent({
 			if (clientWidth < 1000) themeConfig.value.isCollapse = false;
 			document.body.setAttribute('class', '');
 		};
-		// 设置显示/隐藏 logo
+		//Set to show/hide logo
 		const setShowLogo = computed(() => {
 			let { layout, isShowLogo } = themeConfig.value;
 			return (isShowLogo && layout === 'defaults') || (isShowLogo && layout === 'columns');
 		});
-		// 设置/过滤路由（非静态路由/是否显示在菜单中）
+		//Set/filter routing (non-static routing/whether to display in the menu)
 		const setFilterRoutes = () => {
 			if (themeConfig.value.layout === 'columns') return false;
 			(state.menuList as any) = filterRoutesFun(routesList.value);
 		};
-		// 路由过滤递归函数
+		// Route filtering recursive function
 		const filterRoutesFun = (arr: Array<string>) => {
 			return arr
 				.filter((item: any) => !item.meta.isHide)
@@ -100,25 +100,25 @@ export default defineComponent({
 					return item;
 				});
 		};
-		// 设置菜单导航是否固定（移动端）
+		//Set whether the menu navigation is fixed (mobile terminal)
 		const initMenuFixed = (clientWidth: number) => {
 			state.clientWidth = clientWidth;
 		};
-		// 鼠标移入、移出
+		//Mouse in and out
 		const onAsideEnterLeave = (bool: Boolean) => {
 			let { layout } = themeConfig.value;
 			if (layout !== 'columns') return false;
 			if (!bool) proxy.mittBus.emit('restoreDefault');
 			stores.setColumnsMenuHover(bool);
 		};
-		// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
+		// Monitor changes in the themeConfig configuration file and update the height of the menu el-scrollbar
 		watch(themeConfig.value, (val) => {
 			if (val.isShowLogoChange !== val.isShowLogo) {
 				if (!proxy.$refs.layoutAsideScrollbarRef) return false;
 				proxy.$refs.layoutAsideScrollbarRef.update();
 			}
 		});
-		// 监听vuex值的变化，动态赋值给菜单中
+		// Monitor changes in vuex values and dynamically assign values to the menu
 		watch(
 			pinia.state,
 			(val) => {
@@ -130,12 +130,12 @@ export default defineComponent({
 				deep: true,
 			}
 		);
-		// 页面加载前
+		// Before the page is loaded
 		onBeforeMount(() => {
 			initMenuFixed(document.body.clientWidth);
-			setFilterRoutes();
-			// 此界面不需要取消监听(proxy.mittBus.off('setSendColumnsChildren))
-			// 因为切换布局时有的监听需要使用，取消了监听，某些操作将不生效
+            setFilterRoutes();
+			// This interface does not need to cancel monitoring (proxy.mittBus.off('setSendColumnsChildren))
+			// Because some monitors need to be used when switching layouts, if the monitors are cancelled, some operations will not take effect.
 			proxy.mittBus.on('setSendColumnsChildren', (res: any) => {
 				state.menuList = res.children;
 			});

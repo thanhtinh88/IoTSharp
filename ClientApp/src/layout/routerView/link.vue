@@ -12,7 +12,7 @@ import { useRoute, RouteMeta } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 interface LinkViewState {
 	currentRouteMeta: {
 		isLink: string;
@@ -36,13 +36,13 @@ export default defineComponent({
 				title: '',
 			},
 		});
-		// 设置 link 的高度
+		//Set the height of the link
 		const setLinkHeight = computed(() => {
 			let { isTagsview } = themeConfig.value;
 			if (isTagsview) return `115px`;
 			else return `80px`;
 		});
-		// 监听路由的变化，设置内容
+		// Monitor routing changes and set content
 		watch(
 			() => route.path,
 			() => {

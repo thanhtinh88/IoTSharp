@@ -34,16 +34,16 @@
     const formRef = ref(null)
 
     const options = ref(option)
-    //实例对象
+    //Instance object
     const fApi: Ref<Api | null> = ref(null)
-    //表单数据
+    // form data
     const FormCreate = formCreate.$form()
 
     const validatePassCheck = (rule: any, value: any, callback: any) => {
         if (value === '') {
-            callback(new Error('请再次输入密码'));
+            callback(new Error('Please enter password again'));
         } else if (value !== fApi.value!.form.password) {
-            callback(new Error('两次输入的密码不一致!'));
+            callback(new Error('The passwords entered twice are inconsistent!'));
         } else {
             callback();
         }
@@ -64,20 +64,20 @@
                 if (valid) {
                     try {
                         await signup(data)
-                        ElMessage.success('注册成功')
+                        ElMessage.success('registration success')
                         await router.replace({ name: 'login' })
                     } catch (e: any) {
-                        ElMessage.error('注册失败')
+                        ElMessage.error('registration failed')
                         for (const error of Object.values(e.response.data.errors)) {
                             ElMessage.error(`${JSON.stringify(error)}`)
                         }
                     }
                 } else {
-                    ElMessage.error('请正确填写信息')
+                    ElMessage.error('Please fill in the information correctly')
                 }
             })
         } catch (e) {
-            ElMessage.error('请正确填写信息')
+            ElMessage.error('Please fill in the information correctly')
         }
     }
 </script>

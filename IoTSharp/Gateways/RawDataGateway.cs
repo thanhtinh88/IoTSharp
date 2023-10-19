@@ -80,7 +80,7 @@ namespace IoTSharp.Gateways
                     var pathx = atts.FirstOrDefault(al => al.KeyName == _map_to_jsontext_in_json)?.Value_String;
                     if (pathx != null)
                     {
-                        _logger.LogWarning($"数据在{pathx}中以文本格式存放，在这里选中并转换为json格式");
+                        _logger.LogWarning($"The data is stored in text format in {pathx}, select it here and convert it to json format");
                         jt = JToken.Parse(jroot.SelectToken(pathx).ToObject<string>());
                     }
                     else
@@ -96,8 +96,8 @@ namespace IoTSharp.Gateways
                         var jary = jt.SelectToken(data_in_array) as JArray;
                         if (jary == null)
                         {
-                            _logger.LogWarning($"指定了数据在{data_in_array}中，但它为空或者不是数组。");
-                            result = new ApiResult(ApiCode.CantFindObject, $"Can't found a arryay   by {data_in_array} ");
+                            _logger.LogWarning($"The data was specified in {data_in_array}, but it is empty or not an array.");
+                            result = new ApiResult(ApiCode.CantFindObject, $"Can't found a arryay by {data_in_array} ");
                         }
                         else
                         {
@@ -138,7 +138,7 @@ namespace IoTSharp.Gateways
                             result = new ApiResult(ApiCode.InValidData, "can't found device name");
                         }
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -147,8 +147,8 @@ namespace IoTSharp.Gateways
             }
             else
             {
-                _logger.LogInformation($"{_dev}的数据不符合规范， 也无相关规则链处理。");
-                result = new ApiResult(ApiCode.InValidData, $"{_dev}的数据不符合规范， 也无相关规则链处理。");
+                _logger.LogInformation($"{_dev}'s data does not comply with the specification, and there is no relevant rule chain processing.");
+                result = new ApiResult(ApiCode.InValidData, $"{_dev}'s data does not comply with the specification, and there is no relevant rule chain processing.");
             }
             return result;
         }

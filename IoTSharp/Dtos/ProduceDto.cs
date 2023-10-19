@@ -22,8 +22,9 @@ namespace IoTSharp.Dtos
         public string Description { get; set; }
 
         public List<Device> Devices { get; set; }
+
         /// <summary>
-        /// 默认设备类型
+        ///Default device type
         /// </summary>
         public DeviceType DefaultDeviceType { get; set; }
 

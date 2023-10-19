@@ -1,48 +1,48 @@
-// 字体图标 url
+// font icon url
 const cssCdnUrlList: Array<string> = [
-	'//at.alicdn.com/t/font_2298093_y6u00apwst.css',
-	'//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
+    '//at.alicdn.com/t/font_2298093_y6u00apwst.css',
+    '//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
 ];
-// 第三方 js url
+// Third-party js url
 const jsCdnUrlList: Array<string> = [];
 
-// 动态批量设置字体图标
+// Dynamically set font icons in batches
 export function setCssCdn() {
-	if (cssCdnUrlList.length <= 0) return false;
-	cssCdnUrlList.map((v) => {
-		let link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.href = v;
-		link.crossOrigin = 'anonymous';
-		document.getElementsByTagName('head')[0].appendChild(link);
-	});
+    if (cssCdnUrlList.length <= 0) return false;
+    cssCdnUrlList.map((v) => {
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = v;
+        link.crossOrigin = 'anonymous';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    });
 }
 
-// 动态批量设置第三方js
+// Dynamically set third-party js in batches
 export function setJsCdn() {
-	if (jsCdnUrlList.length <= 0) return false;
-	jsCdnUrlList.map((v) => {
-		let link = document.createElement('script');
-		link.src = v;
-		document.body.appendChild(link);
-	});
+    if (jsCdnUrlList.length <= 0) return false;
+    jsCdnUrlList.map((v) => {
+        let link = document.createElement('script');
+        link.src = v;
+        document.body.appendChild(link);
+    });
 }
 
 /**
- * 批量设置字体图标、动态js
- * @method cssCdn 动态批量设置字体图标
- * @method jsCdn 动态批量设置第三方js
- */
+  * Set font icons and dynamic js in batches
+  * @method cssCdn Dynamically set font icons in batches
+  * @method jsCdn dynamically sets third-party js in batches
+  */
 const setIntroduction = {
-	// 设置css
-	cssCdn: () => {
-		setCssCdn();
-	},
-	// 设置js
-	jsCdn: () => {
-		setJsCdn();
-	},
+    // Set css
+    cssCdn: () => {
+        setCssCdn();
+    },
+    // Set js
+    jsCdn: () => {
+        setJsCdn();
+    },
 };
 
-// 导出函数方法
+//Export function method
 export default setIntroduction;

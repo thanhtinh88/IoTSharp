@@ -20,16 +20,16 @@ export default defineComponent({
 	setup() {
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
-		// 设置 logo 的显示。classic 经典布局默认显示 logo
-		const setShowLogo = computed(() => {
-			let { isCollapse, layout } = themeConfig.value;
-			return !isCollapse || layout === 'classic' || document.body.clientWidth < 1000;
-		});
-		// logo 点击实现菜单展开/收起
-		const onThemeConfigChange = () => {
-			if (themeConfig.value.layout === 'transverse') return false;
-			themeConfig.value.isCollapse = !themeConfig.value.isCollapse;
-		};
+        //Set the display of logo. classic classic layout displays logo by default
+        const setShowLogo = computed(() => {
+            let { isCollapse, layout } = themeConfig.value;
+            return !isCollapse || layout === 'classic' || document.body.clientWidth < 1000;
+        });
+        // Logo click to expand/collapse the menu
+        const onThemeConfigChange = () => {
+            if (themeConfig.value.layout === 'transverse') return false;
+            themeConfig.value.isCollapse = !themeConfig.value.isCollapse;
+        };
 		return {
 			logoMini,
 			setShowLogo,

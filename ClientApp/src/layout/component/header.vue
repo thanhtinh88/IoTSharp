@@ -19,7 +19,7 @@ export default defineComponent({
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
-		// 设置 header 的高度
+		//Set the height of header
 		const setHeaderHeight = computed(() => {
 			let { isTagsview, layout } = themeConfig.value;
 			if (isTagsview && layout !== 'classic') return '84px';

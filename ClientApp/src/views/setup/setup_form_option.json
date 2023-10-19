@@ -11,7 +11,7 @@
     "type":"primary",
     "size":"large",
     "disabled":false,
-    "innerText":"提交",
+    "innerText":"Submit",
     "loading":false,
     "show":true,
     "block": true

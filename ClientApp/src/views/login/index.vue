@@ -21,7 +21,7 @@ import Account from '/@/views/login/component/account.vue';
 import AppLogo from "/@/components/AppLogo.vue";
 
 
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 interface LoginState {
 	tabsActiveName: string;
 
@@ -37,11 +37,11 @@ export default defineComponent({
 			tabsActiveName: 'account',
 
 		});
-		// 获取布局配置信息
+		// Get layout configuration information
 		const getThemeConfig = computed(() => {
 			return themeConfig.value;
 		});
-		// 页面加载时
+		//When the page loads
 		onMounted(() => {
 			NextLoading.done();
 		});

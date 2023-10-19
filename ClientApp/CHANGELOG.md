@@ -1,66 +1,67 @@
-# <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">vue-next-admin 更新日志</a>
 
-🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
+# <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">vue-next-admin update log</a>
+
+🎉🎉🔥 `vue-next-admin` is a background open source free template library based on vue3.x, Typescript, vite, Element plus, etc., suitable for mobile phones, tablets, and PCs (for vue2.x, please switch to the vue-prev-admin branch)
 
 ## 2.2.0
 
 `2022.07.10`
 
-⚡⚡⚡ [/sec/stores/userInfo.ts](https://gitee.com/lyt-top/vue-next-admin/blob/master/src/stores/userInfo.ts) 下添加了 `getApiUserInfo` 接口模拟数据 `setTimeout` 为 3 秒
+⚡⚡⚡ Added `getApiUserInfo` under [/sec/stores/userInfo.ts](https://gitee.com/lyt-top/vue-next-admin/blob/master/src/stores/userInfo.ts) Interface simulation data `setTimeout` is 3 seconds
 
-- 🌟 更新 依赖更新最新版本
-- 🐞 修复 [主界面重新授权按钮点击卡死不跳转登录界面#I5C3JS](https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS)，感谢[@Hero-Typ](https://gitee.com/tian_yu_peng)
-- 🐞 修复 编译警告[#I5CVSB](https://gitee.com/lyt-top/vue-next-admin/issues/I5CVSB)，全局替换成 `:deep(attr)`，感谢[@Linvas](https://gitee.com/linvas)。参考文档：[vue3 sfc-style](https://v3.cn.vuejs.org/api/sfc-style.html#style-scoped)。`node_modules\print-js\dist\print.js` 需 `print-js` 作者适配或去除 `package.json` 中的 `"print-js": "^1.6.0"`
-- 🐞 修复 [vue-next-admin-template-js 版本前端控制路由：userInfo.js 请求用户信息接口报错，加载不到路由 可以写个定时器模拟一下接口 一样的报错#I5F1HP](https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP)，感谢[@白开水](https://gitee.com/libin951223)
+- 🌟 Update dependencies to update to the latest version
+- 🐞 Fixed [main interface re-authorization button stuck and not jumping to the login interface #I5C3JS](https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS), thanks [@Hero-Typ ](https://gitee.com/tian_yu_peng)
+- 🐞 Fixed compilation warning [#I5CVSB](https://gitee.com/lyt-top/vue-next-admin/issues/I5CVSB), replaced globally with `:deep(attr)`, thanks [@Linvas]( https://gitee.com/linvas). Reference document: [vue3 sfc-style](https://v3.cn.vuejs.org/api/sfc-style.html#style-scoped). `node_modules\print-js\dist\print.js` requires the `print-js` author to adapt or remove `"print-js": "^1.6.0"` in `package.json`
+- 🐞 Fix [vue-next-admin-template-js version front-end control routing: userInfo.js request user information interface error, if the route cannot be loaded, you can write a timer to simulate the interface and the same error #I5F1HP](https:// gitee.com/lyt-top/vue-next-admin/issues/I5F1HP), thanks [@白白水](https://gitee.com/libin951223)
 
 ## 2.1.1
 
 `2022.05.27`
 
-- 🌟 更新 依赖更新最新版本
-- 🎯 优化 深色模式下，`<el-button text></el-button>` 时，`:active` 样式
-- 🎯 优化 [页面缓存在刷新之后失效 #I58U75](https://gitee.com/lyt-top/vue-next-admin/issues/I58U75))，感谢[@ls0428](https://gitee.com/ls0428)
-- 🎯 优化 [SvgIcon 对下载的 Svg 图像设置颜色无效 #I59ND0](https://gitee.com/lyt-top/vue-next-admin/issues/I59ND0))，感谢[@elus_z](https://gitee.com/elus_z)
-- 🎯 优化 `/src/utils/toolsValidate.ts` 工具类
-- 🐞 修复 [布局切换，TagsView 显示的 tab 会多一个出来 #I58WGM](https://gitee.com/lyt-top/vue-next-admin/issues/I58WGM)，感谢[@lg_boy](https://gitee.com/lg_boy)
-- 🐞 修复 [如果设置顶部面包屑导航开启图标 isBreadcrumbIcon=true 后，样式有点问题 如果不开启就是正常的 #I58VB8](https://gitee.com/lyt-top/vue-next-admin/issues/I58VB8)
-- 🐞 修复 地址栏路由地址输入错误时，返回首页后，再次输入路由地址错误时，不跳转 404 问题
-- 🐞 修复 [2.1.0 版本的图标选择组件多次点击后功能失效 #I590TH](https://gitee.com/lyt-top/vue-next-admin/issues/I590TH)，感谢[@quber](https://gitee.com/quber)
+- 🌟 Update dependencies to update to the latest version
+- 🎯 Optimize the `:active` style in dark mode when `<el-button text></el-button>`
+- 🎯 Optimization [Page cache fails after refresh #I58U75](https://gitee.com/lyt-top/vue-next-admin/issues/I58U75)), thanks [@ls0428](https://gitee. com/ls0428)
+- 🎯 Optimization [SvgIcon is invalid for setting color of downloaded Svg image #I59ND0](https://gitee.com/lyt-top/vue-next-admin/issues/I59ND0)), thanks [@elus_z](https:/ /gitee.com/elus_z)
+- 🎯 Optimize `/src/utils/toolsValidate.ts` tool class
+- 🐞 Fix [Layout switching, one more tab will be displayed in TagsView #I58WGM](https://gitee.com/lyt-top/vue-next-admin/issues/I58WGM), thanks [@lg_boy](https: //gitee.com/lg_boy)
+- 🐞 Fix [If you set the top breadcrumb navigation open icon isBreadcrumbIcon=true, there will be some problems with the style. If it is not turned on, it will be normal #I58VB8](https://gitee.com/lyt-top/vue-next-admin/issues/ I58VB8)
+- 🐞 Fixed the problem that when the routing address is entered incorrectly in the address bar and the routing address is entered incorrectly again after returning to the homepage, the 404 issue will not be redirected.
+- 🐞 Fix [2.1.0 version of the icon selection component fails after multiple clicks #I590TH](https://gitee.com/lyt-top/vue-next-admin/issues/I590TH), thanks [@quber] (https://gitee.com/quber)
 
 ## 2.1.0
 
 `2022.04.18`
 
-⚡⚡⚡ 此版本为破环性更新，优化内容如下：（谨慎更新！谨慎更新！！谨慎更新！！！）。因为 `vuex` 替换成 `pinia`
+⚡⚡⚡ This version is a destructive update, and the optimization content is as follows: (Update with caution! Update with caution!! Update with caution!!!). Because `vuex` is replaced by `pinia`
 
-- 🌟 更新 依赖更新最新版本
-- 🎯 优化 部分界面图片不显示问题（更换 gitee 在线图片地址源）
-- 🎯 优化 各界面方法引入与逻辑之间添加一行空行，方便区分内容
-- 🎯 优化 图标选择器 [#I4YAHB](https://gitee.com/lyt-top/vue-next-admin/issues/I4YAHB)，感谢[@真有你的](https://gitee.com/sunliusen)
-- 🎯 优化 图标选择器 icon type 类型为 all 时，类型 ali、ele、awe 回显问题
-- 🎯 优化 去掉开发环境 i18n 控制台警告，页面代码：[i18n/index.ts](https://gitee.com/lyt-top/vue-next-admin/blob/master/src/i18n/index.ts)
-- 🎯 优化 `NextLoading.start()` 方法，防止第一次进入界面时出现短暂空白
-- 🎯 优化 地址栏有参数退出登录，再次登录不跳之前界面问题 `src/layout/navBars/breadcrumb/user.vue`
-- 🎯 优化 `SvgIcon` 组件，防止 `开启 Tagsview 图标` 时，`tagsView 右键菜单关闭` 报错问题，工作流不可连线、全屏时关闭按钮消失问题
-- 🎯 优化 [如果 url 中有中文等特殊字符，第一次切换该 tab 时 keep-alive 失效#I55JS7](https://gitee.com/lyt-top/vue-next-admin/issues/I55JS7),感谢[yuyong1566](https://gitee.com/yuyong1566)
-- 🎯 优化 [wangEditor](https://www.wangeditor.com/) 更新到 v5，[vue3 版本线上示例中 wangeditor 富文本编辑器 demo 实例,无法换行#I5565B](https://gitee.com/lyt-top/vue-next-admin/issues/I5565B)，感谢@[jenchih](https://gitee.com/jenchih)
-- 🎯 优化 [在关闭 tagview 时，高度刷新时会会变化，出现滚动条](https://gitee.com/lyt-top/vue-next-admin/issues/I55FHM)，感谢[张松](https://gitee.com/zs310071113)
-- 🎯 优化 [路由参数](https://lyt-top.gitee.io/vue-next-admin-preview/#/params/common)演示
-- 🎉 新增 [vuex](https://vuex.vuejs.org/) 替换成 [pinia](https://pinia.vuejs.org/getting-started.html)
-- 🎉 新增 tagsView 支持自定义 tagsView 名称（文章详情时有用），前往体验：[路由参数/普通路由](https://lyt-top.gitee.io/vue-next-admin-preview/#/params/common)。新增 tagsView 支持自定义名称国际化，感谢[@q7but](https://gitee.com/q7but)、[!22 add 添加自定义 tagVIewName 拓展,支持国际化](https://gitee.com/lyt-top/vue-next-admin/pulls/22/files)、感谢[@tony_tong_xin](https://gitee.com/tony_tong_xin)
-- 🐞 修复 适配 `"element-plus": "^2.1.9"，2.2.0` 版本
-- 🐞 修复 [导航栏横向布局后，一级菜单显示问题#I4Z3M3](https://gitee.com/lyt-top/vue-next-admin/issues/I4Z3M3)
-- 🐞 修复 横向布局三级及以上导航菜单高亮、导航高度不统一问题
-- 🐞 修复 分栏模式下,选中的菜单是 primary 样式,鼠标移入字也变成 primary 色了，感谢群友@孤夜-流殇
-- 🐞 修复 [vuex 里面改了颜色 但是不生效 #I4WFMA](https://gitee.com/lyt-top/vue-next-admin/issues/I4WFMA)
-- 🐞 修复 全局主题 primary 清空颜色后报错，[#I4X0LG](https://gitee.com/lyt-top/vue-next-admin/issues/I4X0LG)，感谢[面向 BUG 编程](https://gitee.com/fhtfy)
-- 🐞 修复 [.eslintrc.js 文件 rules 标签名错误 #I53IPK](https://gitee.com/lyt-top/vue-next-admin/issues/I53IPK)，感谢[yuyong1566](https://gitee.com/yuyong1566)
-- 🐞 修复 `开启 Tagsview 图标` 时，`tagsView 右键菜单关闭` 报错问题
-- 🐞 修复 `router.push` 路径找不到时报错问题，`404、401 界面` 已移入到 `main` 主布局里（之前全屏）
-- 🐞 修复 [全局修改组件大小失效了](https://gitee.com/lyt-top/vue-next-admin/issues/I551RP)，感谢[lg_boy](https://gitee.com/lg_boy)
-- 🐞 修复 [修改一下配置时，需要每次都清理 `window.localStorage` 浏览器永久缓存，配置才会生效，问题解决#I567R1](https://gitee.com/lyt-top/vue-next-admin/issues/I567R1),感谢[@lanbao123](https://gitee.com/lanbao123)
-- 🐞 修复 [标记为需要缓存的 tab 页后，再次从左侧菜单打开，还是显示被缓存的页面内容#I4UY3G](https://gitee.com/lyt-top/vue-next-admin/issues/I4UY3G)，感谢@axcc1234、特别感谢群友@华仔
-- 🌈 重构 路由（`/src/router/index.ts`）解决 No match found for location with path "xxx"(前端控制，后端控制未解决) 问题
+- 🌟 Update dependencies to update to the latest version
+- 🎯 Optimize the problem that some interface pictures are not displayed (replace the gitee online picture address source)
+- 🎯 Optimization: Add a blank line between the introduction and logic of each interface method to facilitate the differentiation of content.
+- 🎯 Optimize the icon selector [#I4YAHB](https://gitee.com/lyt-top/vue-next-admin/issues/I4YAHB), thank you [@真有你的](https://gitee.com/ sunliusen)
+- 🎯 Optimize the icon selector icon type when the type is all, the type ali, ele, awe echo problem
+- 🎯 Optimize and remove development environment i18n console warning, page code: [i18n/index.ts](https://gitee.com/lyt-top/vue-next-admin/blob/master/src/i18n/index. ts)
+- 🎯 Optimize the `NextLoading.start()` method to prevent a brief blank when entering the interface for the first time
+- 🎯 Optimization: If there are parameters in the address bar to log out, logging in again will not jump to the previous interface problem `src/layout/navBars/breadcrumb/user.vue`
+- 🎯 Optimize the `SvgIcon` component to prevent the `tagsView right-click menu from closing` when `turning on the Tagsview icon`, error reporting, the workflow cannot be connected, and the close button disappears in full screen
+- 🎯 Optimization [If there are special characters such as Chinese in the URL, keep-alive will be invalid when switching the tab for the first time #I55JS7](https://gitee.com/lyt-top/vue-next-admin/issues/I55JS7) ,Thanks[yuyong1566](https://gitee.com/yuyong1566)
+- 🎯 Optimize [wangEditor](https://www.wangeditor.com/) updated to v5, [wangeditor rich text editor demo instance in vue3 version online example, cannot wrap line #I5565B](https://gitee.com /lyt-top/vue-next-admin/issues/I5565B), thanks @[jenchih](https://gitee.com/jenchih)
+- 🎯 Optimization [When closing tagview, the height will change when refreshing, and a scroll bar will appear](https://gitee.com/lyt-top/vue-next-admin/issues/I55FHM), thanks [Zhang Song]( https://gitee.com/zs310071113)
+- 🎯 Optimize [routing parameters](https://lyt-top.gitee.io/vue-next-admin-preview/#/params/common) demonstration
+- 🎉 Add [vuex](https://vuex.vuejs.org/) and replace it with [pinia](https://pinia.vuejs.org/getting-started.html)
+- 🎉 Added tagsView to support custom tagsView names (useful for article details), go to experience: [Routing Parameters/Common Routing](https://lyt-top.gitee.io/vue-next-admin-preview/#/ params/common). Added tagsView to support custom name internationalization, thanks [@q7but](https://gitee.com/q7but), [!22 add to add custom tagVIewName expansion, support internationalization](https://gitee.com/ lyt-top/vue-next-admin/pulls/22/files), thanks [@tony_tong_xin](https://gitee.com/tony_tong_xin)
+- 🐞 Fix adaptation `"element-plus": "^2.1.9", version 2.2.0`
+- 🐞 Fix [First-level menu display issue after the navigation bar is laid out horizontally#I4Z3M3](https://gitee.com/lyt-top/vue-next-admin/issues/I4Z3M3)
+- 🐞 Fixed the problem of high navigation menu highlighting and inconsistent navigation height in horizontal layout of level 3 and above.
+- 🐞 Fix: In column mode, the selected menu is of primary style, and the text when the mouse is moved also changes to primary color. Thanks to the group friend @古夜-流殇
+- 🐞 Fix [The color is changed in vuex but it does not take effect #I4WFMA](https://gitee.com/lyt-top/vue-next-admin/issues/I4WFMA)
+- 🐞 Fixed the global theme primary reporting an error after clearing the color, [#I4X0LG](https://gitee.com/lyt-top/vue-next-admin/issues/I4X0LG), thanks [BUG-oriented programming](https:// gitee.com/fhtfy)
+- 🐞 Fix [.eslintrc.js file rules tag name error #I53IPK](https://gitee.com/lyt-top/vue-next-admin/issues/I53IPK), thanks [yuyong1566](https://gitee .com/yuyong1566)
+- 🐞 Fixed the error issue of `tagsView right-click menu is closed` when `opening Tagsview icon`
+- 🐞 Fixed the problem of error when `router.push` path cannot be found, `404, 401 interface` has been moved to `main` main layout (previously full screen)
+- 🐞 Fix [Global modification of component size fails](https://gitee.com/lyt-top/vue-next-admin/issues/I551RP), thanks to [lg_boy](https://gitee.com/lg_boy)
+- 🐞 Fix [When modifying the configuration, you need to clear the `window.localStorage` browser permanent cache every time before the configuration will take effect. Problem solved #I567R1](https://gitee.com/lyt-top/vue-next -admin/issues/I567R1), thanks [@lanbao123](https://gitee.com/lanbao123)
+- 🐞 Fix [After marking a tab page that needs to be cached, opening it from the left menu again still displays the cached page content #I4UY3G](https://gitee.com/lyt-top/vue-next-admin/issues /I4UY3G), thank you @axcc1234, special thanks to group friend @华izai
+- 🌈 Reconstruct routing (`/src/router/index.ts`) to solve the problem of No match found for location with path "xxx" (front-end control, back-end control is not resolved)
 
 ## 2.0.2
 

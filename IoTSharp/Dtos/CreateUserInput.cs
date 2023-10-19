@@ -7,21 +7,21 @@ namespace IoTSharp.Dtos
     public class CreateUserInput
     {
         /// <summary>
-        /// 邮箱地址， 也是用户名，一个邮箱只能注册平台的一个客户，如果你在平台有两个租户都有账号，则需要两个邮箱地址。 
+        /// The email address is also the user name. One email address can only register one customer of the platform. If you have two tenants with accounts on the platform, you need two email addresses.
         /// </summary>
         [Required]
         public string Email { get; set; }
         /// <summary>
-        /// 电话号码
+        /// telephone number
         /// </summary>
         public string PhoneNumber { get; set; }
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Guid CustomerId { get; set; }
 
         /// <summary>
-        /// 用户名密码
+        /// Username Password
         /// </summary>
         [Required]
         [StringLength(100, MinimumLength = 6)]

@@ -40,7 +40,7 @@ using AutoMapper;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 设备管理
+    /// Device management
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -80,7 +80,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取指定客户的设备列表
+        /// Get the device list of the specified customer
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
@@ -104,7 +104,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取指定客户的设备列表
+        /// Get the device list of the specified customer
         /// </summary>
         /// <returns></returns>
         // GET: api/Devices/Customers
@@ -119,19 +119,19 @@ namespace IoTSharp.Controllers
             m.Limit = m.Limit < 5 ? 5 : m.Limit;
             try
             {
-            
-                var query=from  c in _context.Device.Include(c => c.DeviceIdentity) where c.Customer.Id == m.customerId && !c.Deleted && c.Tenant.Id == profile.Tenant select c;
+
+                var query = from c in _context.Device.Include(c => c.DeviceIdentity) where c.Customer.Id == m.customerId && !c.Deleted && c.Tenant.Id == profile.Tenant select c;
                 if (m.OnlyActive)
                 {
-                    var al = from a in _context.AttributeLatest where   a.KeyName == Constants._Active &&a.Value_Boolean==true   select a.DeviceId;
-                    query = from x in query where al.Contains( x.Id)   select x;
+                    var al = from a in _context.AttributeLatest where a.KeyName == Constants._Active &&a.Value_Boolean==true select a.DeviceId;
+                    query = from x in query where al.Contains(x.Id) select x;
                 }
                 if (!string.IsNullOrEmpty(m.Name))
                 {
                     if (System.Text.RegularExpressions.Regex.IsMatch(m.Name, @"(?im)^[{(]?[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?$"))
                     {
                         var id = Guid.Parse(m.Name);
-                        query = from  x in query  where   x.Id == id select x ;
+                        query = from x in query where x.Id == id select x;
                     }
                     else
                     {
@@ -209,7 +209,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取指定设备的认证方式信息
+        /// Get the authentication method information of the specified device
         /// </summary>
         /// <param name="deviceId"></param>
         /// <returns></returns>
@@ -236,7 +236,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取指定设备的认证方式信息
+        /// Get the authentication method information of the specified device
         /// </summary>
         /// <param name="deviceId"></param>
         /// <returns></returns>
@@ -259,7 +259,7 @@ namespace IoTSharp.Controllers
                 var dev = cust.FirstOrDefault();
                 if (did != null && dev != null)
                 {
-               
+
                     if (Uri.TryCreate(_setting.MqttBroker.DomainName, UriKind.Absolute, out Uri _uri))
                     {
                         SubjectAlternativeNameBuilder altNames = new SubjectAlternativeNameBuilder();
@@ -301,10 +301,10 @@ namespace IoTSharp.Controllers
 
 
         /// <summary>
-        /// 下载证书
+        /// Download certificate
         /// </summary>
         /// <param name="deviceId"></param>
-        /// <returns>一个压缩包，包含ca.crt client.crt client.key</returns>
+        /// <returns>A compressed package containing ca.crt client.crt client. Key</returns>
         [HttpGet("{deviceId}/DownloadCertificates")]
         [ProducesResponseType(typeof(ApiResult), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResult), StatusCodes.Status400BadRequest)]
@@ -372,7 +372,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        ///获取指定设备的最新属性
+        /// Get the latest attributes of the specified device
         /// </summary>
         /// <param name="deviceId"></param>
         /// <returns></returns>
@@ -409,7 +409,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        ///获取指定Key和设备Id列表的最新属性
+        ///Get the latest attributes of the specified Key and device ID list
         /// </summary>
         /// <returns></returns>
         [Authorize(Roles = nameof(UserRole.NormalUser))]
@@ -434,10 +434,10 @@ namespace IoTSharp.Controllers
 
 
         /// <summary>
-        /// 获取指定设备指定keys的最新属性
+        /// Get the latest attributes of the specified keys of the specified device
         /// </summary>
         /// <param name="deviceId">Which device do you read?</param>
-        /// <param name="keys">Specify key name list , use , or space or  ; to split </param>
+        /// <param name="keys">Specify key name list , use , or space or ; to split </param>
         /// <returns></returns>
         [Authorize(Roles = nameof(UserRole.NormalUser))]
         [HttpGet("{deviceId}/AttributeLatest/{keys}")]
@@ -460,14 +460,13 @@ namespace IoTSharp.Controllers
         }
 
 
-
         private async Task<Device> FoundAsync(Guid deviceId)
         {
             Device dev = null;
             if (User.IsInRole(nameof(UserRole.TenantAdmin)))
             {
                 var tid = Guid.Parse(User.Claims.First(c => c.Type == IoTSharpClaimTypes.Tenant).Value);
-                dev = await _context.Device.Include(d => d.Tenant).Include(d=>d.Customer).Include(d=>d.DeviceIdentity).FirstOrDefaultAsync(d => d.Id == deviceId && d.Tenant.Id == tid && !d.Deleted);
+                dev = await _context.Device.Include(d => d.Tenant).Include(d => d.Customer).Include(d => d.DeviceIdentity).FirstOrDefaultAsync(d => d.Id == deviceId && d.Tenant.Id == tid && !d.Deleted);
             }
             else if (User.IsInRole(nameof(UserRole.NormalUser)))
             {
@@ -478,11 +477,8 @@ namespace IoTSharp.Controllers
         }
 
 
-
-
-
         /// <summary>
-        ///获取指定设备的最新遥测数据
+        ///Get the latest telemetry data of the specified device
         /// </summary>
         /// <param name="deviceId"></param>
         /// <returns></returns>
@@ -513,10 +509,10 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取指定设备的指定key 的遥测数据
+        /// Get the telemetry data of the specified key of the specified device
         /// </summary>
         /// <param name="deviceId">Which device do you read?</param>
-        /// <param name="keys">指定键值列表， 使用分号或者逗号分割 。 </param>
+        /// <param name="keys">Specify a list of key values, separated by semicolons or commas. </param>
         /// <returns></returns>
         [Authorize(Roles = nameof(UserRole.NormalUser))]
         [HttpGet("{deviceId}/TelemetryLatest/{keys}")]
@@ -537,11 +533,11 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取指定设备和指定时间， 指定key的数据
+        /// Get the data of the specified device, specified time, and specified key
         /// </summary>
         /// <param name="deviceId">Which device do you read?</param>
-        /// <param name="keys">Specify key name list , use , or space or  ; to split </param>
-        /// <param name="begin">开始以时间， 比如 2019-06-06 12:24</param>
+        /// <param name="keys">Specify key name list , use , or space or ; to split </param>
+        /// <param name="begin">Start with time, such as 2019-06-06 12:24</param>
         /// <returns></returns>
         [Authorize(Roles = nameof(UserRole.NormalUser))]
         [HttpGet("{deviceId}/TelemetryLatest/{keys}/{begin}")]
@@ -563,10 +559,10 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 返回指定设备的的遥测数据， 按照keyname 和指定时间范围获取，如果keyname 为 all  , 则返回全部key 的数据
+        /// Returns the telemetry data of the specified device, obtained according to keyname and the specified time range. If keyname is all, then returns the data of all keys.
         /// </summary>
         /// <param name="deviceId">Which device do you read?</param>
-        /// <param name="keys">Specify key name list , use , or space or  ; to split </param>
+        /// <param name="keys">Specify key name list , use , or space or ; to split </param>
         /// <param name="begin">For example: 2019-06-06 12:24</param>
         /// <param name="end">For example: 2019-06-06 12:24</param>
         /// <returns></returns>
@@ -590,10 +586,10 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 返回指定设备的的遥测数据， 按照keyname 和指定时间范围获取，如果keyname 为 all  , 则返回全部key 的数据
+        /// Returns the telemetry data of the specified device, obtained according to keyname and the specified time range. If keyname is all, then returns the data of all keys.
         /// </summary>
-        /// <param name="deviceId">指定设备ID</param>
-        /// <param name="queryDto">查询条件例子:
+        /// <param name="deviceId">Specify device ID</param>
+        /// <param name="queryDto">Query condition example:
         ///{
         /// "keys": "",
         /// "begin": "2022-03-23T11:44:56.488Z",
@@ -622,7 +618,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取设备详情
+        /// Get device details
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -662,7 +658,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 修改设备
+        ///Modify device
         /// </summary>
         /// <param name="id"></param>
         /// <param name="device"></param>
@@ -763,8 +759,9 @@ namespace IoTSharp.Controllers
                 return dev;
             }
         }
+
         /// <summary>
-        /// 创建设备， 客户ID和租户ID均为当前登录用户所属
+        /// Create a device. The customer ID and tenant ID belong to the currently logged in user.
         /// </summary>
         /// <param name="device"></param>
         /// <returns></returns>
@@ -784,7 +781,7 @@ namespace IoTSharp.Controllers
                 DeviceType = device.DeviceType,
                 Timeout = device.Timeout,
                 Deleted = false,
-                
+
             };
             devvalue.Tenant = _context.Tenant.Find(new Guid(tid.Value));
             devvalue.Customer = _context.Customer.Find(new Guid(cid.Value));
@@ -794,7 +791,7 @@ namespace IoTSharp.Controllers
                 return new ApiResult<Device>(ApiCode.NotFoundTenantOrCustomer, "Not found Tenant or Customer", null);
             }
             _context.Device.Add(devvalue);
-            _context.AfterCreateDevice(devvalue,device.ProductId);
+            _context.AfterCreateDevice(devvalue, device.ProductId);
             await _context.SaveChangesAsync();
             var identity = _context.DeviceIdentities.FirstOrDefault(c => c.Device.Id == devvalue.Id);
             if (identity != null)
@@ -808,7 +805,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 删除设备
+        /// Delete device
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -840,7 +837,7 @@ namespace IoTSharp.Controllers
                             assets.Aggregate("", (x, y) => x + "," + y.Name), false);
                     }
 
-                    var cert = _context.DeviceIdentities.Include(d=>d.Device).FirstOrDefault(c => c.Device.Id == device.Id);
+                    var cert = _context.DeviceIdentities.Include(d => d.Device).FirstOrDefault(c => c.Device.Id == device.Id);
                     if (cert != null)
                     {
                         _context.DeviceIdentities.RemoveRange(cert);
@@ -885,7 +882,7 @@ namespace IoTSharp.Controllers
                             assets.Aggregate("", (x, y) => x + "," + y.Name), false);
                     }
 
-                    var cert = _context.DeviceIdentities.Include(c=>c.Device).FirstOrDefault(c => c.Device.Id == device.Id);
+                    var cert = _context.DeviceIdentities.Include(c => c.Device).FirstOrDefault(c => c.Device.Id == device.Id);
                     if (cert != null)
                     {
                         _context.DeviceIdentities.RemoveRange(cert);
@@ -922,7 +919,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 远程控制指定设备， 此方法通过给远程设备发送mqtt消息进行控制，设备在收到信息后回复结果，此方法才算调用结束
+        /// Remote control the specified device. This method controls by sending mqtt messages to the remote device. The device replies with the result after receiving the message. This method is considered the end of the call.
         /// </summary>
         /// <param name="access_token"></param>
         /// <param name="method"></param>
@@ -985,9 +982,9 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// HTTP方式上传遥测数据
+        /// Upload telemetry data via HTTP
         /// </summary>
-        /// <param name="access_token">Device 's access token</param>
+        /// <param name="access_token">Device's access token</param>
         /// <param name="telemetrys"></param>
         /// <returns></returns>
         [AllowAnonymous]
@@ -1012,9 +1009,9 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取服务侧的设备属性
+        /// Get the device properties on the service side
         /// </summary>
-        /// <param name="access_token">Device 's access token </param>
+        /// <param name="access_token">Device's access token </param>
         ///<param name="dataSide">Specifying data side.</param>
         ///<param name="keys">Specifying Attribute's keys</param>
         /// <returns></returns>
@@ -1049,9 +1046,9 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 上传客户侧属性数据
+        /// Upload client-side attribute data
         /// </summary>
-        /// <param name="access_token">Device 's access token </param>
+        /// <param name="access_token">Device's access token </param>
         /// <param name="attributes">attributes</param>
         /// <returns></returns>
         [AllowAnonymous]
@@ -1074,12 +1071,14 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 为网关的子设备或者普通设备上传告警信息
+        /// Upload alarm information for gateway sub-devices or ordinary devices
         /// </summary>
         /// <param name="access_token">token</param>
-        /// <param name="alarm">警告内容</param>
+        /// <param name="alarm">Warning content</param>
         /// <returns></returns>
-        /// <remarks>如果是网关设备，当OriginatorName为网关的名称或者ID时，则我们认为他是网关本身的警告，否则我们认为是设备的警告</remarks>
+        /// <remarks>If it is a gateway device, when OriginatorName is the name or ID of the gateway, 
+        /// we think it is a warning from the gateway itself, otherwise we think it is a warning 
+        /// from the device</remarks>
         [AllowAnonymous]
         [HttpPost("{access_token}/Alarm")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -1117,12 +1116,12 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// Http方式调用RawDataGateway网关上传原始Json或者xml并通过规则链进行解析。
+        /// Call RawDataGateway in Http mode to upload the original Json or xml and parse it through the rule chain.
         /// </summary>
-        /// <param name="access_token">Device 's access token </param>
+        /// <param name="access_token">Device's access token </param>
         /// <param name="format"></param>
         /// <returns></returns>
-        /// <remarks>需要在body里面填充数据</remarks>
+        /// <remarks>Need to fill data in the body</remarks>
         [AllowAnonymous]
         [HttpPost("{access_token}/PushDataToMap/{format}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -1150,12 +1149,12 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 上传原始Json或者xml 通过规则链进行解析。
+        /// Upload the original Json or XML for parsing through the rule chain.
         /// </summary>
-        /// <param name="access_token">Device 's access token </param>
-        /// <param name="format">只支持json和 xml， XML会转换为 Json。</param>
+        /// <param name="access_token">Device's access token </param>
+        /// <param name="format">Only supports json and xml, XML will be converted to Json. </param>
         /// <returns></returns>
-        /// <remarks>需要在body里面填充数据</remarks>
+        /// <remarks>Need to fill data in the body</remarks>
         [AllowAnonymous]
         [HttpPost("{access_token}/PushDataToRuleChains/{fromat}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -1217,7 +1216,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 服务侧新增属性
+        /// Add new attributes on the service side
         /// </summary>
         /// <returns></returns>
         [Authorize(Roles = nameof(UserRole.NormalUser))]
@@ -1246,7 +1245,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 服务侧和任意侧属性修改
+        /// Service side and any side attribute modification
         /// </summary>
         /// <param name="devid"></param>
         /// <param name="attributes"></param>
@@ -1286,9 +1285,9 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 属性删除
+        /// Attribute deletion
         /// </summary>
-        /// <param name="input">要删除的属性。</param>
+        /// <param name="input">Attribute to be deleted. </param>
         [HttpDelete("[action]")]
         public async Task<ApiResult<bool>> RemoveAttribute(RemoveDeviceAttributeInput input)
         {

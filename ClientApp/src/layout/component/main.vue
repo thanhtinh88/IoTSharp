@@ -28,7 +28,7 @@ import { NextLoading } from '/@/utils/loading';
 import LayoutParentView from '/@/layout/routerView/parent.vue';
 import Footer from '/@/layout/footer/index.vue';
 
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 interface MainState {
 	headerHeight: string | number;
 	currentRouteMeta: any;
@@ -46,39 +46,39 @@ export default defineComponent({
 			headerHeight: '',
 			currentRouteMeta: {},
 		});
-		// 判断布局
-		const isClassicOrTransverse = computed(() => {
-			const { layout } = themeConfig.value;
-			return layout === 'classic' || layout === 'transverse';
-		});
-		// 设置 main 的高度
-		const initHeaderHeight = () => {
-			const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
-			let { isTagsview } = themeConfig.value;
-			if (isTagsview) return (state.headerHeight = bool ? `86px` : `115px`);
-			else return (state.headerHeight = `80px`);
-		};
-		// 初始化获取当前路由 meta，用于设置 iframes padding
-		const initGetMeta = () => {
-			state.currentRouteMeta = route.meta;
-		};
-		// 页面加载前
-		onMounted(async () => {
-			await initGetMeta();
-			initHeaderHeight();
-			NextLoading.done();
-		});
-		// 监听路由变化
-		watch(
-			() => route.path,
-			() => {
-				state.currentRouteMeta = route.meta;
-				const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
-				state.headerHeight = bool ? `86px` : `115px`;
-				proxy.$refs.layoutScrollbarRef.update();
-			}
-		);
-		// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
+        // Determine layout
+        const isClassicOrTransverse = computed(() => {
+            const { layout } = themeConfig.value;
+            return layout === 'classic' || layout === 'transverse';
+        });
+        //Set the height of main
+        const initHeaderHeight = () => {
+            const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
+            let { isTagsview } = themeConfig.value;
+            if (isTagsview) return (state.headerHeight = bool ? `86px` : `115px`);
+            else return (state.headerHeight = `80px`);
+        };
+        // Initialize to get the current route meta, which is used to set iframes padding
+        const initGetMeta = () => {
+            state.currentRouteMeta = route.meta;
+        };
+        // Before the page is loaded
+        onMounted(async () => {
+            await initGetMeta();
+            initHeaderHeight();
+            NextLoading.done();
+        });
+        // Monitor routing changes
+        watch(
+            () => route.path,
+            () => {
+                state.currentRouteMeta = route.meta;
+                const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
+                state.headerHeight = bool ? `86px` : `115px`;
+                proxy.$refs.layoutScrollbarRef.update();
+            }
+        );
+		// Monitor changes in the themeConfig configuration file and update the height of the menu el-scrollbar
 		watch(
 			themeConfig,
 			(val) => {

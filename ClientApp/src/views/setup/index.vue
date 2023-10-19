@@ -7,12 +7,13 @@
 
         </div>
         <div v-if="storesAppInfo.appInfo.installed" class="installed">
-          系统已初始化， 请直接登录
-          <Button type="primary" style="margin-top: 10px" @click="$router.replace({name: 'login'})">跳转至登录页面
-          </Button>
+            The system has been initialized, please log in directly.
+            <Button type="primary" style="margin-top: 10px" @click="$router.replace({name: 'login'})">
+                Jump to login page
+            </Button>
         </div>
         <div v-else>
-          <div class="form-subtitle"> 欢迎使用, 请填写邮箱, 密码以及账号, 用于初始化系统</div>
+            <div class="form-subtitle"> Welcome, please fill in your email, password and account number to initialize the system</div>
           <FormCreate
               v-model:api="fApi"
               :rule="rules"
@@ -24,7 +25,7 @@
       </div>
     </div>
     <div class="copyright-wrap">
-      <p>系统版本</p>
+        <p>System version</p>
       <p>{{ storesAppInfo.appInfo.version }}</p>
     </div>
   </div>
@@ -45,17 +46,17 @@ import {useRouter} from "vue-router";
 const FormCreate = formCreate.$form()
 const router = useRouter()
 const storesAppInfo = useAppInfo()
-//实例对象
+//Instance object
 const fApi: Ref<Api | null> = ref(null)
-//表单数据
+// form data
 const value = ref({})
 const options = reactive(setup_form_option)
 
 const validatePassCheck = (rule:any, value:any, callback:any) => {
   if (value === '') {
-    callback(new Error('请再次输入密码'));
+      callback(new Error('Please enter password again'));
   } else if (value !== fApi.value!.form.password) {
-    callback(new Error('两次输入的密码不一致!'));
+      callback(new Error('The passwords entered twice are inconsistent!'));
   } else {
     callback();
   }
@@ -74,17 +75,17 @@ function onSubmit(data:any) {
       if (valid) {
         try {
           await initSysAdmin(data)
-          ElMessage.success('初始化成功')
+            ElMessage.success('Initialization successful')
           await router.replace({name: 'login'})
         } catch (e) {
-          ElMessage.error('初始化失败')
+            ElMessage.error('initialization failed')
         }
       } else {
-        ElMessage.error('请正确填写信息')
+          ElMessage.error('Please fill in the information correctly')
       }
     })
   } catch (e) {
-    ElMessage.error('请正确填写信息')
+      ElMessage.error('Please fill in the information correctly')
   }
 }
 

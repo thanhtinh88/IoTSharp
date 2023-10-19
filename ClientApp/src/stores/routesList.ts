@@ -2,11 +2,11 @@ import { defineStore } from 'pinia';
 import { RoutesListState } from './interface';
 
 /**
- * 路由列表
- * @methods setRoutesList 设置路由数据
- * @methods setColumnsMenuHover 设置分栏布局菜单鼠标移入 boolean
- * @methods setColumnsNavHover 设置分栏布局最左侧导航鼠标移入 boolean
- */
+  *Route list
+  * @methods setRoutesList Set routing data
+  * @methods setColumnsMenuHover sets the column layout menu when the mouse moves into boolean
+  * @methods setColumnsNavHover sets the leftmost navigation of the column layout and moves the mouse into Boolean
+  */
 export const useRoutesList = defineStore('routesList', {
 	state: (): RoutesListState => ({
 		routesList: [],

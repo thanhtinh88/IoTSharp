@@ -32,7 +32,7 @@ export default defineComponent({
 		const isFixedHeader = computed(() => {
 			return themeConfig.value.isFixedHeader;
 		});
-		// 监听路由的变化
+		// Monitor routing changes
 		watch(
 			() => route.path,
 			() => {

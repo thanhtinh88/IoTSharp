@@ -18,7 +18,7 @@ using HealthChecks.UI.Data;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 健康检查
+    /// health examination
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -40,8 +40,9 @@ namespace IoTSharp.Controllers
                 DateTimeZoneHandling = DateTimeZoneHandling.Local
             };
         }
+
         ///<summary>
-        /// 获取相关服务的健康检查信息
+        /// Get health check information of related services
         /// </summary>
         /// <returns></returns>
         [HttpGet()]

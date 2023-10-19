@@ -16,7 +16,7 @@ using ShardingCore.Extensions;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 告警管理
+    /// Alarm management
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -30,9 +30,9 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 创建告警， 但不触发规则链。要触发规则链， 请使用设备相关的API
+        /// Create an alarm, but do not trigger the rule chain. To trigger a rule chain, use the device-related API
         /// </summary>
-        /// <param name="dto">告警内容</param>
+        /// <param name="dto">Alarm content</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ApiResult> Occurred([FromBody] CreateAlarmDto dto)
@@ -72,9 +72,9 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 查询告警信息
+        /// Query alarm information
         /// </summary>
-        /// <param name="m">指定OriginatorId时需要填写OriginatorType</param>
+        /// <param name="m">OriginatorType needs to be filled in when specifying OriginatorId</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ApiResult<PagedData<AlarmDto>>> List([FromBody] AlarmParam m)
@@ -183,7 +183,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 搜索告警发起对象
+        /// Search for alarm initiating object
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
@@ -218,7 +218,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 确认告警
+        /// Confirm alarm
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
@@ -254,7 +254,7 @@ namespace IoTSharp.Controllers
 
 
         /// <summary>
-        /// 清除告警信息
+        /// Clear alarm information
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>

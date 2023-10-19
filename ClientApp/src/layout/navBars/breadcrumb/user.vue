@@ -107,7 +107,7 @@ export default defineComponent({
 			disabledI18n: 'zh-cn',
 			disabledSize: 'large',
 		});
-		// 设置分割样式
+		//Set split style
 		const layoutUserFlexNum = computed(() => {
 			let num: string | number = '';
 			const { layout, isClassicSplitMenu } = themeConfig.value;
@@ -116,7 +116,7 @@ export default defineComponent({
 			else num = '';
 			return num;
 		});
-		// 全屏点击时
+		//When full screen is clicked
 		const onScreenfullClick = () => {
 			if (!screenfull.isEnabled) {
 				ElMessage.warning('暂不不支持全屏');
@@ -128,11 +128,11 @@ export default defineComponent({
 				else state.isScreenfull = false;
 			});
 		};
-		// 布局配置 icon 点击时
-		const onLayoutSetingClick = () => {
-			proxy.mittBus.emit('openSetingsDrawer');
-		};
-		// 下拉菜单点击时
+        //Layout configuration icon when clicked
+        const onLayoutSetingClick = () => {
+            proxy.mittBus.emit('openSetingsDrawer');
+        };
+		//When the drop-down menu is clicked
 		const onHandleCommandClick = (path: string) => {
 			if (path === 'logOut') {
 				ElMessageBox({
@@ -160,9 +160,9 @@ export default defineComponent({
 					},
 				})
 					.then(async () => {
-						// 清除缓存/token等
-						Session.clear();
-						// 使用 reload 时，不需要调用 resetRoute() 重置路由
+                        // Clear cache/token, etc.
+                        Session.clear();
+						// When using reload, there is no need to call resetRoute() to reset the route
 						window.location.reload();
 					})
 					.catch(() => {});
@@ -176,63 +176,63 @@ export default defineComponent({
 				router.push(path);
 			}
 		};
-		// 菜单搜索点击
-		const onSearchClick = () => {
-			searchRef.value.openSearch();
-		};
-		// 组件大小改变
-		const onComponentSizeChange = (size: string) => {
-			Local.remove('themeConfig');
-			themeConfig.value.globalComponentSize = size;
-			Local.set('themeConfig', themeConfig.value);
-			initComponentSize();
-			window.location.reload();
-		};
-		// 语言切换
-		const onLanguageChange = (lang: string) => {
-			Local.remove('themeConfig');
-			themeConfig.value.globalI18n = lang;
-			Local.set('themeConfig', themeConfig.value);
-			proxy.$i18n.locale = lang;
-			initI18n();
-			other.useTitle();
-		};
-		// 设置 element plus 组件的国际化
-		const setI18nConfig = async (locale: string) => {
-			proxy.mittBus.emit('getI18nConfig',messages.value[locale]);
-		};
-		// 初始化言语国际化
-		const initI18n = () => {
-			switch (Local.get('themeConfig').globalI18n) {
-				case 'zh-cn':
-					state.disabledI18n = 'zh-cn';
-					setI18nConfig('zh-cn');
-					break;
-				case 'en':
-					state.disabledI18n = 'en';
-					setI18nConfig('en');
-					break;
-				case 'zh-tw':
-					state.disabledI18n = 'zh-tw';
-					setI18nConfig('zh-tw');
-					break;
-			}
-		};
-		// 初始化全局组件大小
-		const initComponentSize = () => {
-			switch (Local.get('themeConfig').globalComponentSize) {
-				case 'large':
-					state.disabledSize = 'large';
-					break;
-				case 'default':
-					state.disabledSize = 'default';
-					break;
-				case 'small':
-					state.disabledSize = 'small';
-					break;
-			}
-		};
-		// 页面加载时
+        //Menu search click
+        const onSearchClick = () => {
+            searchRef.value.openSearch();
+        };
+        // Component size changes
+        const onComponentSizeChange = (size: string) => {
+            Local.remove('themeConfig');
+            themeConfig.value.globalComponentSize = size;
+            Local.set('themeConfig', themeConfig.value);
+            initComponentSize();
+            window.location.reload();
+        };
+        // language switch
+        const onLanguageChange = (lang: string) => {
+            Local.remove('themeConfig');
+            themeConfig.value.globalI18n = lang;
+            Local.set('themeConfig', themeConfig.value);
+            proxy.$i18n.locale = lang;
+            initI18n();
+            other.useTitle();
+        };
+        //Set the internationalization of the element plus component
+        const setI18nConfig = async (locale: string) => {
+            proxy.mittBus.emit('getI18nConfig', messages.value[locale]);
+        };
+        //Initialize language internationalization
+        const initI18n = () => {
+            switch (Local.get('themeConfig').globalI18n) {
+                case 'zh-cn':
+                    state.disabledI18n = 'zh-cn';
+                    setI18nConfig('zh-cn');
+                    break;
+                case 'en':
+                    state.disabledI18n = 'en';
+                    setI18nConfig('en');
+                    break;
+                case 'zh-tw':
+                    state.disabledI18n = 'zh-tw';
+                    setI18nConfig('zh-tw');
+                    break;
+            }
+        };
+        //Initialize global component size
+        const initComponentSize = () => {
+            switch (Local.get('themeConfig').globalComponentSize) {
+                case 'large':
+                    state.disabledSize = 'large';
+                    break;
+                case 'default':
+                    state.disabledSize = 'default';
+                    break;
+                case 'small':
+                    state.disabledSize = 'small';
+                    break;
+            }
+        };
+//When the page loads
 		onMounted(() => {
 			if (Local.get('themeConfig')) {
 				initI18n();

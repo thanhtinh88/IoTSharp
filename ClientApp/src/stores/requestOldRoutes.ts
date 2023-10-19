@@ -2,9 +2,9 @@ import { defineStore } from 'pinia';
 import { RequestOldRoutesState } from './interface';
 
 /**
- * 后端返回原始路由(未处理时)
- * @methods setCacheKeepAlive 设置接口原始路由数据
- */
+  * The backend returns the original route (when not processed)
+  * @methods setCacheKeepAlive sets the original routing data of the interface
+  */
 export const useRequestOldRoutes = defineStore('requestOldRoutes', {
 	state: (): RequestOldRoutesState => ({
 		requestOldRoutes: [],

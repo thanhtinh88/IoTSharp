@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 运行指标信息
+    /// Running indicator information
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -35,8 +35,9 @@ namespace IoTSharp.Controllers
             string _hc_Caching = $"{nameof(CachingUseIn)}-{Enum.GetName(options.Value.CachingUseIn)}";
             _caching = factory.GetCachingProvider(_hc_Caching);
         }
+
         /// <summary>
-        /// 返回事件总线的统计信息
+        /// Returns the statistics of the event bus
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]

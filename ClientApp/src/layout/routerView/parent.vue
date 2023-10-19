@@ -18,7 +18,7 @@ import { useKeepALiveNames } from '/@/stores/keepAliveNames';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session } from '/@/utils/storage';
 
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 interface ParentViewState {
 	refreshRouterViewKey: null | string;
 	keepAliveNameList: string[];
@@ -37,15 +37,15 @@ export default defineComponent({
 			refreshRouterViewKey: null,
 			keepAliveNameList: [],
 		});
-		// 设置主界面切换动画
+		//Set the main interface switching animation
 		const setTransitionName = computed(() => {
 			return themeConfig.value.animation;
 		});
-		// 获取组件缓存列表(name值)
+		// Get component cache list (name value)
 		const getKeepAliveNames = computed(() => {
 			return themeConfig.value.isTagsview ? cachedViews.value : state.keepAliveNameList;
 		});
-		// 页面加载前，处理缓存，页面刷新时路由缓存处理
+		// Before the page is loaded, the cache is processed, and the routing cache is processed when the page is refreshed.
 		onBeforeMount(() => {
 			state.keepAliveNameList = keepAliveNames.value;
 			proxy.mittBus.on('onTagsViewRefreshRouterView', (fullPath: string) => {
@@ -57,7 +57,7 @@ export default defineComponent({
 				});
 			});
 		});
-		// 页面加载时
+		//When the page loads
 		onMounted(() => {
 			// https://gitee.com/lyt-top/vue-next-admin/issues/I58U75
 			// https://gitee.com/lyt-top/vue-next-admin/issues/I59RXK
@@ -67,11 +67,11 @@ export default defineComponent({
 				}, 0);
 			});
 		});
-		// 页面卸载时
+		//When the page is unloaded
 		onUnmounted(() => {
 			proxy.mittBus.off('onTagsViewRefreshRouterView', () => {});
 		});
-		// 监听路由变化，防止 tagsView 多标签时，切换动画消失
+		// Monitor routing changes to prevent the switching animation from disappearing when tagsView has multiple tags
 		watch(
 			() => route.fullPath,
 			() => {

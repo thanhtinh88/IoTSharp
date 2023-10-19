@@ -11,23 +11,23 @@ namespace IoTSharp.Dtos
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         /// <summary>
-        /// 设备名称
+        ///Device name
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 设备类型
+        /// Equipment type
         /// </summary>
         public DeviceType DeviceType { get; set; }
 
         /// <summary>
-        /// 超时时间 秒数 
+        /// Timeout seconds
         /// </summary>
         public int Timeout { get; set; }
         /// <summary>
-        /// 所有者
+        /// Owner
         /// </summary>
         public Gateway Owner { get; set; }
- 
+
 
         public IdentityType IdentityType { get; set; }
 
@@ -35,16 +35,16 @@ namespace IoTSharp.Dtos
         public string IdentityValue { get; set; }
         public string IdentityId { get; set; }
         /// <summary>
-        /// 是否活动
+        /// Is it active?
         /// </summary>
-        public bool Active { get;  set; }
+        public bool Active { get; set; }
         /// <summary>
-        /// 最后活动
+        /// Last activity
         /// </summary>
-        public DateTime? LastActivityDateTime { get;  set; }
-        public string TenantName { get;   set; }
-        public string CustomerName { get;  set; }
-        public Guid TenantId { get;  set; }
-        public Guid CustomerId { get;  set; }
+        public DateTime? LastActivityDateTime { get; set; }
+        public string TenantName { get; set; }
+        public string CustomerName { get; set; }
+        public Guid TenantId { get; set; }
+        public Guid CustomerId { get; set; }
     }
 }

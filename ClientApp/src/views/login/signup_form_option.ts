@@ -11,7 +11,7 @@ export const option = {
 		type: 'primary',
 		size: 'large',
 		disabled: false,
-		innerText: '注册',
+		innerText: 'Register',
 		loading: false,
 		width: '100%',
 		show: true,

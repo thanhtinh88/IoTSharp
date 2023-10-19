@@ -65,12 +65,10 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取资产的属性和遥测数据
+        /// Get the asset's properties and telemetry data
         /// </summary>
         /// <param name="assetid"></param>
         /// <returns></returns>
-
-
         [HttpGet]
         public ApiResult<PagedData<AssetDeviceItem>> Relations(Guid assetid)
         {
@@ -110,9 +108,8 @@ namespace IoTSharp.Controllers
 
         }
 
-
         /// <summary>
-        /// 根据资产Id获取资产信息
+        /// Get asset information based on asset ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -137,8 +134,9 @@ namespace IoTSharp.Controllers
             return new ApiResult<AssetDto>(ApiCode.CantFindObject, "Not found asset", null);
 
         }
+
         /// <summary>
-        /// 修改资产信息
+        /// Modify asset information
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -172,12 +170,12 @@ namespace IoTSharp.Controllers
             }
 
         }
+
         /// <summary>
-        /// 保存资产信息
+        /// Save asset information
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-
         [HttpPost]
         public async Task<ApiResult<bool>> Save([FromBody] AssetAddDto dto)
         {
@@ -231,12 +229,12 @@ namespace IoTSharp.Controllers
             }
 
         }
+
         /// <summary>
-        /// 增加资产
+        /// Add assets
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
-
         [HttpPost]
         public async Task<ApiResult<bool>> addDevice(ModelAddAssetDevice m)
         {
@@ -297,8 +295,6 @@ namespace IoTSharp.Controllers
         }
 
 
-
-
         [HttpDelete]
         public async Task<ApiResult<bool>> RemoveDevice(ModelAssetDevice m)
         {
@@ -320,8 +316,9 @@ namespace IoTSharp.Controllers
             }
 
         }
+
         /// <summary>
-        /// 根据Id移除资产的属性或者遥测
+        /// Remove asset attributes or telemetry based on Id
         /// </summary>
         /// <param name="relationId"></param>
         /// <returns></returns>
@@ -350,13 +347,11 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        ///  修改资产和设备关联属性或者遥测信息
+        /// Modify asset and device related properties or telemetry information
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
-
         [HttpPost]
-
         public async Task<ApiResult<bool>> EditRelation(ModelEditAssetAttrItem m)
         {
             var profile = this.GetUserProfile();

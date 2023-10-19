@@ -45,27 +45,27 @@ export default defineComponent({
 			cropperImgBase64: '',
 			cropper: null,
 		});
-		// 打开弹窗
+		//Open the pop-up window
 		const openDialog = (imgs: any) => {
-			state.cropperImg = imgs;
-			state.isShowDialog = true;
-			nextTick(() => {
-				initCropper();
-			});
+		state.cropperImg = imgs;
+		state.isShowDialog = true;
+		nextTick(() => {
+		initCropper();
+		});
 		};
-		// 关闭弹窗
+		//Close pop-up window
 		const closeDialog = () => {
-			state.isShowDialog = false;
+		state.isShowDialog = false;
 		};
-		// 取消
+		// Cancel
 		const onCancel = () => {
-			closeDialog();
+		closeDialog();
 		};
-		// 更换
+		// Replace
 		const onSubmit = () => {
-			// state.cropperImgBase64 = state.cropper.getCroppedCanvas().toDataURL('image/jpeg');
+		// state.cropperImgBase64 = state.cropper.getCroppedCanvas().toDataURL('image/jpeg');
 		};
-		// 初始化cropperjs图片裁剪
+		//Initialize cropperjs image cropping
 		const initCropper = () => {
 			const letImg: any = document.querySelector('.cropper-warp-left-img');
 			(<any>state.cropper) = new Cropper(letImg, {

@@ -3,10 +3,6 @@ using IoTSharp.Contracts;
 
 namespace IoTSharp.Dtos
 {
-   
-
-
-
     public class ProduceDictionaryEditDto
     {
         public Guid produceId { get; set; }
@@ -21,51 +17,51 @@ namespace IoTSharp.Dtos
         public Guid Id { get; set; }
 
         /// <summary>
-        /// 字段名称
+        /// Field Name
         /// </summary>
         public string KeyName { get; set; }
 
         /// <summary>
-        /// 字段显示名称
+        /// Field display name
         /// </summary>
         public string DisplayName { get; set; }
 
 
 
         /// <summary>
-        /// 单位
+        /// Unit
         /// </summary>
         public string Unit { get; set; }
 
         /// <summary>
-        /// 单位转换表达式
+        ///Unit conversion expression
         /// </summary>
         public string UnitExpression { get; set; }
 
         /// <summary>
-        /// 单位转换
+        /// Unit conversion
         /// </summary>
         public bool UnitConvert { get; set; }
         /// <summary>
-        /// 字段备注
+        /// Field remarks
         /// </summary>
         public string KeyDesc { get; set; }
         /// <summary>
-        /// 默认值
+        /// default value
         /// </summary>
         public string DefaultValue { get; set; }
 
         /// <summary>
-        /// 是否显示
+        /// Whether to display
         /// </summary>
         public bool Display { get; set; }
 
         /// <summary>
-        /// 位置名称
+        /// Location name
         /// </summary>
         public string Place0 { get; set; }
         /// <summary>
-        /// 此位置顺序
+        /// This position sequence
         /// </summary>
         public string PlaceOrder0 { get; set; }
         public string Place1 { get; set; }
@@ -79,7 +75,7 @@ namespace IoTSharp.Dtos
         public string Place5 { get; set; }
         public string PlaceOrder5 { get; set; }
         /// <summary>
-        /// 数据类型 
+        /// type of data 
         /// </summary>
         public DataType DataType { get; set; }
 
@@ -87,5 +83,4 @@ namespace IoTSharp.Dtos
         public string Tag { get; set; }
 
     }
-
 }

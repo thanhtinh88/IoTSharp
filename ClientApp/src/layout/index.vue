@@ -20,7 +20,7 @@ export default defineComponent({
 		const { proxy } = <any>getCurrentInstance();
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
-		// 窗口大小改变时(适配移动端)
+		//When the window size changes (adapted to mobile terminals)
 		const onLayoutResize = () => {
 			if (!Local.get('oldLayout')) Local.set('oldLayout', themeConfig.value.layout);
 			const clientWidth = document.body.clientWidth;
@@ -37,12 +37,12 @@ export default defineComponent({
 				});
 			}
 		};
-		// 页面加载前
+		// Before the page is loaded
 		onBeforeMount(() => {
 			onLayoutResize();
 			window.addEventListener('resize', onLayoutResize);
 		});
-		// 页面卸载时
+		//When the page is unloaded
 		onUnmounted(() => {
 			window.removeEventListener('resize', onLayoutResize);
 		});

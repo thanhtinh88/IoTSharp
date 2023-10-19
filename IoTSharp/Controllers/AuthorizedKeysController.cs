@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 全局设备认证KEY管理
+    /// Global device authentication KEY management
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -35,7 +35,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取当前已登录用户所属客户的全局认证KEY
+        /// Get the global authentication KEY of the client of the currently logged in user
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -45,7 +45,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 根据ID获取KEY
+        /// Get KEY based on ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

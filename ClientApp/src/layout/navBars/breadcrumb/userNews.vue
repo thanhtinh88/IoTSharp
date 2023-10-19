@@ -27,24 +27,24 @@ export default defineComponent({
 	name: 'layoutBreadcrumbUserNews',
 	setup() {
 		const state = reactive({
-			newsList: [
-				{
-					label: '关于版本发布的通知',
-					value: 'vue-next-admin，基于 vue3 + CompositionAPI + typescript + vite + element plus，正式发布时间：2021年02月28日！',
-					time: '2020-12-08',
-				},
-				{
-					label: '关于学习交流的通知',
-					value: 'QQ群号码 665452019，欢迎小伙伴入群学习交流探讨！',
-					time: '2020-12-08',
-				},
-			],
+            newsList: [
+                {
+                    label: 'Notice about version release',
+                    value: 'vue-next-admin, based on vue3 + CompositionAPI + typescript + vite + element plus, officially released on February 28, 2021! ',
+                    time: '2020-12-08',
+                },
+                {
+                    label: 'Notice about learning exchange',
+                    value: 'QQ group number 665452019, friends are welcome to join the group to learn, communicate and discuss! ',
+                    time: '2020-12-08',
+                },
+            ],
 		});
-		// 全部已读点击
-		const onAllReadClick = () => {
-			state.newsList = [];
-		};
-		// 前往通知中心点击
+        // All read clicks
+        const onAllReadClick = () => {
+            state.newsList = [];
+        };
+		// Go to the notification center and click
 		const onGoToGiteeClick = () => {
 			window.open('https://gitee.com/lyt-top/vue-next-admin');
 		};

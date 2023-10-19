@@ -10,10 +10,10 @@ import { Local } from '/@/utils/storage';
 import SvgIcon from '/@/components/svgIcon/index.vue';
 
 /**
- * 导出全局注册 element plus svg 图标
- * @param app vue 实例
- * @description 使用：https://element-plus.gitee.io/zh-CN/component/icon.html
- */
+  * Export global registration element plus svg icon
+  * @param app vue instance
+  * @description Use: https://element-plus.gitee.io/zh-CN/component/icon.html
+  */
 export function elSvg(app: App) {
 	const icons = svg as any;
 	for (const i in icons) {
@@ -23,9 +23,9 @@ export function elSvg(app: App) {
 }
 
 /**
- * 设置浏览器标题国际化
- * @method const title = useTitle(); ==> title()
- */
+  * Set browser title internationalization
+  * @method const title = useTitle(); ==> title()
+  */
 export function useTitle() {
 	const stores = useThemeConfig(pinia);
 	const { themeConfig } = storeToRefs(stores);
@@ -43,35 +43,35 @@ export function useTitle() {
 }
 
 /**
- * 设置 自定义 tagsView 名称、 自定义 tagsView 名称国际化
- * @param params 路由 query、params 中的 tagsViewName
- * @returns 返回当前 tagsViewName 名称
- */
-export function setTagsViewNameI18n(item:any) {
+  * Set custom tagsView name, custom tagsView name internationalization
+  * @param params routing query, tagsViewName in params
+  * @returns returns the current tagsViewName name
+  */
+export function setTagsViewNameI18n(item: any) {
 	let tagsViewName: any = '';
 	const { query, params, meta } = item;
 	if (query?.tagsViewName || params?.tagsViewName) {
 		if (/\/zh-cn|en|zh-tw\//.test(query?.tagsViewName) || /\/(zh-cn|en|zh-tw)\//.test(params?.tagsViewName)) {
-			// 国际化
+			// globalization
 			const urlTagsParams = (query?.tagsViewName && JSON.parse(query?.tagsViewName)) || (params?.tagsViewName && JSON.parse(params?.tagsViewName));
 			tagsViewName = urlTagsParams[i18n.global.locale];
 		} else {
-			// 非国际化
+			// non-internationalization
 			tagsViewName = query?.tagsViewName || params?.tagsViewName;
 		}
 	} else {
-		// 非自定义 tagsView 名称
+		//Non-custom tagsView name
 		tagsViewName = i18n.global.t(<any>meta.title);
 	}
 	return tagsViewName;
 }
 
 /**
- * 图片懒加载
- * @param el dom 目标元素
- * @param arr 列表数据
- * @description data-xxx 属性用于存储页面或应用程序的私有自定义数据
- */
+  * Lazy loading of images
+  * @param el dom target element
+  * @param arr list data
+  * @description data-xxx attributes are used to store private custom data for pages or applications
+  */
 export const lazyImg = (el: any, arr: any) => {
 	const io = new IntersectionObserver((res) => {
 		res.forEach((v: any) => {
@@ -91,9 +91,9 @@ export const lazyImg = (el: any, arr: any) => {
 };
 
 /**
- * 全局组件大小
- * @returns 返回 `window.localStorage` 中读取的缓存值 `globalComponentSize`
- */
+  * Global component size
+  * @returns Returns the cached value `globalComponentSize` read in `window.localStorage`
+  */
 export const globalComponentSize = (): string => {
 	const stores = useThemeConfig(pinia);
 	const { themeConfig } = storeToRefs(stores);
@@ -101,10 +101,10 @@ export const globalComponentSize = (): string => {
 };
 
 /**
- * 对象深克隆
- * @param obj 源对象
- * @returns 克隆后的对象
- */
+  * Object deep cloning
+  * @param obj source object
+  * @returns cloned object
+  */
 export function deepClone(obj: any) {
 	let newObj: any;
 	try {
@@ -123,8 +123,8 @@ export function deepClone(obj: any) {
 }
 
 /**
- * 判断是否是移动端
- */
+  * Determine whether it is a mobile terminal
+  */
 export function isMobile() {
 	if (
 		navigator.userAgent.match(
@@ -138,11 +138,11 @@ export function isMobile() {
 }
 
 /**
- * 判断数组对象中所有属性是否为空，为空则删除当前行对象
- * @description @感谢大黄
- * @param list 数组对象
- * @returns 删除空值后的数组对象
- */
+  * Determine whether all attributes in the array object are empty. If they are empty, delete the current row object.
+  * @description @Thank you Dahuang
+  * @param list array object
+  * @returns array object after deleting null values
+  */
 export function handleEmpty(list: any) {
 	const arr = [];
 	for (const i in list) {
@@ -159,16 +159,16 @@ export function handleEmpty(list: any) {
 }
 
 /**
- * 统一批量导出
- * @method elSvg 导出全局注册 element plus svg 图标
- * @method useTitle 设置浏览器标题国际化
- * @method setTagsViewNameI18n 设置 自定义 tagsView 名称、 自定义 tagsView 名称国际化
- * @method lazyImg 图片懒加载
- * @method globalComponentSize() element plus 全局组件大小
- * @method deepClone 对象深克隆
- * @method isMobile 判断是否是移动端
- * @method handleEmpty 判断数组对象中所有属性是否为空，为空则删除当前行对象
- */
+  * Unified batch export
+  * @method elSvg Export global registration element plus svg icon
+  * @method useTitle Set browser title internationalization
+  * @method setTagsViewNameI18n Set custom tagsView name, custom tagsView name internationalization
+  * @method lazyImg image lazy loading
+  * @method globalComponentSize() element plus global component size
+  * @method deepClone object deep cloning
+  * @method isMobile determines whether it is a mobile terminal
+  * @method handleEmpty determines whether all attributes in the array object are empty. If they are empty, delete the current row object.
+  */
 const other = {
 	elSvg: (app: App) => {
 		elSvg(app);
@@ -196,9 +196,9 @@ const other = {
 	},
 };
 
-// 统一批量导出
+// Unified batch export
 export default other;
-// 延迟函数
+//delay function
 export function sleep(ms: number) {
-	return new Promise( resolve => setTimeout(resolve, ms) );
+	return new Promise(resolve => setTimeout(resolve, ms));
 }

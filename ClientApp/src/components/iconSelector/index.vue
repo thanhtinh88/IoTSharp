@@ -69,184 +69,184 @@ import initIconfont from '/@/utils/getStyleSheets';
 export default defineComponent({
 	name: 'iconSelector',
 	emits: ['update:modelValue', 'get', 'clear'],
-	props: {
-		// 输入框前置内容
-		prepend: {
-			type: String,
-			default: () => 'ele-Pointer',
-		},
-		// 输入框占位文本
-		placeholder: {
-			type: String,
-			default: () => '请输入内容搜索图标或者选择图标',
-		},
-		// 输入框占位文本
-		size: {
-			type: String,
-			default: () => 'default',
-		},
-		// 弹窗标题
-		title: {
-			type: String,
-			default: () => '请选择图标',
-		},
-		// icon 图标类型
-		type: {
-			type: String,
-			default: () => 'ele',
-		},
-		// 禁用
-		disabled: {
-			type: Boolean,
-			default: () => false,
-		},
-		// 是否可清空
-		clearable: {
-			type: Boolean,
-			default: () => true,
-		},
-		// 自定义空状态描述文字
-		emptyDescription: {
-			type: String,
-			default: () => '无相关图标',
-		},
-		// 双向绑定值，默认为 modelValue，
-		// 参考：https://v3.cn.vuejs.org/guide/migration/v-model.html#%E8%BF%81%E7%A7%BB%E7%AD%96%E7%95%A5
-		// 参考：https://v3.cn.vuejs.org/guide/component-custom-events.html#%E5%A4%9A%E4%B8%AA-v-model-%E7%BB%91%E5%AE%9A
-		modelValue: String,
-	},
-	setup(props, { emit }) {
-		const inputWidthRef = ref();
-		const selectorScrollbarRef = ref();
-		const state = reactive({
-			fontIconPrefix: '',
-			fontIconWidth: 0,
-			fontIconSearch: '',
-			fontIconTabsIndex: 0,
-			fontIconSheetsList: [],
-			fontIconPlaceholder: '',
-			fontIconType: 'ali',
-			fontIconShow: true,
-		});
-		// 处理 input 获取焦点时，modelValue 有值时，改变 input 的 placeholder 值
-		const onIconFocus = () => {
-			if (!props.modelValue) return false;
-			state.fontIconSearch = '';
-			state.fontIconPlaceholder = props.modelValue;
-		};
-		// 处理 input 失去焦点时，为空将清空 input 值，为点击选中图标时，将取原先值
-		const onIconBlur = () => {
-			setTimeout(() => {
-				const icon = state.fontIconSheetsList.filter((icon: string) => icon === state.fontIconSearch);
-				if (icon.length <= 0) state.fontIconSearch = '';
-			}, 300);
-		};
-		// 处理 icon 双向绑定数值回显
-		const initModeValueEcho = () => {
-			if (props.modelValue === '') return ((<string | undefined>state.fontIconPlaceholder) = props.placeholder);
-			(<string | undefined>state.fontIconPlaceholder) = props.modelValue;
-			(<string | undefined>state.fontIconPrefix) = props.modelValue;
-		};
-		// 处理 icon type 类型为 all 时，类型 ali、ele、awe 回显问题
-		const initFontIconTypeEcho = () => {
-			if ((<any>props.modelValue)?.indexOf('iconfont') > -1) onIconChange('ali');
-			else if ((<any>props.modelValue)?.indexOf('ele-') > -1) onIconChange('ele');
-			else if ((<any>props.modelValue)?.indexOf('fa') > -1) onIconChange('awe');
-			else onIconChange('ali');
-		};
-		// 图标搜索及图标数据显示
-		const fontIconSheetsFilterList = computed(() => {
-			if (!state.fontIconSearch) return state.fontIconSheetsList;
-			let search = state.fontIconSearch.trim().toLowerCase();
-			return state.fontIconSheetsList.filter((item: any) => {
-				if (item.toLowerCase().indexOf(search) !== -1) return item;
-			});
-		});
-		// 获取 input 的宽度
-		const getInputWidth = () => {
-			nextTick(() => {
-				state.fontIconWidth = inputWidthRef.value.$el.offsetWidth;
-			});
-		};
-		// 监听页面宽度改变
-		const initResize = () => {
-			window.addEventListener('resize', () => {
-				getInputWidth();
-			});
-		};
-		// 初始化数据
-		const initFontIconData = async (type: string) => {
-			state.fontIconSheetsList = [];
-			if (type === 'ali') {
-				await initIconfont.ali().then((res: any) => {
-					// 阿里字体图标使用 `iconfont xxx`
-					state.fontIconSheetsList = res.map((i: string) => `iconfont ${i}`);
-				});
-			} else if (type === 'ele') {
-				await initIconfont.ele().then((res: any) => {
-					state.fontIconSheetsList = res;
-				});
-			} else if (type === 'awe') {
-				await initIconfont.awe().then((res: any) => {
-					// fontawesome字体图标使用 `fa xxx`
-					state.fontIconSheetsList = res.map((i: string) => `fa ${i}`);
-				});
-			}
-			// 初始化 input 的 placeholder
-			// 参考（单项数据流）：https://cn.vuejs.org/v2/guide/components-props.html?#%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81
-			state.fontIconPlaceholder = props.placeholder;
-			// 初始化双向绑定回显
-			initModeValueEcho();
-		};
-		// 图标点击切换
-		const onIconChange = (type: string) => {
-			state.fontIconType = type;
-			initFontIconData(type);
-		};
-		// 获取当前点击的 icon 图标
-		const onColClick = (v: any) => {
-			state.fontIconPlaceholder = v;
-			state.fontIconPrefix = v;
-			emit('get', state.fontIconPrefix);
-			emit('update:modelValue', state.fontIconPrefix);
-		};
-		// 清空当前点击的 icon 图标
-		const onClearFontIcon = () => {
-			state.fontIconPrefix = '';
-			emit('clear', state.fontIconPrefix);
-			emit('update:modelValue', state.fontIconPrefix);
-		};
-		// 监听 Popover 打开，用于双向绑定值回显
-		const onPopoverShow = () => {
-			initModeValueEcho();
-			initFontIconTypeEcho();
-		};
-		// 页面加载时
-		onMounted(() => {
-			initModeValueEcho();
-			initResize();
-			getInputWidth();
-		});
+    props: {
+        // Input box prefix content
+        prepend: {
+            type: String,
+            default: () => 'ele-Pointer',
+        },
+        //Input box placeholder text
+        placeholder: {
+            type: String,
+            default: () => 'Please enter the content to search for the icon or select the icon',
+        },
+        //Input box placeholder text
+        size: {
+            type: String,
+            default: () => 'default',
+        },
+        // Pop-up window title
+        title: {
+            type: String,
+            default: () => 'Please select an icon',
+        },
+        // icon icon type
+        type: {
+            type: String,
+            default: () => 'ele',
+        },
+        // disable
+        disabled: {
+            type: Boolean,
+            default: () => false,
+        },
+        // Whether it can be cleared
+        clearable: {
+            type: Boolean,
+            default: () => true,
+        },
+        // Customize empty status description text
+        emptyDescription: {
+            type: String,
+            default: () => 'No related icon',
+        },
+        // Two-way binding value, default is modelValue,
+        // Reference: https://v3.cn.vuejs.org/guide/migration/v-model.html#%E8%BF%81%E7%A7%BB%E7%AD%96%E7%95%A5
+        // Reference: https://v3.cn.vuejs.org/guide/component-custom-events.html#%E5%A4%9A%E4%B8%AA-v-model-%E7%BB%91% E5%AE%9A
+        modelValue: String,
+    },
+    setup(props, { emit }) {
+        const inputWidthRef = ref();
+        const selectorScrollbarRef = ref();
+        const state = reactive({
+            fontIconPrefix: '',
+            fontIconWidth: 0,
+            fontIconSearch: '',
+            fontIconTabsIndex: 0,
+            fontIconSheetsList: [],
+            fontIconPlaceholder: '',
+            fontIconType: 'ali',
+            fontIconShow: true,
+        });
+        // When the input gets focus and the modelValue has a value, change the placeholder value of the input
+        const onIconFocus = () => {
+            if (!props.modelValue) return false;
+            state.fontIconSearch = '';
+            state.fontIconPlaceholder = props.modelValue;
+        };
+        // When the input loses focus, the input value will be cleared if it is empty. When the icon is clicked and selected, the original value will be taken.
+        const onIconBlur = () => {
+            setTimeout(() => {
+                const icon = state.fontIconSheetsList.filter((icon: string) => icon === state.fontIconSearch);
+                if (icon.length <= 0) state.fontIconSearch = '';
+            }, 300);
+        };
+        // Process icon two-way binding value echo
+        const initModeValueEcho = () => {
+            if (props.modelValue === '') return ((<string | undefined>state.fontIconPlaceholder) = props.placeholder);
+            (<string | undefined>state.fontIconPlaceholder) = props.modelValue;
+            (<string | undefined>state.fontIconPrefix) = props.modelValue;
+        };
+        // Handle the echo problem of types ali, ele, and awe when the icon type is all
+        const initFontIconTypeEcho = () => {
+            if ((<any>props.modelValue)?.indexOf('iconfont') > -1) onIconChange('ali');
+            else if ((<any>props.modelValue)?.indexOf('ele-') > -1) onIconChange('ele');
+            else if ((<any>props.modelValue)?.indexOf('fa') > -1) onIconChange('awe');
+            else onIconChange('ali');
+        };
+        //Icon search and icon data display
+        const fontIconSheetsFilterList = computed(() => {
+            if (!state.fontIconSearch) return state.fontIconSheetsList;
+            let search = state.fontIconSearch.trim().toLowerCase();
+            return state.fontIconSheetsList.filter((item: any) => {
+                if (item.toLowerCase().indexOf(search) !== -1) return item;
+            });
+        });
+        // Get the width of input
+        const getInputWidth = () => {
+            nextTick(() => {
+                state.fontIconWidth = inputWidthRef.value.$el.offsetWidth;
+            });
+        };
+        // Monitor page width changes
+        const initResize = () => {
+            window.addEventListener('resize', () => {
+                getInputWidth();
+            });
+        };
+        // Initialization data
+        const initFontIconData = async (type: string) => {
+            state.fontIconSheetsList = [];
+            if (type === 'ali') {
+                await initIconfont.ali().then((res: any) => {
+                    //Alibaba font icon uses `iconfont xxx`
+                    state.fontIconSheetsList = res.map((i: string) => `iconfont ${i}`);
+                });
+            } else if (type === 'ele') {
+                await initIconfont.ele().then((res: any) => {
+                    state.fontIconSheetsList = res;
+                });
+            } else if (type === 'awe') {
+                await initIconfont.awe().then((res: any) => {
+                    // fontawesome font icon uses `fa xxx`
+                    state.fontIconSheetsList = res.map((i: string) => `fa ${i}`);
+                });
+            }
+            //Initialize input placeholder
+            // Reference (single data flow): https://cn.vuejs.org/v2/guide/components-props.html?#%E5%8D%95%E5%90%91%E6%95%B0%E6 %8D%AE%E6%B5%81
+            state.fontIconPlaceholder = props.placeholder;
+            //Initialize two-way binding echo
+            initModeValueEcho();
+        };
+        //Icon click to switch
+        const onIconChange = (type: string) => {
+            state.fontIconType = type;
+            initFontIconData(type);
+        };
+        // Get the currently clicked icon
+        const onColClick = (v: any) => {
+            state.fontIconPlaceholder = v;
+            state.fontIconPrefix = v;
+            emit('get', state.fontIconPrefix);
+            emit('update:modelValue', state.fontIconPrefix);
+        };
+        //Clear the currently clicked icon
+        const onClearFontIcon = () => {
+            state.fontIconPrefix = '';
+            emit('clear', state.fontIconPrefix);
+            emit('update:modelValue', state.fontIconPrefix);
+        };
+        // Listen for Popover to open for two-way binding value echo
+        const onPopoverShow = () => {
+            initModeValueEcho();
+            initFontIconTypeEcho();
+        };
+        //When the page loads
+        onMounted(() => {
+            initModeValueEcho();
+            initResize();
+            getInputWidth();
+        });
 
-		// 监听双向绑定 modelValue 的变化
-		watch(
-			() => props.modelValue,
-			() => {
-				initModeValueEcho();
-			}
-		);
-		return {
-			inputWidthRef,
-			selectorScrollbarRef,
-			fontIconSheetsFilterList,
-			onColClick,
-			onIconChange,
-			onClearFontIcon,
-			onIconFocus,
-			onIconBlur,
-			onPopoverShow,
-			...toRefs(state),
-		};
-	},
+        // Monitor changes in two-way binding modelValue
+        watch(
+            () => props.modelValue,
+            () => {
+                initModeValueEcho();
+            }
+        );
+        return {
+            inputWidthRef,
+            selectorScrollbarRef,
+            fontIconSheetsFilterList,
+            onColClick,
+            onIconChange,
+            onClearFontIcon,
+            onIconFocus,
+            onIconBlur,
+            onPopoverShow,
+            ...toRefs(state),
+        };
+    },
 });
 </script>

@@ -95,30 +95,30 @@ const editorInit = () => {
       allowNonTsExtensions: true,
     });
 
-    !editor
-      ? (editor = monaco.editor.create(container.value as HTMLElement, {
-        value: props.modelValue ?? "",
-        language: props.language?? "json",
-        automaticLayout: true,
-        theme: props.theme ?? "vs-dark", // 官方自带三种主题vs, hc-black, or vs-dark
-        foldingStrategy: "indentation",
-        renderLineHighlight: "all", // 行亮
-        selectOnLineNumbers: props.selectOnLineNumbers == "true", // 显示行号
-        minimap: {
-          enabled: false,
-        },
-        readOnly: false, // 只读
-        fontSize: 16, // 字体大小
-        scrollBeyondLastLine: false, // 取消代码后面一大段空白
-        overviewRulerBorder: false, // 不要滚动条的边框
-      }))
-      : editor.setValue(props.modelValue ?? "");
+      !editor
+          ? (editor = monaco.editor.create(container.value as HTMLElement, {
+              value: props.modelValue ?? "",
+              language: props.language ?? "json",
+              automaticLayout: true,
+              theme: props.theme ?? "vs-dark", // There are three official themes: vs, hc-black, or vs-dark
+              foldingStrategy: "indentation",
+              renderLineHighlight: "all", // line light
+              selectOnLineNumbers: props.selectOnLineNumbers == "true", // Display line number
+              minimap: {
+                  enabled: false,
+              },
+              readOnly: false, // read only
+              fontSize: 16, // font size
+              scrollBeyondLastLine: false, // A large blank space after the cancellation code
+              overviewRulerBorder: false, // No scroll bar border
+          }))
+          : editor.setValue(props.modelValue ?? "");
 
-    editor.onDidChangeModelContent((val: any) => {
-      emit("update:modelValue", editor.getValue());
-      // newValue.value = editor.getValue();
-      //  emit("change", editor.getValue());
-    });
+      editor.onDidChangeModelContent((val: any) => {
+          emit("update:modelValue", editor.getValue());
+          // newValue.value = editor.getValue();
+          // emit("change", editor.getValue());
+      });
 
     editor.onDidFocusEditorText(() => {
       emit("focus", editor);

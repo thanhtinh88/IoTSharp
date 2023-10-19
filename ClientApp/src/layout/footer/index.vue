@@ -17,7 +17,7 @@ export default defineComponent({
 		const state = reactive({
 			isDelayFooter: true,
 		});
-		// 路由改变时，等主界面动画加载完毕再显示 footer
+		// When the route changes, wait until the main interface animation is loaded before displaying the footer.
 		onBeforeRouteUpdate(() => {
 			setTimeout(() => {
 				state.isDelayFooter = false;

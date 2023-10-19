@@ -21,7 +21,7 @@
 				</div>
 				<div class="layout-lock-screen-date-top">
 					<SvgIcon name="ele-Top" />
-					<div class="layout-lock-screen-date-top-text">上滑解锁</div>
+					<div class="layout-lock-screen-date-top-text">Swipe up to unlock</div>
 				</div>
 			</div>
 			<transition name="el-zoom-in-center">
@@ -33,7 +33,7 @@
 						<div class="layout-lock-screen-login-box-name">Administrator</div>
 						<div class="layout-lock-screen-login-box-value">
 							<el-input
-								placeholder="请输入密码"
+								placeholder="Please enter password"
 								ref="layoutLockScreenInputRef"
 								v-model="lockScreenPassword"
 								@keyup.enter.native.stop="onLockScreenSubmit()"
@@ -66,7 +66,7 @@ import { Local } from '/@/utils/storage';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 interface LockScreenState {
 	transparency: number;
 	downClientY: number;
@@ -109,100 +109,100 @@ export default defineComponent({
 			isShowLockScreenIntervalTime: 0,
 			lockScreenPassword: '',
 		});
-		// 鼠标按下
-		const onDown = (down: any) => {
-			state.isFlags = true;
-			state.downClientY = down.touches ? down.touches[0].clientY : down.clientY;
-		};
-		// 鼠标移动
-		const onMove = (move: any) => {
-			if (state.isFlags) {
-				const el = <HTMLElement>state.querySelectorEl;
-				const opacitys = (state.transparency -= 1 / 200);
-				if (move.touches) {
-					state.moveDifference = move.touches[0].clientY - state.downClientY;
-				} else {
-					state.moveDifference = move.clientY - state.downClientY;
-				}
-				if (state.moveDifference >= 0) return false;
-				el.setAttribute('style', `top:${state.moveDifference}px;cursor:pointer;opacity:${opacitys};`);
-				if (state.moveDifference < -400) {
-					el.setAttribute('style', `top:${-el.clientHeight}px;cursor:pointer;transition:all 0.3s ease;`);
-					state.moveDifference = -el.clientHeight;
-					setTimeout(() => {
-						el && el.parentNode?.removeChild(el);
-					}, 300);
-				}
-				if (state.moveDifference === -el.clientHeight) {
-					state.isShowLoockLogin = true;
-					layoutLockScreenInputRef.value.focus();
-				}
-			}
-		};
-		// 鼠标松开
-		const onEnd = () => {
-			state.isFlags = false;
-			state.transparency = 1;
-			if (state.moveDifference >= -400) {
-				(<HTMLElement>state.querySelectorEl).setAttribute('style', `top:0px;opacity:1;transition:all 0.3s ease;`);
-			}
-		};
-		// 获取要拖拽的初始元素
-		const initGetElement = () => {
-			nextTick(() => {
-				state.querySelectorEl = proxy.$refs.layoutLockScreenDateRef;
-			});
-		};
-		// 时间初始化
-		const initTime = () => {
-			state.time.hm = formatDate(new Date(), 'HH:MM');
-			state.time.s = formatDate(new Date(), 'SS');
-			state.time.mdq = formatDate(new Date(), 'mm月dd日，WWW');
-		};
-		// 时间初始化定时器
-		const initSetTime = () => {
-			initTime();
-			state.setIntervalTime = window.setInterval(() => {
-				initTime();
-			}, 1000);
-		};
-		// 锁屏时间定时器
-		const initLockScreen = () => {
-			if (themeConfig.value.isLockScreen) {
-				state.isShowLockScreenIntervalTime = window.setInterval(() => {
-					if (themeConfig.value.lockScreenTime <= 1) {
-						state.isShowLockScreen = true;
-						setLocalThemeConfig();
-						return false;
-					}
-					themeConfig.value.lockScreenTime--;
-				}, 1000);
-			} else {
-				clearInterval(state.isShowLockScreenIntervalTime);
-			}
-		};
-		// 存储布局配置
-		const setLocalThemeConfig = () => {
-			themeConfig.value.isDrawer = false;
-			Local.set('themeConfig', themeConfig.value);
-		};
-		// 密码输入点击事件
-		const onLockScreenSubmit = () => {
-			themeConfig.value.isLockScreen = false;
-			themeConfig.value.lockScreenTime = 30;
-			setLocalThemeConfig();
-		};
-		// 页面加载时
-		onMounted(() => {
-			initGetElement();
-			initSetTime();
-			initLockScreen();
-		});
-		// 页面卸载时
-		onUnmounted(() => {
-			window.clearInterval(state.setIntervalTime);
-			window.clearInterval(state.isShowLockScreenIntervalTime);
-		});
+        //Mouse pressed
+        const onDown = (down: any) => {
+            state.isFlags = true;
+            state.downClientY = down.touches ? down.touches[0].clientY : down.clientY;
+        };
+        //mouse movement
+        const onMove = (move: any) => {
+            if (state.isFlags) {
+                const el = <HTMLElement>state.querySelectorEl;
+                const opacity = (state.transparency -= 1 / 200);
+                if (move.touches) {
+                    state.moveDifference = move.touches[0].clientY - state.downClientY;
+                } else {
+                    state.moveDifference = move.clientY - state.downClientY;
+                }
+                if (state.moveDifference >= 0) return false;
+                el.setAttribute('style', `top:${state.moveDifference}px;cursor:pointer;opacity:${opacitys};`);
+                if (state.moveDifference < -400) {
+                    el.setAttribute('style', `top:${-el.clientHeight}px;cursor:pointer;transition:all 0.3s ease;`);
+                    state.moveDifference = -el.clientHeight;
+                    setTimeout(() => {
+                        el && el.parentNode?.removeChild(el);
+                    }, 300);
+                }
+                if (state.moveDifference === -el.clientHeight) {
+                    state.isShowLoockLogin = true;
+                    layoutLockScreenInputRef.value.focus();
+                }
+            }
+        };
+        //Mouse released
+        const onEnd = () => {
+            state.isFlags = false;
+            state.transparency = 1;
+            if (state.moveDifference >= -400) {
+                (<HTMLElement>state.querySelectorEl).setAttribute('style', `top:0px;opacity:1;transition:all 0.3s ease;`);
+            }
+        };
+        // Get the initial element to be dragged
+        const initGetElement = () => {
+            nextTick(() => {
+                state.querySelectorEl = proxy.$refs.layoutLockScreenDateRef;
+            });
+        };
+        // time initialization
+        const initTime = () => {
+            state.time.hm = formatDate(new Date(), 'HH:MM');
+            state.time.s = formatDate(new Date(), 'SS');
+            state.time.mdq = formatDate(new Date(), 'mm month dd day, WWW');
+        };
+        // Time initialization timer
+        const initSetTime = () => {
+            initTime();
+            state.setIntervalTime = window.setInterval(() => {
+                initTime();
+            }, 1000);
+        };
+        // Lock screen timer
+        const initLockScreen = () => {
+            if (themeConfig.value.isLockScreen) {
+                state.isShowLockScreenIntervalTime = window.setInterval(() => {
+                    if (themeConfig.value.lockScreenTime <= 1) {
+                        state.isShowLockScreen = true;
+                        setLocalThemeConfig();
+                        return false;
+                    }
+                    themeConfig.value.lockScreenTime--;
+                }, 1000);
+            } else {
+                clearInterval(state.isShowLockScreenIntervalTime);
+            }
+        };
+        //Storage layout configuration
+        const setLocalThemeConfig = () => {
+            themeConfig.value.isDrawer = false;
+            Local.set('themeConfig', themeConfig.value);
+        };
+        //Password input click event
+        const onLockScreenSubmit = () => {
+            themeConfig.value.isLockScreen = false;
+            themeConfig.value.lockScreenTime = 30;
+            setLocalThemeConfig();
+        };
+        //When the page loads
+        onMounted(() => {
+            initGetElement();
+            initSetTime();
+            initLockScreen();
+        });
+        //When the page is unloaded
+        onUnmounted(() => {
+            window.clearInterval(state.setIntervalTime);
+            window.clearInterval(state.isShowLockScreenIntervalTime);
+        });
 		return {
 			layoutLockScreenInputRef,
 			onDown,

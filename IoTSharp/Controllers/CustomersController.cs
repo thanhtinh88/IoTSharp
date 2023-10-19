@@ -19,7 +19,7 @@ using Customer = IoTSharp.Data.Customer;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 客户管理
+    /// Customer Management
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -34,7 +34,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取指定租户下的所有客户
+        /// Get all customers under the specified tenant
         /// </summary>
         /// <returns></returns>
         [HttpPost("Tenant/{tenantId}/All")]
@@ -48,7 +48,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取指定租户下的所有客户
+        /// Get all customers under the specified tenant
         /// </summary>
         /// <returns></returns>
         [HttpPost("Tenant")]
@@ -74,7 +74,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 返回指定id的客户
+        /// Returns the customer with the specified id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -94,7 +94,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 修改指定租户为 指定的信息
+        /// Modify the information specified by the specified tenant
         /// </summary>
         /// <param name="id"></param>
         /// <param name="customer"></param>
@@ -137,7 +137,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 为当前客户所在的租户新增客户
+        /// Add a new customer to the tenant where the current customer is located
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
@@ -164,7 +164,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 删除指定的客户ID
+        /// Delete the specified customer ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

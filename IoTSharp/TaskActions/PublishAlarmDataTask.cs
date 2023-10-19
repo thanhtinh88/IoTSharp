@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace IoTSharp.TaskActions
 {
-    [DisplayName("告警数据发布器")]
-    [Description("告警数据发布器")]
+    [DisplayName("Alarm Data Publisher")]
+    [Description("Alarm Data Publisher")]
     public class PublishAlarmDataTask : TaskAction
     {
         private readonly IPublisher _queue;

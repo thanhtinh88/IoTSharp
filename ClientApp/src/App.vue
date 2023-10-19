@@ -50,15 +50,15 @@ export default defineComponent({
     const state = reactive({
       i18nLocale: null,
     });
-    // 获取全局组件大小
+    // Get the global component size
     const getGlobalComponentSize = computed(() => {
       return other.globalComponentSize();
     });
-    // 布局配置弹窗打开
+    //The layout configuration pop-up window opens
     const openSetingsDrawer = () => {
       setingsRef.value.openDrawer();
     };
-    // 设置初始化，防止刷新时恢复默认
+    // Set initialization to prevent restoration to default when refreshing
     onBeforeMount(async () => {
       try {
         const {data} = await getSysInfo()
@@ -67,44 +67,44 @@ export default defineComponent({
           await router.replace({name: 'setup'})
         }
       } catch (e) {
-        ElMessage.error('获取应用信息失败')
+          ElMessage.error('Failed to obtain application information')
       }
-      // 设置批量第三方 icon 图标
+      // Set batch third-party icon icons
       setIntroduction.cssCdn();
-      // 设置批量第三方 js
+      // Set up batch third-party js
       setIntroduction.jsCdn();
 
     });
-    // 页面加载时
+   //When the page loads
     onMounted(() => {
       nextTick(() => {
-        // 监听布局配置弹窗点击打开
+        //Click to open the listening layout configuration pop-up window
         proxy.mittBus.on('openSetingsDrawer', () => {
           openSetingsDrawer();
         });
-        // 设置 i18n，App.vue 中的 el-config-provider
+        //Set i18n, el-config-provider in App.vue
         proxy.mittBus.on('getI18nConfig', (locale: string) => {
           (state.i18nLocale as string | null) = locale;
         });
-        // 获取缓存中的布局配置
+        // Get the layout configuration in the cache
         if (Local.get('themeConfig')) {
           storesThemeConfig.setThemeConfig(Local.get('themeConfig'));
           document.documentElement.style.cssText = Local.get('themeConfigStyle');
         }
-        // 获取缓存中的全屏配置
+        // Get the full-screen configuration in the cache
         if (Session.get('isTagsViewCurrenFull')) {
           stores.setCurrenFullscreen(Session.get('isTagsViewCurrenFull'));
         }
       });
     });
-    // 页面销毁时，关闭监听布局配置/i18n监听
+    // When the page is destroyed, turn off the listening layout configuration/i18n listening
     onUnmounted(() => {
       proxy.mittBus.off('openSetingsDrawer', () => {
       });
       proxy.mittBus.off('getI18nConfig', () => {
       });
     });
-    // 监听路由的变化，设置网站标题
+    // Monitor routing changes and set the website title
     watch(
         () => route.path,
         () => {

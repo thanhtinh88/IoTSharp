@@ -15,7 +15,7 @@ using ShardingCore.Extensions;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 设备模型
+    /// Device model
     /// </summary>
     [Route("api/[controller]/[action]")]
     [Authorize]

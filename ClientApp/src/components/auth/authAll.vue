@@ -19,7 +19,7 @@ export default defineComponent({
 	setup(props) {
 		const stores = useUserInfo();
 		const { userInfos } = storeToRefs(stores);
-		// 获取 pinia 中的用户权限
+		// Get user permissions in pinia
 		const getUserAuthBtnList = computed(() => {
 			return judementSameArr(props.value, userInfos.value.authBtnList);
 		});

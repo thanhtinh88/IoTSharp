@@ -2,13 +2,13 @@ import { IListQueryParam } from '../iapiresult';
 import request from '/@/utils/request';
 
 /**
- * 租户api接口集合
- * @method tenantList 租户列表
- * @method gettenant 获取租户
- * @method posttenant 新增租户
- * @method puttenant 修改租户
- * @method deletetenant 删除租户
- */
+  * Tenant api interface collection
+  * @method tenantList tenant list
+  * @method gettenant Get the tenant
+  * @method posttenant Add tenant
+  * @method puttenant Modify tenant
+  * @method deletetenant delete tenant
+  */
 export function tenantApi() {
 	return {
 		tenantList: (params: QueryParam) => {

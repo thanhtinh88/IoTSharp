@@ -1,63 +1,59 @@
 <p align="left">
-  <a href="https://iotsharp.io/">
-    <img src="public/logo_white.svg" width="360px" alt="IoTSharp logo" />
-  </a>
+   <a href="https://iotsharp.io/">
+     <img src="public/logo_white.svg" width="360px" alt="IoTSharp logo" />
+   </a>
 </p>
 
 
-#### 🌈 介绍
+#### 🌈 Introduction
 
-这是一个基于模板vue-next-admin 的 IoTSharp前端项目,IoTSharp 是一个开源的物联网基础平台，集设备属性数据管理、遥测数据监测、RPC多模式远程控制、规则链设计引擎等强大能力，依据数字孪生概念将可见与不可见的物理设备统一孪生到数字世界，在落地上IoTSharp结合了资产管理、产品化发展的理念，让平台应用更加贴合复杂的应用场景，在协议支持上支持HTTP、MQTT 、CoAp 等多种标准物联网协议接入和非标协议的转换。  
+This is an IoTSharp front-end project based on the template vue-next-admin. IoTSharp is an open source IoT basic platform that integrates powerful capabilities such as device attribute data management, telemetry data monitoring, RPC multi-mode remote control, and rule chain design engine. According to The digital twin concept unifies visible and invisible physical devices into the digital world. When implemented, IoTSharp combines the concepts of asset management and product development to make platform applications more suitable for complex application scenarios. In terms of protocol support, it supports HTTP, MQTT, CoAp and other standard IoT protocol access and conversion of non-standard protocols.
 
-[![NodeJS with build](https://github.com/IoTSharp/IoTSharp/actions/workflows/nodejsbuild.yml/badge.svg)](https://github.com/IoTSharp/ClientApp/actions/workflows/nodejsbuild.yml) 
+[![NodeJS with build](https://github.com/IoTSharp/IoTSharp/actions/workflows/nodejsbuild.yml/badge.svg)](https://github.com/IoTSharp/ClientApp/actions/workflows/ nodejsbuild.yml)
 
 
-#### ⛱️ 线上预览
+#### ⛱️ Online preview
 
 - Demo <a href="http://demo.iotsharp.net" target="_blank">http://demo.iotsharp.net</a>
  
 
 
-#### 🚧 安装 npm
+#### 🚧 Install npm
 
-- 复制代码(桌面 cmd 运行) `npm install `
+- Copy the code (run with desktop cmd) `npm install`
 
 
-#### 🏭 环境支持
+#### 🏭 Environment support
 
-| Edge      | Firefox      | Chrome      | Safari      |
+| Edge | Firefox | Chrome | Safari |
 | --------- | ------------ | ----------- | ----------- |
 | Edge ≥ 79 | Firefox ≥ 78 | Chrome ≥ 64 | Safari ≥ 12 |
 
-> 由于 Vue3 不再支持 IE11，故而 ElementPlus 也不支持 IE11 及之前版本。
+> Since Vue3 no longer supports IE11, ElementPlus does not support IE11 and earlier versions.
 
-#### ⚡ 使用说明
+#### ⚡ Instructions for use
 
-建议使用  npm 
+It is recommended to use npm
 
 ```bash
-# 进入项目
-cd ClientApp
+# Enter the project
+cdClientApp
 
-# 安装依赖
-npm install  --legacy-peer-deps
+# Install dependencies
+npm install --legacy-peer-deps
 
-# 运行项目
-npm run dev
+# Run the project
+npm rundev
 
-# 打包发布
+# Package and publish
 npm run build
 ```
 
-#### 💯 学习交流加
+#### 💯 Learning and Exchange Plus
  
- 点击这里查看详细连接 https://github.com/IoTSharp/IoTSharp#community-support
+  Click here to view the detailed connection https://github.com/IoTSharp/IoTSharp#community-support
 
 
-#### ❤️ 鸣谢列表
+#### ❤️ Acknowledgments List
 
 - <a href="https://github.com/lyt-Top/vue-next-admin" target="_blank">vue-next-admin</a>
-
-
-
- 

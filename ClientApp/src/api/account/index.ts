@@ -15,7 +15,8 @@ export function ModifyMyInfo(params:any){
         data: params
     });
 }
-// 租户注册
+
+// Tenant registration
 export function signup(params:signUpForm) {
     return request.post(`/api/account/create`, params)
 }

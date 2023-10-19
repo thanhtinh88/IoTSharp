@@ -19,7 +19,7 @@ using IdentityModel.OidcClient;
 namespace IoTSharp.Services.MQTTControllers
 {
     /// <summary>
-    /// 兼容thingsboard协议
+    /// Compatible with thingsboard protocol
     /// </summary>
     [MqttController]
     [MqttRoute("v1/gateway")]
@@ -59,7 +59,7 @@ namespace IoTSharp.Services.MQTTControllers
         {
             var _dev = GetSessionItem<Device>();
             var lst = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, List<GatewayPlayload>>>(Message.ConvertPayloadToString());
-            _logger.LogInformation($"{ClientId}的数据{Message.Topic}是网关数据， 解析到{lst?.Count}个设备");
+            _logger.LogInformation($"The data {Message.Topic} of {ClientId} is gateway data and is parsed to {lst?.Count} devices");
             await _queue.PublishActive(_dev.Id, ActivityStatus.Activity);
 
             lst?.Keys.ToList().ForEach(async dev =>
@@ -67,12 +67,12 @@ namespace IoTSharp.Services.MQTTControllers
                 var plst = lst[dev];
                 var device = _dev.JudgeOrCreateNewDevice(dev, _scopeFactor, _logger);
                 await _queue.PublishActive(device.Id, ActivityStatus.Activity);
-                _logger.LogInformation($"{ClientId}的网关数据正在处理设备{dev}， 设备ID为{_dev?.Id}");
+                _logger.LogInformation($"{ClientId}'s gateway data is processing device {dev}, and the device ID is {_dev?.Id}");
                 plst.ForEach(p =>
                 {
                     _queue.PublishTelemetryData(new PlayloadData() { DeviceId = device.Id, ts = new DateTime(p.Ticks, DateTimeKind.Utc), MsgBody = p.Values, DataSide = DataSide.ClientSide, DataCatalog = DataCatalog.TelemetryData });
                 });
-                _logger.LogInformation($"{ClientId}的网关数据处理完成，设备{dev}ID为{device?.Id}共计{plst.Count}条");
+                _logger.LogInformation($"{ClientId}'s gateway data processing is completed, device {dev}ID is {device?.Id}, totaling {plst.Count}");
             });
             await Ok();
         }
@@ -82,22 +82,23 @@ namespace IoTSharp.Services.MQTTControllers
         {
             var _dev = GetSessionItem<Device>();
             var lst = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, List<GatewayPlayload>>>(Message.ConvertPayloadToString());
-            _logger.LogInformation($"{ClientId}的数据{Message.Topic}是网关数据， 解析到{lst?.Count}个设备");
+            _logger.LogInformation($"The data {Message.Topic} of {ClientId} is gateway data and is parsed to {lst?.Count} devices");
             await _queue.PublishActive(_dev.Id, ActivityStatus.Activity);
             lst?.Keys.ToList().ForEach(async dev =>
             {
                 var plst = lst[dev];
                 var device = _dev.JudgeOrCreateNewDevice(dev, _scopeFactor, _logger);
                 await _queue.PublishActive(device.Id, ActivityStatus.Activity);
-                _logger.LogInformation($"{ClientId}的网关数据正在处理设备{dev}， 设备ID为{device?.Id}");
+                _logger.LogInformation($"{ClientId}'s gateway data is processing device {dev}, and the device ID is {device?.Id}");
                 plst.ForEach(async p =>
                 {
                     await _queue.PublishAttributeData(new PlayloadData() { DeviceId = device.Id, ts = new DateTime(p.Ticks, DateTimeKind.Utc), MsgBody = p.Values, DataSide = DataSide.ClientSide, DataCatalog = DataCatalog.TelemetryData });
                 });
-                _logger.LogInformation($"{ClientId}的网关数据处理完成，设备{dev}ID为{device?.Id}共计{plst.Count}条");
+                _logger.LogInformation($"{ClientId}'s gateway data processing is completed, device {dev}ID is {device?.Id}, totaling {plst.Count}");
             });
             await Ok();
         }
+
         [MqttRoute("{devname}/connect")]
         public async Task on_connect_bydevname(string devname)
         {
@@ -111,10 +112,11 @@ namespace IoTSharp.Services.MQTTControllers
             }
             else
             {
-                _logger.LogWarning("未能创建或者找到网关的设备。");
+                _logger.LogWarning("Failed to create or find the gateway device.");
             }
             await Ok();
         }
+
         [MqttRoute("{devname}/disconnect")]
         public async Task on_disconnect_bydevname(string devname)
         {
@@ -127,10 +129,11 @@ namespace IoTSharp.Services.MQTTControllers
             }
             else
             {
-                _logger.LogWarning("未能创建或者找到网关的设备。");
+                _logger.LogWarning("Failed to create or find the gateway device.");
             }
             await Ok();
         }
+
         [MqttRoute("connect")]
         public async Task on_connect()
         {
@@ -146,12 +149,12 @@ namespace IoTSharp.Services.MQTTControllers
                 }
                 else
                 {
-                    _logger.LogWarning("未能创建或者找到网关的设备。");
+                    _logger.LogWarning("Failed to create or find the gateway device.");
                 }
             }
             else
             {
-                _logger.LogWarning("无法获取网关的子设备。");
+                _logger.LogWarning("Unable to obtain the sub-device of the gateway.");
             }
             await Ok();
         }
@@ -171,12 +174,12 @@ namespace IoTSharp.Services.MQTTControllers
                 }
                 else
                 {
-                    _logger.LogWarning("未能创建或者找到网关的设备。");
+                    _logger.LogWarning("Failed to create or find the gateway device.");
                 }
             }
             else
             {
-                _logger.LogWarning("无法获取网关的子设备。");
+                _logger.LogWarning("Unable to obtain the sub-device of the gateway.");
             }
             await Ok();
         }
@@ -189,11 +192,11 @@ namespace IoTSharp.Services.MQTTControllers
                 var _dev = GetSessionItem<Device>();
                 await _queue.PublishActive(_dev.Id, ActivityStatus.Activity);
                 var result = await _rawData.ExecuteAsync(_dev, "xml", Message.ConvertPayloadToString());
-                _logger.LogInformation($"调用XML网关处理语句返回:{result.Code}-{result.Msg}");
+                _logger.LogInformation($"Calling the XML gateway processing statement returns: {result.Code}-{result.Msg}");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"调用XML网关失败:{ex.Message}");
+                _logger.LogError(ex, $"Failed to call XML gateway: {ex.Message}");
             }
             await Ok();
         }
@@ -206,11 +209,11 @@ namespace IoTSharp.Services.MQTTControllers
                 var _dev = GetSessionItem<Device>();
                 await _queue.PublishActive(_dev.Id, ActivityStatus.Activity);
                 var result = await _rawData.ExecuteAsync(_dev, "json", Message.ConvertPayloadToString());
-                _logger.LogInformation($"调用Json网关处理语句返回:{result.Code}-{result.Msg}");
+                _logger.LogInformation($"Calling the Json gateway processing statement returns: {result.Code}-{result.Msg}");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"调用Json网关失败:{ex.Message}");
+                _logger.LogError(ex, $"Failed to call Json gateway: {ex.Message}");
             }
             await Ok();
         }
@@ -225,21 +228,21 @@ namespace IoTSharp.Services.MQTTControllers
                 {
                     await _queue.PublishActive(_dev.Id, ActivityStatus.Activity);
                     var result = await _kep.ExecuteAsync(_dev, Message.Payload);
-                    _logger.LogInformation($"调用KepServerEx网关处理语句返回:{result.Code}-{result.Msg}");
+                    _logger.LogInformation($"Calling KepServerEx gateway processing statement returns: {result.Code}-{result.Msg}");
                     await Ok();
                 }
                 else
                 {
                     await BadMessage();
-                    _logger.LogWarning($"调用KepServerEx网关时未找到设备");
+                    _logger.LogWarning($"No device found when calling KepServerEx gateway");
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"调用KepServerEx失败:{ex.Message}");
+                _logger.LogError(ex, $"Failed to call KepServerEx: {ex.Message}");
             }
-   
+
         }
     }
 }

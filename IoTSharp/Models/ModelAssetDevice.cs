@@ -25,23 +25,23 @@ namespace IoTSharp.Models
     {
 
         /// <summary>
-        /// 资产Id
+        /// AssetId
         /// </summary>
         public Guid AssetId { get; set; }
         /// <summary>
-        /// 要导入的设备Id
+        /// Device ID to import
         /// </summary>
 
         public Guid Deviceid { get; set; }
 
         /// <summary>
-        /// 要导入的设备属性数据列表
+        /// List of device attribute data to be imported
         /// </summary>
         public ModelAddAssetDeviceItem[] Attrs { get; set; }
 
 
         /// <summary>
-        /// 要导入的设备遥测数据列表
+        /// List of device telemetry data to import
         /// </summary>
         public ModelAddAssetDeviceItem[] Temps { get; set; }
 
@@ -51,29 +51,26 @@ namespace IoTSharp.Models
         public class ModelAddAssetDeviceItem
         {
             /// <summary>
-            /// 属性或者遥测的描述
+            /// Description of the property or telemetry
             /// </summary>
             public string Description { get; set; }
 
 
             /// <summary>
-            ///属性或者遥测的KeyName
+            /// KeyName of the property or telemetry
             /// </summary>
             public string keyName { get; set; }
 
             /// <summary>
-            ///数据侧
+            /// data side
             /// </summary>
             public DataCatalog dataSide { get; set; }
 
 
             /// <summary>
-            /// 属性或者遥测的KeyName的别名
+            /// Alias for the property or telemetry KeyName
             /// </summary>
             public string Name { get; set; }
-
-
-
         }
 
     }
@@ -81,87 +78,88 @@ namespace IoTSharp.Models
 
 
     public class ModelEditAssetAttrItem
-    {/// <summary>
-     ///  关联关系的id 
-     /// </summary>
+    {
+        /// <summary>
+        ///  The id of the association
+        /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        ///  属性或者遥测的描述
+        ///  Description of the property or telemetry
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        ///  属性或者遥测的KeyName的别名
+        ///  Alias for the property or telemetry KeyName
         /// </summary>
         public string Name { get; set; }
-
     }
 
-
-
     public class ModelAssetAttrItem
-    {/// <summary>
-     ///  关联关系的id 
-     /// </summary>
+    {
+        /// <summary>
+        /// The id of the association
+        /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        ///  属性或者遥测的描述
+        /// Description of properties or telemetry
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        ///  属性或者遥测的KeyName
+        /// KeyName of property or telemetry
         /// </summary>
         public string keyName { get; set; }
 
 
         /// <summary>
-        ///  属性或者遥测的数据侧
+        /// Attribute or telemetry data side
         /// </summary>
         public DataCatalog dataSide { get; set; }
 
 
         /// <summary>
-        ///  属性或者遥测的别名
+        /// Aliases for properties or telemetry
         /// </summary>
         public string Name { get; set; }
 
     }
 
     public class AssetDeviceItem
-    {/// <summary>
-     /// 设备名称
-     /// </summary>
+    {
+        /// <summary>
+        ///Device name
+        /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 设备Id
+        ///DeviceId
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        /// 设备类型
+        /// Equipment type
         /// </summary>
         public DeviceType DeviceType { get; set; }
 
 
         /// <summary>
-        /// 超时
+        /// time out
         /// </summary>
 
         public int Timeout { get; set; }
         /// <summary>
-        /// 设备认证方式
+        /// Device authentication method
         /// </summary>
         public DeviceIdentity DeviceIdentity { get; set; }
         /// <summary>
-        /// 属性数据
+        ///Attribute data
         /// </summary>
         public ModelAssetAttrItem[] Attrs { get; set; }
         /// <summary>
-        /// 遥测数据
+        /// Telemetry data
         /// </summary>
         public ModelAssetAttrItem[] Temps { get; set; }
     }
+
 }

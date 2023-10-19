@@ -6,26 +6,26 @@ namespace IoTSharp.Dtos
     public class CreateUserDto
     {
         /// <summary>
-        /// 用户邮箱
+        /// User email
         /// </summary>
         [Required]
         [EmailAddress]
         public string Email { get; set; }
 
         /// <summary>
-        /// 系统管理员密码
+        /// System administrator password
         /// </summary>
         [Required]
         [StringLength(100, ErrorMessage = "PASSWORD_MIN_LENGTH", MinimumLength = 6)]
         public string Password { get; set; }
 
         /// <summary>
-        /// 电话号码
+        /// telephone number
         /// </summary>
         [Phone]
         public string PhoneNumber { get; set; }
         /// <summary>
-        /// 客户的ID
+        ///Customer ID
         /// </summary>
         public Guid Customer { get; set; }
 

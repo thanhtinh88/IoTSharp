@@ -159,8 +159,8 @@ namespace IoTSharp.Extensions
                     _waitingCalls.Clear();
                 }
 
-                // TODO: 释放未托管的资源(未托管的对象)并替代终结器
-                // TODO: 将大型字段设置为 null
+                // TODO: Release unmanaged resources (unmanaged objects) and replace finalizers
+                // TODO: Set large fields to null
                 disposedValue = true;
             }
         }

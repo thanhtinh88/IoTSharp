@@ -1,101 +1,100 @@
 /**
- * 定义接口来定义对象的类型
- * `stores` 全部类型定义在这里
- */
+  * Define the interface to define the type of object
+  * `stores` All types are defined here
+  */
 
-// 用户信息
+// User Info
 export interface UserInfosState {
-	authBtnList: string[];
-	photo: string;
-	roles: string[];
-	time: number;
-	userName: string;
-	customer?: any;
-	tenant?: any;
+    authBtnList: string[];
+    photo: string;
+    roles: string[];
+    time: number;
+    userName: string;
+    customer?: any;
+    tenant?: any;
 }
 export interface UserInfosStates {
-	userInfos: UserInfosState;
+    userInfos: UserInfosState;
 }
 
-// 路由缓存列表
+// Route cache list
 export interface KeepAliveNamesState {
-	keepAliveNames: string[];
-	cachedViews: string[];
+    keepAliveNames: string[];
+    cachedViews: string[];
 }
 
-// 后端返回原始路由(未处理时)
+// The backend returns the original route (when not processed)
 export interface RequestOldRoutesState {
-	requestOldRoutes: string[];
+    requestOldRoutes: string[];
 }
 
-// TagsView 路由列表
+// TagsView routing list
 export interface TagsViewRoutesState {
-	tagsViewRoutes: string[];
-	isTagsViewCurrenFull: Boolean;
+    tagsViewRoutes: string[];
+    isTagsViewCurrenFull: Boolean;
 }
 
-// 路由列表
+//Route list
 export interface RoutesListState {
-	routesList: string[];
-	isColumnsMenuHover: Boolean;
-	isColumnsNavHover: Boolean;
+    routesList: string[];
+    isColumnsMenuHover: Boolean;
+    isColumnsNavHover: Boolean;
 }
 
-// 布局配置
+//Layout configuration
 export interface ThemeConfigState {
-	isDrawer: boolean;
-	primary: string;
-	topBar: string;
-	topBarColor: string;
-	isTopBarColorGradual: boolean;
-	menuBar: string;
-	menuBarColor: string;
-	isMenuBarColorGradual: boolean;
-	columnsMenuBar: string;
-	columnsMenuBarColor: string;
-	isColumnsMenuBarColorGradual: boolean;
-	isCollapse: boolean;
-	isUniqueOpened: boolean;
-	isFixedHeader: boolean;
-	isFixedHeaderChange: boolean;
-	isClassicSplitMenu: boolean;
-	isLockScreen: boolean;
-	lockScreenTime: number;
-	isShowLogo: boolean;
-	isShowLogoChange: boolean;
-	isBreadcrumb: boolean;
-	isTagsview: boolean;
-	isBreadcrumbIcon: boolean;
-	isTagsviewIcon: boolean;
-	isCacheTagsView: boolean;
-	isSortableTagsView: boolean;
-	isShareTagsView: boolean;
-	isFooter: boolean;
-	isGrayscale: boolean;
-	isInvert: boolean;
-	isIsDark: boolean;
-	isWartermark: boolean;
-	wartermarkText: string;
-	tagsStyle: string;
-	animation: string;
-	columnsAsideStyle: string;
-	columnsAsideLayout: string;
-	layout: string;
-	isRequestRoutes: boolean;
-	globalTitle: string;
-	globalViceTitle: string;
-	globalI18n: string;
-	globalComponentSize: string;
+    isDrawer: boolean;
+    primary: string;
+    topBar: string;
+    topBarColor: string;
+    isTopBarColorGradual: boolean;
+    menuBar: string;
+    menuBarColor: string;
+    isMenuBarColorGradual: boolean;
+    columnsMenuBar: string;
+    columnsMenuBarColor: string;
+    isColumnsMenuBarColorGradual: boolean;
+    isCollapse: boolean;
+    isUniqueOpened: boolean;
+    isFixedHeader: boolean;
+    isFixedHeaderChange: boolean;
+    isClassicSplitMenu: boolean;
+    isLockScreen: boolean;
+    lockScreenTime: number;
+    isShowLogo: boolean;
+    isShowLogoChange: boolean;
+    isBreadcrumb: boolean;
+    isTagsview: boolean;
+    isBreadcrumbIcon: boolean;
+    isTagsviewIcon: boolean;
+    isCacheTagsView: boolean;
+    isSortableTagsView: boolean;
+    isShareTagsView: boolean;
+    isFooter: boolean;
+    isGrayscale: boolean;
+    isInvert: boolean;
+    isIsDark: boolean;
+    isWartermark: boolean;
+    wartermarkText: string;
+    tagsStyle: string;
+    animation: string;
+    columnsAsideStyle: string;
+    columnsAsideLayout: string;
+    layout: string;
+    isRequestRoutes: boolean;
+    globalTitle: string;
+    globalViceTitle: string;
+    globalI18n: string;
+    globalComponentSize: string;
 }
 export interface ThemeConfigStates {
-	themeConfig: ThemeConfigState;
+    themeConfig: ThemeConfigState;
 }
 export interface AppInfo {
-	version: string; // 用户信息
-	installed: boolean; // 路由缓存列表
-	caCertificate: boolean; // 后端返回原始路由(未处理时)
-	domain: string; // TagsView 路由列表
-	brokerThumbprint?: any; // 路由列表
-	caThumbprint?: any; // 布局配置
+    version: string; // User information
+    installed: boolean; // Route cache list
+    caCertificate: boolean; // The backend returns the original route (when not processed)
+    domain: string; // TagsView routing list
+    brokerThumbprint?: any; // routing list
+    caThumbprint?: any; // Layout configuration
 }
-

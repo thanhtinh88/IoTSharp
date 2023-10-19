@@ -44,7 +44,7 @@ namespace IoTSharp.Jobs
                 catch (Exception ex)
                 {
 
-                    _logger.LogError(ex, "处理看板缓存时遇到问题。");
+                    _logger.LogError(ex, "A problem was encountered while processing the Kanban cache.");
                 }
             }
         }

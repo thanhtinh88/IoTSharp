@@ -2,139 +2,139 @@ import { defineStore } from 'pinia';
 import { ThemeConfigStates, ThemeConfigState } from './interface';
 
 /**
- * 布局配置
- * 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I567R1，感谢@lanbao123
- * 2020.05.28 by lyt 优化。开发时配置不生效问题
- * 修改配置时：
- * 1、需要每次都清理 `window.localStorage` 浏览器永久缓存
- * 2、或者点击布局配置最底部 `一键恢复默认` 按钮即可看到效果
- */
+  * Layout configuration
+  * Fixed: https://gitee.com/lyt-top/vue-next-admin/issues/I567R1, thanks to @lanbao123
+  * Optimized on 2020.05.28 by lyt. Problem that configuration does not take effect during development
+  * When modifying the configuration:
+  * 1. You need to clear the `window.localStorage` browser permanent cache every time
+  * 2. Or click the `One-click restore to default` button at the bottom of the layout configuration to see the effect.
+  */
 export const useThemeConfig = defineStore('themeConfig', {
 	state: (): ThemeConfigStates => ({
 		themeConfig: {
-			// 是否开启布局配置抽屉
+			// Whether to open the layout configuration drawer
 			isDrawer: false,
 
 			/**
-			 * 全局主题
-			 */
-			// 默认 primary 主题颜色
+			* Global theme
+			*/
+			//Default primary theme color
 			primary: '#4945FF',
-			// 是否开启深色模式
+			// Whether to enable dark mode
 			isIsDark: false,
 
 			/**
-			 * 菜单 / 顶栏
-			 * 注意：v1.0.17 版本去除设置布局切换，重置主题样式（initSetLayoutChange），
-			 * 切换布局需手动设置样式，设置的样式自动同步各布局，
-			 * 代码位置：/@/layout/navBars/breadcrumb/setings.vue
-			 */
-			// 默认顶栏导航背景颜色
+			* Menu/top bar
+			* Note: v1.0.17 version removes setting layout switching and resetting theme style (initSetLayoutChange).
+			* To switch layouts, you need to manually set the style. The set style will automatically synchronize with each layout.
+			* Code location: /@/layout/navBars/breadcrumb/settings.vue
+			*/
+			//Default top bar navigation background color
 			topBar: '#ffffff',
-			// 默认顶栏导航字体颜色
+			//Default top bar navigation font color
 			topBarColor: '#606266',
-			// 是否开启顶栏背景颜色渐变
+			// Whether to enable the top bar background color gradient
 			isTopBarColorGradual: false,
-			// 默认菜单导航背景颜色
+			//Default menu navigation background color
 			menuBar: '#ffffff',
-			// 默认菜单导航字体颜色
+			//Default menu navigation font color
 			menuBarColor: '#666687',
-			// 是否开启菜单背景颜色渐变
+			// Whether to enable menu background color gradient
 			isMenuBarColorGradual: false,
-			// 默认分栏菜单背景颜色
+			//Default column menu background color
 			columnsMenuBar: '#545c64',
-			// 默认分栏菜单字体颜色
+			//Default column menu font color
 			columnsMenuBarColor: '#e6e6e6',
-			// 是否开启分栏菜单背景颜色渐变
+			// Whether to enable the background color gradient of the column menu
 			isColumnsMenuBarColorGradual: false,
 
 			/**
-			 * 界面设置
-			 */
-			// 是否开启菜单水平折叠效果
+			* Interface settings
+			*/
+			// Whether to enable the horizontal folding effect of the menu
 			isCollapse: false,
-			// 是否开启菜单手风琴效果
+			// Whether to enable the menu accordion effect
 			isUniqueOpened: false,
-			// 是否开启固定 Header
+			// Whether to enable fixed Header
 			isFixedHeader: false,
-			// 初始化变量，用于更新菜单 el-scrollbar 的高度，请勿删除
+			// Initialize variable, used to update the height of menu el-scrollbar, please do not delete it
 			isFixedHeaderChange: false,
-			// 是否开启经典布局分割菜单（仅经典布局生效）
+			// Whether to enable the classic layout split menu (only classic layout takes effect)
 			isClassicSplitMenu: false,
-			// 是否开启自动锁屏
+			// Whether to turn on automatic screen lock
 			isLockScreen: false,
-			// 开启自动锁屏倒计时(s/秒)
+			// Enable automatic screen lock countdown (s/seconds)
 			lockScreenTime: 30,
 
 			/**
-			 * 界面显示
-			 */
-			// 是否开启侧边栏 Logo
+			* Interface display
+			*/
+			// Whether to enable the sidebar logo
 			isShowLogo: true,
-			// 初始化变量，用于 el-scrollbar 的高度更新，请勿删除
+			// Initialization variable, used for height update of el-scrollbar, please do not delete it
 			isShowLogoChange: false,
-			// 是否开启 Breadcrumb，强制经典、横向布局不显示
+			// Whether to turn on Breadcrumb and force the classic and horizontal layout not to be displayed
 			isBreadcrumb: true,
-			// 是否开启 Tagsview
+			// Whether to enable Tagsview
 			isTagsview: true,
-			// 是否开启 Breadcrumb 图标
+			// Whether to enable the Breadcrumb icon
 			isBreadcrumbIcon: false,
-			// 是否开启 Tagsview 图标
+			// Whether to enable Tagsview icon
 			isTagsviewIcon: false,
-			// 是否开启 TagsView 缓存
+			// Whether to enable TagsView caching
 			isCacheTagsView: false,
-			// 是否开启 TagsView 拖拽
+			// Whether to enable TagsView drag and drop
 			isSortableTagsView: true,
-			// 是否开启 TagsView 共用
+			// Whether to enable TagsView sharing
 			isShareTagsView: false,
-			// 是否开启 Footer 底部版权信息
+			// Whether to enable the copyright information at the bottom of the Footer
 			isFooter: false,
-			// 是否开启灰色模式
+			// Whether to enable gray mode
 			isGrayscale: false,
-			// 是否开启色弱模式
+			// Whether to enable color weak mode
 			isInvert: false,
-			// 是否开启水印
+			// Whether to enable watermark
 			isWartermark: false,
-			// 水印文案
+			// watermark copy
 			wartermarkText: 'IoTSharp',
 
 			/**
-			 * 其它设置
-			 */
-			// Tagsview 风格：可选值"<tags-style-one|tags-style-four|tags-style-five>"，默认 tags-style-five
-			// 定义的值与 `/src/layout/navBars/tagsView/tagsView.vue` 中的 class 同名
+						 * Other settings
+			*/
+			// Tagsview style: optional value "<tags-style-one|tags-style-four|tags-style-five>", default tags-style-five
+			// The defined value has the same name as the class in `/src/layout/navBars/tagsView/tagsView.vue`
 			tagsStyle: 'tags-style-five',
-			// 主页面切换动画：可选值"<slide-right|slide-left|opacitys>"，默认 slide-right
+			// Main page switching animation: optional value "<slide-right|slide-left|opacitys>", default slide-right
 			animation: 'slide-right',
-			// 分栏高亮风格：可选值"<columns-round|columns-card>"，默认 columns-round
+			// Column highlighting style: optional value "<columns-round|columns-card>", default columns-round
 			columnsAsideStyle: 'columns-round',
-			// 分栏布局风格：可选值"<columns-horizontal|columns-vertical>"，默认 columns-horizontal
+			// Column layout style: optional value "<columns-horizontal|columns-vertical>", default columns-horizontal
 			columnsAsideLayout: 'columns-vertical',
 
 			/**
-			 * 布局切换
-			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/layout/navBars/breadcrumb/setings.vue
-			 * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
-			 */
-			// 布局切换：可选值"<defaults|classic|transverse|columns>"，默认 defaults
+			* Layout switching
+			* Note: For demonstration purposes, when switching layouts, the colors will be restored to default. Code location: /@/layout/navBars/breadcrumb/settings.vue
+			* `initSetLayoutChange(set layout switching, reset theme style)` method in
+			*/
+			// Layout switching: optional value "<defaults|classic|transverse|columns>", default defaults
 			layout: 'defaults',
 
 			/**
-			 * 后端控制路由
-			 */
-			// 是否开启后端控制路由
+			* Backend control routing
+			*/
+			// Whether to enable backend control routing
 			isRequestRoutes: true,
 
 			/**
-			 * 全局网站标题 / 副标题
-			 */
-			// 网站主标题（菜单导航、浏览器当前网页标题）
+			* Global website title/subtitle
+			*/
+			// Main title of the website (menu navigation, browser current web page title)
 			globalTitle: 'IoTSharp',
-			// 网站副标题（登录页顶部文字）
+			// Website subtitle (text at the top of the login page)
 			globalViceTitle: 'IoTSharp',
-			// 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
-			globalI18n: 'zh-cn',
-			// 默认全局组件大小，可选值"<large|'default'|small>"，默认 'large'
+			//Default initial language, optional value "<zh-cn|en|zh-tw>", default en
+			globalI18n: 'en',
+			//Default global component size, optional value "<large|'default'|small>", default 'large'
 			globalComponentSize: 'default',
 		},
 	}),

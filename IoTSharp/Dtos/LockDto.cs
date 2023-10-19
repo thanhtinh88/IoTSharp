@@ -6,11 +6,11 @@ namespace IoTSharp.Dtos
     public class LockDto
     {
         /// <summary>
-        /// 用户ID
+        /// User ID
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
-        /// 用户锁定操作
+        /// User lock operation
         /// </summary>
         public LockOpt Opt { get; set; }
     }

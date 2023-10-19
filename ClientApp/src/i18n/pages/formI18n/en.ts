@@ -1,4 +1,4 @@
-// 定义内容
+//define content
 export default {
 	formI18nLabel: {
 		name: 'name',

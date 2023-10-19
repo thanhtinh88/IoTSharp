@@ -20,7 +20,7 @@ namespace IoTSharp.Gateways
     public class OPCUATag
     {
         /// <summary>
-        /// 模拟器示例.函数._System._DemandPoll
+        /// Simulator example. Function._System._DemandPoll
         /// </summary>
         [JsonPropertyName("id")]
         public string TagName { get; set; }
@@ -60,10 +60,10 @@ namespace IoTSharp.Gateways
     }
 
 
-    //    id: |TAGNAME|
-    //v: |TAGVALUE|
-    //q: |TAGQUALITY|
-    //t: |TAGTIMESTAMP|
+    //id: |TAGNAME|
+    // v: |TAGVALUE|
+    // q: |TAGQUALITY|
+    // t: |TAGTIMESTAMP|
     public class KepServerEx
     {
         private readonly AppSettings _setting;
@@ -98,8 +98,8 @@ namespace IoTSharp.Gateways
             {
                 var device = _dev.JudgeOrCreateNewDevice(dev, _scopeFactor, _logger);
                 await _queue.PublishActive(device.Id, ActivityStatus.Activity);
-                _logger.LogInformation($"{_dev.Name}的网关数据正在处理设备{dev}， 设备ID为{_dev?.Id}");
-                var plst = from d in kp.Tags where d.CanUse &&  d.DeviceName == dev select new KeyValuePair<string, object>(d.TelemetryName, d.TagValue.ToObject());
+                _logger.LogInformation($"{_dev.Name}'s gateway data is processing device {dev}, and the device ID is {_dev?.Id}");
+                var plst = from d in kp.Tags where d.CanUse && d.DeviceName == dev select new KeyValuePair<string, object>(d.TelemetryName, d.TagValue.ToObject());
 
                 if (plst.Any())
                 {
@@ -107,26 +107,26 @@ namespace IoTSharp.Gateways
                     {
                         DeviceId = device.Id,
                         ts = kp.DateTime,
-                        MsgBody = new Dictionary<string, object>(plst.DistinctBy(k=>k.Key)),
+                        MsgBody = new Dictionary<string, object>(plst.DistinctBy(k => k.Key)),
                         DataSide = DataSide.ClientSide,
                         DataCatalog = DataCatalog.TelemetryData
                     });
                 }
-                _logger.LogInformation($"{_dev.Name}的网关数据处理完成，设备{dev}ID为{device?.Id}共计{plst.Count()}条");
+                _logger.LogInformation($"{_dev.Name}'s gateway data processing is completed, device {dev} ID is {device?.Id}, totaling {plst.Count()}");
             }
-            var _sys = from d in kp.Tags where d.CanUse &&  d.IsSystem  select new KeyValuePair<string, object>(d.TelemetryName, d.TagValue.ToObject());
+            var _sys = from d in kp.Tags where d.CanUse && d.IsSystem select new KeyValuePair<string, object>(d.TelemetryName, d.TagValue.ToObject());
             if (_sys.Any())
             {
                 await _queue.PublishTelemetryData(new PlayloadData()
                 {
                     DeviceId = _dev.Id,
                     ts = kp.DateTime,
-                    MsgBody = new Dictionary<string, object>(_sys.DistinctBy(k=>k.Key)),
+                    MsgBody = new Dictionary<string, object>(_sys.DistinctBy(k => k.Key)),
                     DataSide = DataSide.ClientSide,
                     DataCatalog = DataCatalog.TelemetryData
                 });
             }
-            _logger.LogInformation($"{_dev.Name}的网关数据处理完成，设备的系统属性共计{_sys.Count()}条");
+            _logger.LogInformation($"{_dev.Name}'s gateway data processing is completed, and the system attributes of the device total {_sys.Count()}");
             return new ApiResult() { Code = (int)ApiCode.Success, Msg = "OK" };
         }
     }

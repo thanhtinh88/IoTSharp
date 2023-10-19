@@ -2,13 +2,13 @@ import { IListQueryParam } from '../iapiresult';
 import request from '/@/utils/request';
 
 /**
- * 租户api接口集合
- * @method ruleList 租户列表
- * @method getrule 获取租户
- * @method postrule 新增租户
- * @method putrule 修改租户
- * @method deleterule 删除租户
- */
+  * Tenant api interface collection
+  * @method ruleList tenant list
+  * @method getrule Get the tenant
+  * @method postrule Add tenant
+  * @method putrule Modify tenant
+  * @method deleterule delete tenant
+  */
 export function ruleApi() {
 	return {
 		ruleList: (params: QueryParam) => {

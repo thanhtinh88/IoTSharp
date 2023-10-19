@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 安装
+    /// Install
     /// </summary>
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -47,7 +47,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 检查IoTSharp实例信息
+        /// Check IoTSharp instance information
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
@@ -82,7 +82,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 域名可以不配置， 默认会使用机器名  
+        /// The domain name does not need to be configured. The machine name will be used by default.
         /// </summary>
         /// <returns></returns>
         [Authorize(Roles = nameof(UserRole.SystemAdmin))]
@@ -136,7 +136,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 安装初始化IoTSharp
+        /// Install and initialize IoTSharp
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

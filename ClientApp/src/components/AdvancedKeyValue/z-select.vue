@@ -3,7 +3,7 @@
 </template>
 <script setup>
 const props = defineProps({
-// 字段配置， 每个字段以什么样式配置显示
+//Field configuration, how each field is configured to be displayed
   value: {
     type: [Boolean, Number, String],
     default: false,

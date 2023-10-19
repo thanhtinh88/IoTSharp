@@ -4,13 +4,13 @@ import { IListQueryParam } from '../iapiresult';
 import request from '/@/utils/request';
 
 /**
- * 设备api接口集合
- * @method devcieList 设备列表
- * @method getdevcie 获取设备
- * @method postdevcie 新增设备
- * @method putdevcie 修改设备
- * @method deletedevcie 删除设备
- */
+  * Device api interface collection
+  * @method deviceList device list
+  * @method getdevcie Get the device
+  * @method postdevice new device
+  * @method putdevice modify the device
+  * @method deletedevice delete device
+  */
 export function deviceApi() {
 	return {
 		devcieList: (params: QueryParam) => {
@@ -105,14 +105,15 @@ export function deviceApi() {
 			});
 		},
 		
-		// 获取设备规则
+		// Get device rules
 		getDeviceRules: (deviceId: string) => {
 			return request({
 				url: '/api/rules/getDeviceRules?deviceId=' + deviceId,
 				method: 'get',
 			});
 		},
-		// 设置规则
+
+		// Set rules
 		setDeviceRules: (deviceId: string, ruleId: any) => {
 			return request({
 				url: '/api/rules/binddevice',

@@ -24,7 +24,7 @@ export default defineComponent({
 			iframeLoading: true,
 			iframeUrl: '',
 		});
-		// 初始化页面加载 loading
+		//Initialize page loading loading
 		const initIframeLoad = () => {
 			state.iframeUrl = <any>route.meta.isLink;
 			nextTick(() => {
@@ -46,11 +46,11 @@ export default defineComponent({
 				else return `51px`;
 			}
 		});
-		// 页面加载时
+		//When the page loads
 		onMounted(() => {
 			initIframeLoad();
 		});
-		// 监听路由变化，多个 iframe 时使用
+		// Monitor route changes, used when multiple iframes are used
 		watch(
 			() => route.path,
 			() => {

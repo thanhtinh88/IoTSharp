@@ -33,22 +33,20 @@ namespace IoTSharp.Models.Rule
         public string linenamespace { get; set; }
     }
 
-
-
     public class NodeObject
     {
         public string nodeId { get; set; }
         /// <summary>
-        /// 节点分组类型 （脚本，执行器）
+        /// Node grouping type (script, executor)
         /// </summary>
 
         public string nodetype { get; set; }
         /// <summary>
-        /// 节点内容（脚本时为脚本内容，执行器时为配置）
+        /// Node content (script content for scripts, configuration for executors)
         /// </summary>
         public string content { get; set; }
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string mata { get; set; }
 

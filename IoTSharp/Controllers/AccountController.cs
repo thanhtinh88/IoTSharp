@@ -26,7 +26,7 @@ using static IronPython.Modules._ast;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 用户管理
+    /// User Management
     /// </summary>
     [ApiController]
     [Authorize]
@@ -41,7 +41,7 @@ namespace IoTSharp.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
 
         /// <summary>
-        /// 用户管理
+        /// User Management
         /// </summary>
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
@@ -65,7 +65,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取当前用户的头像， 基于邮箱生成
+        /// Get the current user's avatar, generated based on email
         /// </summary>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
@@ -88,7 +88,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 获取当前登录用户信息
+        /// Get current logged in user information
         /// </summary>
         /// <returns></returns>
         [HttpGet, Authorize(Roles = nameof(UserRole.NormalUser))]
@@ -130,7 +130,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 登录用户
+        /// Login user
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -224,7 +224,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 刷新JWT Token
+        /// Refresh JWT Token
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -272,7 +272,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 退出账号
+        /// Log out of account
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
@@ -294,10 +294,10 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 注册用户
+        /// registered user
         /// </summary>
         /// <param name="model"></param>
-        /// <returns >返回登录结果</returns>
+        /// <returns >Return login results</returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<ApiResult<LoginResult>> Register([FromBody] RegisterDto model)
@@ -345,10 +345,10 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 注册新的租户，客户，以及用户
+        /// Register new tenants, customers, and users
         /// </summary>
         /// <param name="model"></param>
-        /// <returns >返回登录结果</returns>
+        /// <returns >Return login results</returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<ApiResult<LoginResult>> Create([FromBody] InstallDto model)
@@ -407,10 +407,10 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 注册新的租户，客户，以及用户
+        /// Register new tenants, customers, and users
         /// </summary>
         /// <param name="model"></param>
-        /// <returns >返回登录结果</returns>
+        /// <returns >Return login results</returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<ApiResult<LoginResult>> CreateUser([FromBody] CreateUserDto model)
@@ -461,10 +461,11 @@ namespace IoTSharp.Controllers
                 return new ApiResult<LoginResult>(ApiCode.NotFoundCustomer, "未找到客户", null);
             }
         }
+        
         /// <summary>
-        /// 为当前客户所在的租户新增用户  zhangjie 20230308
+        /// Add user zhangjie 20230308 to the tenant where the current customer is located
         /// </summary>
-        /// <param name="model">前端传参</param>
+        /// <param name="model">Front-end parameter passing</param>
         /// <returns></returns>
         [Authorize(Roles = nameof(UserRole.CustomerAdmin))]
         [HttpPost]
@@ -540,7 +541,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 列出指定租户的所有用户。
+        /// List all users of the specified tenant.
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
@@ -601,7 +602,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 返回用户信息
+        /// Return user information
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -618,7 +619,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 锁定用户
+        /// Lock user
         /// </summary>
         /// <param name="dto"></param>
         /// <returns>
@@ -626,8 +627,8 @@ namespace IoTSharp.Controllers
         /// NotFoundUser = 10021,
         /// CanNotLockUser = 10022,
         ///LockUserHaveError = 10023
-        ///CanNotLockYourself =10028 
-        ///CanNotUnlockYourself =10029 
+        ///CanNotLockYourself =10028
+        ///CanNotUnlockYourself =10029
         ///</returns>
         [HttpPut]
         public async Task<ApiResult> Lock(LockDto dto)
@@ -724,7 +725,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 修改用户信息
+        /// Modify user information
         /// </summary>
         /// <returns></returns>
         [HttpPut]
@@ -737,7 +738,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 修改当前用户信息
+        /// Modify current user information
         /// </summary>
         /// <returns></returns>
         [HttpPut]
@@ -750,7 +751,7 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 修改当前用户信息
+        /// Modify current user information
         /// </summary>
         /// <returns></returns>
         [HttpPut]

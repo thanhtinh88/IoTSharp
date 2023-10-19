@@ -15,7 +15,7 @@ namespace IoTSharp.Dtos
         /// </summary>
         public string access_token { get; set; }
         /// <summary>
-        /// 过期时间
+        /// Expiration
         /// </summary>
         public long expires_in { get; set; }
 
@@ -27,27 +27,27 @@ namespace IoTSharp.Dtos
     public class LoginResult
     {
         /// <summary>
-        /// 登录结果
+        /// Login results
         /// </summary>
         public ApiCode Code { get; set; }
         /// <summary>
-        /// 用户名
+        /// username
         /// </summary>
         public string UserName { get; set; }
         /// <summary>
-        /// 登录结果
+        /// Login results
         /// </summary>
         public Microsoft.AspNetCore.Identity.SignInResult SignIn { get; set; }
         /// <summary>
-        /// 是否成功
+        /// whether succeed
         /// </summary>
         public bool Succeeded { get; set; }
         /// <summary>
-        /// Token
+        ///Token
         /// </summary>
         public TokenEntity Token { get; set; }
         /// <summary>
-        /// 用户所具备权限
+        /// Permissions possessed by the user
         /// </summary>
         public IList<string> Roles { get; set; }
         public string Avatar { get; internal set; }
@@ -56,12 +56,12 @@ namespace IoTSharp.Dtos
     public class LoginDto
     {
         /// <summary>
-        /// 密码
+        /// password
         /// </summary>
         [Required]
         public string Password { get; set; }
         /// <summary>
-        /// 用户名
+        /// username
         /// </summary>
         [Required]
         public string UserName { get; set; }
@@ -71,62 +71,62 @@ namespace IoTSharp.Dtos
     public class RegisterDto
     {
         /// <summary>
-        /// 邮箱地址， 也是用户名，一个邮箱只能注册平台的一个客户，如果你在平台有两个租户都有账号，则需要两个邮箱地址。 
+        /// The email address is also the user name. One email address can only register one customer of the platform. If you have two tenants with accounts on the platform, you need two email addresses.
         /// </summary>
         [Required]
         public string Email { get; set; }
         /// <summary>
-        /// 电话号码
+        /// telephone number
         /// </summary>
         [Required]
         public string PhoneNumber { get; set; }
         /// <summary>
-        /// 用户隶属客户邮箱地址
+        /// The user's customer email address
         /// </summary>
         [Required]
         public string Customer { get; set; }
         /// <summary>
-        /// 用户名密码
+        /// Username Password
         /// </summary>
         [Required]
-        [StringLength(100,  MinimumLength = 6)]
+        [StringLength(100, MinimumLength = 6)]
         public string Password { get; set; }
     }
 
     public class UserItemDto
     {
         /// <summary>
-        /// 用户邮箱地址
+        /// User email address
         /// </summary>
         public string Email { get; set; }
         /// <summary>
-        /// 权限标识
+        /// Permission identification
         /// </summary>
         public List<string> Roles { get; set; } = new List<string>();
         /// <summary>
-        /// 电话号码
+        /// telephone number
         /// </summary>
         public string PhoneNumber { get; set; }
         /// <summary>
-        /// 登录失败次数
+        /// Number of failed login attempts
         /// </summary>
         public int AccessFailedCount { get; set; }
         /// <summary>
-        /// 标识
+        /// Identification
         /// </summary>
         public string Id { get; set; }
         /// <summary>
-        /// 是否被锁定
+        /// Whether it is locked
         /// </summary>
         public bool LockoutEnabled { get; set; }
         /// <summary>
-        /// 锁定时长
+        /// Lock duration
         /// </summary>
         public DateTimeOffset? LockoutEnd { get; set; }
         /// <summary>
-        /// 用户名
+        /// username
         /// </summary>
-        public string UserName { get;  set; }
+        public string UserName { get; set; }
         public string CustomerName { get; set; }
         public string TenantName { get; set; }
     }
@@ -134,18 +134,16 @@ namespace IoTSharp.Dtos
     public class UserPassword
     {
         /// <summary>
-        /// 旧密码
+        /// Old Password
         /// </summary>
         public string Pass { get; set; }
         /// <summary>
-        /// 新密码
+        /// New Password
         /// </summary>
         public string PassNew { get; set; }
         /// <summary>
-        /// 第二次验证密码
+        /// Verify password for the second time
         /// </summary>
         public string PassNewSecond { get; set; }
     }
-
-
 }

@@ -46,12 +46,11 @@ namespace IoTSharp.Controllers
             _helper = helper;
         }
 
+
         /// <summary>
-        /// 更新节点的条件表达式
+        /// Update the conditional expression of the node
         /// </summary>
         /// <returns> </returns>
-        ///
-
         [HttpPost]
         public async Task<ApiResult<bool>> UpdateFlowExpression(UpdateFlowExpression m)
         {
@@ -184,11 +183,10 @@ namespace IoTSharp.Controllers
         }
 
         /// <summary>
-        /// 复制一个规则副本
+        /// Make a copy of the rule
         /// </summary>
         /// <param name="flowRule"></param>
         /// <returns></returns>
-
         [HttpPost]
         public async Task<ApiResult<bool>> Fork(FlowRule flowRule)
         {
@@ -1422,7 +1420,6 @@ namespace IoTSharp.Controllers
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
-
         [HttpPost]
         public async Task<ApiResult<PagedData<BaseEventDto>>> FlowEvents([FromBody] EventParam m)
         {

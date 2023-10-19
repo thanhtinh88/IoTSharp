@@ -18,7 +18,7 @@ export default defineComponent({
 	setup() {
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
-		// 是否显示 tagsView
+		// Whether to display tagsView
 		const setShowTagsView = computed(() => {
 			let { layout, isTagsview } = themeConfig.value;
 			return layout !== 'classic' && isTagsview;

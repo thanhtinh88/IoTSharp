@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace IoTSharp.TaskActions
 {
-    [DisplayName("遥测数据发布器")]
-    [Description("发布遥测数据至队列")]
+    [DisplayName("Telemetry Data Publisher")]
+    [Description("Publish telemetry data to queue")]
     public class PublishTelemetryDataTask : TaskAction
     {
         private readonly IPublisher _queue;

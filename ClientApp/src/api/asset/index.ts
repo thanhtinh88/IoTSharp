@@ -2,12 +2,12 @@ import { IListQueryParam } from '../iapiresult';
 import request from '/@/utils/request';
 
 /**
- * 资产管理api接口集合
- * @method assetList 资产列表
- * @method postAsset 新增资产
- * @method putAsset 修改资产
- * @method deleteAsset 删除资产
- */
+  * Asset management API interface collection
+  * @method assetList asset list
+  * @method postAsset new assets
+  * @method putAsset Modify assets
+  * @method deleteAsset delete assets
+  */
 export function assetApi() {
 	return {
 		assetList: (params: QueryParam) => {

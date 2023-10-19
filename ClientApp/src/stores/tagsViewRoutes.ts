@@ -3,10 +3,10 @@ import { TagsViewRoutesState } from './interface';
 import { Session } from '/@/utils/storage';
 
 /**
- * TagsView 路由列表
- * @methods setTagsViewRoutes 设置 TagsView 路由列表
- * @methods setCurrenFullscreen 设置开启/关闭全屏时的 boolean 状态
- */
+  * TagsView routing list
+  * @methods setTagsViewRoutes sets the TagsView routing list
+  * @methods setCurrenFullscreen sets the Boolean state when turning on/off full screen
+  */
 export const useTagsViewRoutes = defineStore('tagsViewRoutes', {
 	state: (): TagsViewRoutesState => ({
 		tagsViewRoutes: [],

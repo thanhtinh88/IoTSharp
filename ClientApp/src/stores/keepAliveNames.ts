@@ -2,13 +2,13 @@ import { defineStore } from 'pinia';
 import { KeepAliveNamesState } from './interface';
 
 /**
- * 路由缓存列表
- * @methods setCacheKeepAlive 设置要缓存的路由 names（开启 Tagsview）
- * @methods addCachedView 添加要缓存的路由 names（关闭 Tagsview）
- * @methods delCachedView 删除要缓存的路由 names（关闭 Tagsview）
- * @methods delOthersCachedViews 右键菜单`关闭其它`，删除要缓存的路由 names（关闭 Tagsview）
- * @methods delAllCachedViews 右键菜单`全部关闭`，删除要缓存的路由 names（关闭 Tagsview）
- */
+  * Route cache list
+  * @methods setCacheKeepAlive Set the routing names to be cached (enable Tagsview)
+  * @methods addCachedView Add routing names to be cached (close Tagsview)
+  * @methods delCachedView Delete route names to be cached (close Tagsview)
+  * @methods delOthersCachedViews Right-click menu `Close Others`, delete route names to be cached (close Tagsview)
+  * @methods delAllCachedViews Right-click menu `Close All`, delete route names to be cached (close Tagsview)
+  */
 export const useKeepALiveNames = defineStore('keepALiveNames', {
 	state: (): KeepAliveNamesState => ({
 		keepAliveNames: [],

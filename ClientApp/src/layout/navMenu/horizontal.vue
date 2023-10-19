@@ -57,71 +57,71 @@ export default defineComponent({
 		const state = reactive({
 			defaultActive: null,
 		});
-		// 获取父级菜单数据
-		const menuLists = computed(() => {
-			return <any>props.menuList;
-		});
-		// 设置横向滚动条可以鼠标滚轮滚动
-		const onElMenuHorizontalScroll = (e: any) => {
-			const eventDelta = e.wheelDelta || -e.deltaY * 40;
-			proxy.$refs.elMenuHorizontalScrollRef.$refs.wrap$.scrollLeft = proxy.$refs.elMenuHorizontalScrollRef.$refs.wrap$.scrollLeft + eventDelta / 4;
-		};
-		// 初始化数据，页面刷新时，滚动条滚动到对应位置
-		const initElMenuOffsetLeft = () => {
-			nextTick(() => {
-				let els: any = document.querySelector('.el-menu.el-menu--horizontal li.is-active');
-				if (!els) return false;
-				proxy.$refs.elMenuHorizontalScrollRef.$refs.wrapRef.scrollLeft = els.offsetLeft;
-			});
-		};
-		// 路由过滤递归函数
-		const filterRoutesFun = (arr: Array<string>) => {
-			return arr
-				.filter((item: any) => !item.meta.isHide)
-				.map((item: any) => {
-					item = Object.assign({}, item);
-					if (item.children) item.children = filterRoutesFun(item.children);
-					return item;
-				});
-		};
-		// 传送当前子级数据到菜单中
-		const setSendClassicChildren = (path: string) => {
-			const currentPathSplit = path.split('/');
-			let currentData: any = {};
-			filterRoutesFun(routesList.value).map((v, k) => {
-				if (v.path === `/${currentPathSplit[1]}`) {
-					v['k'] = k;
-					currentData['item'] = [{ ...v }];
-					currentData['children'] = [{ ...v }];
-					if (v.children) currentData['children'] = v.children;
-				}
-			});
-			return currentData;
-		};
-		// 设置页面当前路由高亮
-		const setCurrentRouterHighlight = (currentRoute: any) => {
-			const { path, meta } = currentRoute;
-			if (themeConfig.value.layout === 'classic') {
-				(<any>state.defaultActive) = `/${path.split('/')[1]}`;
-			} else {
-				const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
-				if (pathSplit.length >= 4 && meta.isHide) state.defaultActive = pathSplit.splice(0, 3).join('/');
-				else state.defaultActive = path;
-			}
-		};
-		// 页面加载前
-		onBeforeMount(() => {
-			setCurrentRouterHighlight(route);
-		});
-		// 页面加载时
-		onMounted(() => {
-			initElMenuOffsetLeft();
-		});
-		// 路由更新时
+        // Get parent menu data
+        const menuLists = computed(() => {
+            return <any>props.menuList;
+        });
+        // Set the horizontal scroll bar to scroll with the mouse wheel
+        const onElMenuHorizontalScroll = (e: any) => {
+            const eventDelta = e.wheelDelta || -e.deltaY * 40;
+            proxy.$refs.elMenuHorizontalScrollRef.$refs.wrap$.scrollLeft = proxy.$refs.elMenuHorizontalScrollRef.$refs.wrap$.scrollLeft + eventDelta / 4;
+        };
+        // Initialize data. When the page is refreshed, the scroll bar scrolls to the corresponding position.
+        const initElMenuOffsetLeft = () => {
+            nextTick(() => {
+                let els: any = document.querySelector('.el-menu.el-menu--horizontal li.is-active');
+                if (!els) return false;
+                proxy.$refs.elMenuHorizontalScrollRef.$refs.wrapRef.scrollLeft = els.offsetLeft;
+            });
+        };
+        // Route filtering recursive function
+        const filterRoutesFun = (arr: Array<string>) => {
+            return arr
+                .filter((item: any) => !item.meta.isHide)
+                .map((item: any) => {
+                    item = Object.assign({}, item);
+                    if (item.children) item.children = filterRoutesFun(item.children);
+                    return item;
+                });
+        };
+        //Transmit the current child data to the menu
+        const setSendClassicChildren = (path: string) => {
+            const currentPathSplit = path.split('/');
+            let currentData: any = {};
+            filterRoutesFun(routesList.value).map((v, k) => {
+                if (v.path === `/${currentPathSplit[1]}`) {
+                    v['k'] = k;
+                    currentData['item'] = [{ ...v }];
+                    currentData['children'] = [{ ...v }];
+                    if (v.children) currentData['children'] = v.children;
+                }
+            });
+            return currentData;
+        };
+        //Set the current route highlighting on the page
+        const setCurrentRouterHighlight = (currentRoute: any) => {
+            const { path, meta } = currentRoute;
+            if (themeConfig.value.layout === 'classic') {
+                (<any>state.defaultActive) = `/${path.split('/')[1]}`;
+            } else {
+                const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
+                if (pathSplit.length >= 4 && meta.isHide) state.defaultActive = pathSplit.splice(0, 3).join('/');
+                else state.defaultActive = path;
+            }
+        };
+        // Before the page is loaded
+        onBeforeMount(() => {
+            setCurrentRouterHighlight(route);
+        });
+        //When the page loads
+        onMounted(() => {
+            initElMenuOffsetLeft();
+        });
+		//When routing is updated
 		onBeforeRouteUpdate((to) => {
-			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
-			setCurrentRouterHighlight(to);
-			// 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
+            // Fix: https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+            setCurrentRouterHighlight(to);
+			//Fixed the problem that when the cutting menu is opened in the classic layout, the left navigation menu data does not change after clicking tagsView
 			let { layout, isClassicSplitMenu } = themeConfig.value;
 			if (layout === 'classic' && isClassicSplitMenu) {
 				proxy.mittBus.emit('setSendClassicChildren', setSendClassicChildren(to.path));

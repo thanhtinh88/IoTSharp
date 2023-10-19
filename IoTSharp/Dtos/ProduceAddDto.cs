@@ -8,55 +8,55 @@ namespace IoTSharp.Dtos
 {
     public class ProduceAddDto
     {
-  
-        public Guid Id { get; set; } 
+
+        public Guid Id { get; set; }
 
         /// <summary>
-        /// 设备名称
+        ///Device name
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// ICON file full path 
+        /// ICON file full path
         /// </summary>
         public string Icon { get; set; }
 
         /// <summary>
-        /// 网关类型  根据不通网关来处理相关配置
+        /// Gateway type handles related configurations based on unavailable gateways
         /// </summary>
-           [EnumDataType(typeof(GatewayType))]
+        [EnumDataType(typeof(GatewayType))]
         public GatewayType GatewayType { get; set; } = GatewayType.Unknow;
 
         /// <summary>
-        /// 网关配置信息， 如果是Unknow 则不使用， 如果是自定义 ，则这里是json字符串。 
-        /// 如果是其他对应的网关， 则这里是 对应的配置文件名。 
+        /// Gateway configuration information, if it is Unknown, it will not be used. If it is customized, this is a json string.
+        /// If it is another corresponding gateway, then here is the corresponding configuration file name.
         /// </summary>
         public string GatewayConfiguration { get; set; } = string.Empty;
         /// <summary>
-        /// 超时时间 秒数
+        /// Timeout seconds
         /// </summary>
         public int DefaultTimeout { get; set; } = 300;
         /// <summary>
-        /// 租户
+        /// Tenant
         /// </summary>
         public Guid Tenant { get; set; }
         /// <summary>
-        /// 客户
+        /// client
         /// </summary>
         public Guid Customer { get; set; }
         /// <summary>
-        /// 默认认证类型
+        ///Default authentication type
         /// </summary>
         [EnumDataType(typeof(IdentityType))]
         public IdentityType DefaultIdentityType { get; set; } = IdentityType.AccessToken;
         /// <summary>
-        /// 描述
+        /// describe
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// 默认设备类型
+        ///Default device type
         /// </summary>
         public DeviceType DefaultDeviceType { get; set; }
-      
+
     }
 }

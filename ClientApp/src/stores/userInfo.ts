@@ -6,9 +6,9 @@ import { useLoginApi } from '../api/login';
 import { resolve } from 'dns/promises';
 
 /**
- * 用户信息
- * @methods setUserInfos 设置用户信息
- */
+  * User Info
+  * @methods setUserInfos Set user information
+  */
 export const useUserInfo = defineStore('userInfo', {
 	state: (): UserInfosStates => ({
 		userInfos: {
@@ -23,7 +23,7 @@ export const useUserInfo = defineStore('userInfo', {
 	}),
 	actions: {
 		async setUserInfos() {
-			// 存储用户信息到浏览器缓存
+			// Store user information in browser cache
 			if (Session.get('userInfo')) {
 				this.userInfos = Session.get('userInfo');
 			} else {
@@ -32,7 +32,7 @@ export const useUserInfo = defineStore('userInfo', {
 				Session.set('userInfo', userInfos);
 			}
 		},
-		// 模拟接口数据
+		//Simulate interface data
 		// https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP
 		async getApiUserInfo() {
 			return useLoginApi()

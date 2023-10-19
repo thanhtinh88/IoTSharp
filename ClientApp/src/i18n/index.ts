@@ -14,12 +14,12 @@ import pagesFormI18nZhcn from '/@/i18n/pages/formI18n/zh-cn';
 import pagesFormI18nEn from '/@/i18n/pages/formI18n/en';
 import pagesFormI18nZhtw from '/@/i18n/pages/formI18n/zh-tw';
 
-// 定义语言国际化内容
+// Define language internationalization content
 /**
- * 说明：
- * /src/i18n/lang 下的 ts 为框架的国际化内容
- * /src/i18n/pages 下的 ts 为各界面的国际化内容
- */
+  * illustrate:
+  * ts under /src/i18n/lang is the international content of the framework
+  * ts under /src/i18n/pages is the internationalized content of each interface
+  */
 const messages = {
 	[zhcnLocale.name]: {
 		...zhcnLocale,
@@ -39,11 +39,11 @@ const messages = {
 	},
 };
 
-// 读取 pinia 默认语言
+//Read pinia default language
 const stores = useThemeConfig(pinia);
 const { themeConfig } = storeToRefs(stores);
 
-// 导出语言国际化
+// Export language internationalization
 // https://vue-i18n.intlify.dev/guide/essentials/fallback.html#explicit-fallback-with-one-locale
 export const i18n = createI18n({
 	legacy: false,
@@ -52,6 +52,6 @@ export const i18n = createI18n({
 	silentFallbackWarn: true,
 	fallbackWarn: false,
 	locale: themeConfig.value.globalI18n,
-	fallbackLocale: zhcnLocale.name,
+	fallbackLocale: enLocale.name,
 	messages,
 });

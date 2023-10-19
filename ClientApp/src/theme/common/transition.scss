@@ -1,99 +1,108 @@
-/* 页面切换动画
+/* Page switching animation
 ------------------------------- */
 .slide-right-enter-active,
 .slide-right-leave-active,
 .slide-left-enter-active,
 .slide-left-leave-active {
-	will-change: transform;
-	transition: all 0.3s ease;
+    will-change: transform;
+    transition: all 0.3s ease;
 }
-// slide-right
+//slide-right
 .slide-right-enter-from {
-	opacity: 0;
-	transform: translateX(-20px);
-}
-.slide-right-leave-to {
-	opacity: 0;
-	transform: translateX(20px);
-}
-// slide-left
-.slide-left-enter-from {
-	@extend .slide-right-leave-to;
-}
-.slide-left-leave-to {
-	@extend .slide-right-enter-from;
-}
-// opacitys
-.opacitys-enter-active,
-.opacitys-leave-active {
-	will-change: transform;
-	transition: all 0.3s ease;
-}
-.opacitys-enter-from,
-.opacitys-leave-to {
-	opacity: 0;
+    opacity: 0;
+    transform: translateX(-20px);
 }
 
-/* Breadcrumb 面包屑过渡动画
+.slide-right-leave-to {
+    opacity: 0;
+    transform: translateX(20px);
+}
+//slide-left
+.slide-left-enter-from {
+    @extend .slide-right-leave-to;
+}
+
+.slide-left-leave-to {
+    @extend .slide-right-enter-from;
+}
+// opacity
+.opacitys-enter-active,
+.opacitys-leave-active {
+    will-change: transform;
+    transition: all 0.3s ease;
+}
+
+.opacitys-enter-from,
+.opacitys-leave-to {
+    opacity: 0;
+}
+
+/* Breadcrumb breadcrumb transition animation
 ------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-	transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
+
 .breadcrumb-enter-from,
 .breadcrumb-leave-active {
-	opacity: 0;
-	transform: translateX(20px);
+    opacity: 0;
+    transform: translateX(20px);
 }
+
 .breadcrumb-leave-active {
-	position: absolute;
-	z-index: -1;
+    position: absolute;
+    z-index: -1;
 }
 
 
 
-/* logo 过渡动画
+/* logo transition animation
 ------------------------------- */
 @keyframes logoAnimation {
-	0% {
-		transform: scale(0);
-	}
-	80% {
-		transform: scale(1.2);
-	}
-	100% {
-		transform: scale(1);
-	}
+    0% {
+        transform: scale(0);
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
-/* 404、401 过渡动画
+/* 404, 401 transition animation
 ------------------------------- */
 @keyframes error-num {
-	0% {
-		transform: translateY(60px);
-		opacity: 0;
-	}
-	100% {
-		transform: translateY(0);
-		opacity: 1;
-	}
+    0% {
+        transform: translateY(60px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
+
 @keyframes error-img {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
+
 @keyframes error-img-two {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
-
-
-

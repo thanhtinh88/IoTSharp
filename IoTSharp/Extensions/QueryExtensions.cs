@@ -1,31 +1,30 @@
 ﻿using IoTSharp.Controllers.Models;
-using IoTSharp.Models;
-using Microsoft.EntityFrameworkCore.Query;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using System;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading;
 using IoTSharp.EasyEFQuery;
+using IoTSharp.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace IoTSharp.Extensions
 {
- 
+
     public static class QueryExtensions
     {
         /// <summary>
-        /// 分页查询
+        /// Paging query
         /// </summary>
-        /// <typeparam name="T">原表类型</typeparam>
-        /// <param name="_dto">基础查询条件</param>
-        /// <param name="src">查询源</param>
+        /// <typeparam name="T">Original table type</typeparam>
+        /// <param name="_dto">Basic query conditions</param>
+        /// <param name="src">Query source</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<PagedData<T>> Query<T>(this QueryDto _dto, IQueryable<T> src ,CancellationToken cancellationToken = default(CancellationToken)) where T : class
+        public static async Task<PagedData<T>> Query<T>(this QueryDto _dto, IQueryable<T> src, CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
-            var _total = await src.CountAsync( cancellationToken);
+            var _total = await src.CountAsync(cancellationToken);
             var query = src.Skip((_dto.Offset) * _dto.Limit)
                           .Take(_dto.Limit);
             var rs = await query.ToListAsync(cancellationToken);
@@ -37,12 +36,12 @@ namespace IoTSharp.Extensions
             return data;
         }
         /// <summary>
-        /// 分页查询
+        /// Paging query
         /// </summary>
-        /// <typeparam name="T">原表类型</typeparam>
-        /// <param name="_dto">基础查询条件</param>
-        /// <param name="src">查询源</param>
-        /// <param name="_where">额外的查询条件</param>
+        /// <typeparam name="T">Original table type</typeparam>
+        /// <param name="_dto">Basic query conditions</param>
+        /// <param name="src">Query source</param>
+        /// <param name="_where">Additional query conditions</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public static async Task<PagedData<T>> Query<T>(this QueryDto _dto, IQueryable<T> src, Expression<Func<T, bool>> _where, CancellationToken cancellationToken = default(CancellationToken)) where T : class
@@ -50,23 +49,23 @@ namespace IoTSharp.Extensions
             var _total = await src.CountAsync(_where, cancellationToken);
             var query = src.Where(_where).Skip((_dto.Offset) * _dto.Limit)
                           .Take(_dto.Limit);
-           var rs = await query.ToListAsync(cancellationToken);
+            var rs = await query.ToListAsync(cancellationToken);
             var data = new PagedData<T>
             {
                 total = _total,
-                rows = rs 
+                rows = rs
             };
-         
+
             return data;
         }
         /// <summary>
-        /// 分页查询
+        /// Paging query
         /// </summary>
-        /// <typeparam name="T">原表类型</typeparam>
-        /// <typeparam name="P">查询名称的字段类型</typeparam>
-        /// <param name="_dto">基础查询条件</param>
-        /// <param name="src">查询源</param>
-        /// <param name="func">指定查询条件里面的Name查询对应的字段</param>
+        /// <typeparam name="T">Original table type</typeparam>
+        /// <typeparam name="P">Query name field type</typeparam>
+        /// <param name="_dto">Basic query conditions</param>
+        /// <param name="src">Query source</param>
+        /// <param name="func">Specify the field corresponding to the Name query in the query condition</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public static async Task<PagedData<T>> Query<T, P>(this QueryDto _dto, IQueryable<T> src, Expression<Func<T, P>> func, CancellationToken cancellationToken = default(CancellationToken)) where T : class
@@ -86,26 +85,27 @@ namespace IoTSharp.Extensions
         {
             var member = (MemberExpression)func.Body;
             var queries = new QueryCollection
-                {
-                    new Query { Name = member.Member.Name, Operator =Operators.StartWith, Value = _dto.Name },
-                    new Query { Name = member.Member.Name, Operator =Operators.Contains, Value = _dto.Name },
-                    new Query { Name = member.Member.Name, Operator = Operators.EndWidth, Value = _dto.Name  }
-                };
+            {
+                new Query { Name = member.Member.Name, Operator =Operators.StartWith, Value = _dto.Name },
+                new Query { Name = member.Member.Name, Operator =Operators.Contains, Value = _dto.Name },
+                new Query { Name = member.Member.Name, Operator = Operators.EndWidth, Value = _dto.Name }
+            };
             var _where = queries.AsExpression<T>();
             return _where;
         }
+
         /// <summary>
-        /// 分页查询
+        /// Paging query
         /// </summary>
-        /// <typeparam name="T">原表类型</typeparam>
-        /// <typeparam name="P">查询名称的字段类型</typeparam>
-        /// <param name="_dto">基础查询条件</param>
-        /// <param name="src">查询源</param>
-        /// <param name="func">指定查询条件里面的Name查询对应的字段</param>
-        /// <param name="_where">额外的查询条件</param>
+        /// <typeparam name="T">Original table type</typeparam>
+        /// <typeparam name="P">Query name field type</typeparam>
+        /// <param name="_dto">Basic query conditions</param>
+        /// <param name="src">Query source</param>
+        /// <param name="func">Specify the field corresponding to the Name query in the query condition</param>
+        /// <param name="_where">Additional query conditions</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<PagedData<T>> Query<T, P>(this QueryDto _dto, IQueryable<T> src, Expression<Func<T, bool>> _where, Expression<Func<T, P>> func,  CancellationToken cancellationToken = default(CancellationToken)) where T : class
+        public static async Task<PagedData<T>> Query<T, P>(this QueryDto _dto, IQueryable<T> src, Expression<Func<T, bool>> _where, Expression<Func<T, P>> func, CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             _where = _where.WithNameQuery(_dto, func);
             var _total = await src.CountAsync(_where, cancellationToken);
@@ -119,22 +119,23 @@ namespace IoTSharp.Extensions
             };
             return data;
         }
+
         /// <summary>
-        /// 分页查询
+        /// Paging query
         /// </summary>
-        /// <typeparam name="T">原表类型</typeparam>
-        /// <typeparam name="P">查询名称的字段类型</typeparam>
-        /// <typeparam name="R">查询到的数据转换为指定的类型</typeparam>
-        /// <param name="_dto">基础查询条件</param>
-        /// <param name="src">查询源</param>
-        /// <param name="func">指定查询条件里面的Name查询对应的字段</param>
-        /// <param name="_where">额外的查询条件</param>
-        /// <param name="conver">查询到的数据转换为指定的表达式</param>
+        /// <typeparam name="T">Original table type</typeparam>
+        /// <typeparam name="P">Query name field type</typeparam>
+        /// <typeparam name="R">Convert the queried data to the specified type</typeparam>
+        /// <param name="_dto">Basic query conditions</param>
+        /// <param name="src">Query source</param>
+        /// <param name="func">Specify the field corresponding to the Name query in the query condition</param>
+        /// <param name="_where">Additional query conditions</param>
+        /// <param name="conver">Convert the queried data to the specified expression</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<PagedData<R>> Query<T, R,P>(this QueryDto _dto, IQueryable<T> src, Expression<Func<T, bool>> _where, Expression<Func<T,P>> func ,  Expression<Func<T, R>> conver, CancellationToken cancellationToken = default(CancellationToken)) where T : class
+        public static async Task<PagedData<R>> Query<T, R, P>(this QueryDto _dto, IQueryable<T> src, Expression<Func<T, bool>> _where, Expression<Func<T, P>> func, Expression<Func<T, R>> conver, CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
-            _where = _where.WithNameQuery( _dto, func);
+            _where = _where.WithNameQuery(_dto, func);
             var _total = await src.CountAsync(_where, cancellationToken);
             var query = src.Where(_where).Skip((_dto.Offset) * _dto.Limit)
                           .Take(_dto.Limit);
@@ -154,11 +155,11 @@ namespace IoTSharp.Extensions
             {
                 var member = (MemberExpression)func.Body;
                 var queries = new QueryCollection
-                {
-                    new Query { Name = member.Member.Name, Operator =Operators.StartWith, Value = _dto.Name },
-                    new Query { Name = member.Member.Name, Operator =Operators.Contains, Value = _dto.Name },
-                    new Query { Name = member.Member.Name, Operator = Operators.EndWidth, Value = _dto.Name  }
-                };
+                 {
+                     new Query { Name = member.Member.Name, Operator =Operators.StartWith, Value = _dto.Name },
+                     new Query { Name = member.Member.Name, Operator =Operators.Contains, Value = _dto.Name },
+                     new Query { Name = member.Member.Name, Operator = Operators.EndWidth, Value = _dto.Name }
+                 };
                 _where = _where.AndWith(queries);
             }
 

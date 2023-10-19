@@ -85,16 +85,16 @@ namespace IoTSharp.Services.MQTTControllers
             , TimeSpan.FromSeconds(_settings.RuleCachingExpiration));
             if (rules.HasValue)
             {
-                var obj =   Message.Payload ;
+                var obj = Message.Payload;
                 rules.Value.ToList().ForEach(async g =>
                 {
-                    _logger.LogInformation($"{ClientId}的数据{Message.Topic}通过规则链{g}进行处理。");
+                    _logger.LogInformation($"The data {Message.Topic} of {ClientId} is processed through the rule chain {g}.");
                     await _flowRuleProcessor.RunFlowRules(g, obj, p_dev.Id, FlowRuleRunType.Normal, null);
                 });
             }
             else
             {
-                _logger.LogInformation($"{ClientId}的数据{Message.Topic}不符合规范， 也无相关规则链处理。");
+                _logger.LogInformation($"The data {Message.Topic} of {ClientId} does not comply with the specification, and there is no relevant rule chain processing.");
             }
         }
         [MqttRoute("json")]
@@ -116,13 +116,13 @@ namespace IoTSharp.Services.MQTTControllers
                 var obj = JsonConvert.DeserializeObject(Message.ConvertPayloadToString());
                 rules.Value.ToList().ForEach(async g =>
                 {
-                    _logger.LogInformation($"{ClientId}的数据{Message.Topic}通过规则链{g}进行处理。");
+                    _logger.LogInformation($"The data {Message.Topic} of {ClientId} is processed through the rule chain {g}.");
                     await _flowRuleProcessor.RunFlowRules(g, obj, p_dev.Id, FlowRuleRunType.Normal, null);
                 });
             }
             else
             {
-                _logger.LogInformation($"{ClientId}的数据{Message.Topic}不符合规范， 也无相关规则链处理。");
+                _logger.LogInformation($"The data {Message.Topic} of {ClientId} does not comply with the specification, and there is no relevant rule chain processing.");
             }
         }
     }

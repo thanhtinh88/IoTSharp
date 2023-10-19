@@ -12,14 +12,14 @@
     </el-sub-menu>
     <template v-else>
       <el-menu-item :index="val.path" :key="val.path">
-        <template v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
-          <!--					<SvgIcon :name="val.meta.icon" />-->
-          <el-icon class="z-menu-icon" style="margin-right: 10">
-            <component :is="menuIconList[val.name]"></component>
-          </el-icon>
-          <!--         *  // 在这里修改子菜单-->
-          <span >{{ $t(val.meta.title) }}</span>
-        </template>
+          <template v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
+              <!--					<SvgIcon :name="val.meta.icon" />-->
+              <el-icon class="z-menu-icon" style="margin-right: 10">
+                  <component :is="menuIconList[val.name]"></component>
+              </el-icon>
+              <!--         * // Modify submenu here -->
+              <span>{{ $t(val.meta.title) }}</span>
+          </template>
         <template v-else>
           <a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">
             <SvgIcon :name="val.meta.icon"/>
@@ -44,7 +44,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    // 获取父级菜单数据
+    // Get parent menu data
     const chils = computed(() => {
       return <any>props.chil;
     });

@@ -9,8 +9,9 @@ namespace IoTSharp.Dtos
     {
         public Guid OperationId { get; set; }
         public DateTime? AddDate { get; set; }
+
         /// <summary>
-        /// 节点处理状态，0 创建完
+        ///Node processing status, 0 created
         /// </summary>
         public int? NodeStatus { get; set; }
         public string OperationDesc { get; set; }

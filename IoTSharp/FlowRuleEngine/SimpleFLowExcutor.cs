@@ -25,7 +25,7 @@ namespace IoTSharp.FlowRuleEngine
     public class SimpleFlowExcutor : IFlowExcutor<FlowExcuteEntity>
     {
         /// <summary>
-        /// 调用规则引擎处理线上的逻辑，判断是否为True，用来判断是否继续进行下一步节点
+        /// Call the rule engine to process the online logic and determine whether it is True, which is used to determine whether to continue to the next node.
         /// </summary>
         /// <param name="Input"></param>
         /// <returns></returns>
@@ -40,22 +40,22 @@ namespace IoTSharp.FlowRuleEngine
             {
                 item.Rule.Operator = item.id;
             }
-            //规则集合，可以参考RulesEngine.RulesEngine程序说明，其中需要的很多参数已经写死，只有Expression前端填写，如Age>18
+            //Rule collection, you can refer to the RulesEngine.RulesEngine program description. Many of the required parameters have been hard-coded and only the Expression front-end is filled in, such as Age>18
             /**
-             * //定义规则
-        var  rulesStr = @"[{
+             * //Define rules
+        var rulesStr = @"[{
         ""WorkflowName"":""UserInputworkflow"",
         ""Rules"":[
-.         {
+.{
             "RuleName"":"CheckAge"
-            "ErrorMessage"":""年龄必须大于18岁。"",
+            "ErrorMessage"":""Age must be greater than 18 years old."",
             ""ErrorType"":""Error"",
             ""RuleExpressionType"":"LambdaExpression"",
             ""Expression"":""Age > 18""
           },
-         { 
+         {
             ""RuleName"" :"CheckIDNoIsEmpty"",
-            ""ErrorMessage”":""身份证号不可以为空."",
+            ""ErrorMessage"":""ID card number cannot be empty."",
             ""ErrorType"":"Error"",
             ""RuleExpressionType"":""LambdaExpression"",
             ""Expression"":""IdNo != null""
@@ -63,7 +63,7 @@ namespace IoTSharp.FlowRuleEngine
         }]";
           **/
             mainRules.Rules = Input.Task.outgoing.Select(c => c.Rule).ToList();
-            //调用规则引擎执行规则判断验证成功就会返回IsSuccess=true
+            //Calling the rule engine to execute the rules and judging if the verification is successful, IsSuccess=true will be returned
             var bre = new RulesEngine.RulesEngine(new[] { mainRules }, null);
             return await bre.ExecuteAllRulesAsync(Input.Task.id, Input.Params);
         }

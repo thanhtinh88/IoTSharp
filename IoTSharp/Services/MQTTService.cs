@@ -81,14 +81,14 @@ namespace IoTSharp.Services
                 {
                     if (clientid != _mcsetting.MqttBroker)
                     {
-                        _logger.LogWarning($"未能找到客户端{clientid}回话附加的设备信息，现在断开此链接。 ");
+                        _logger.LogWarning($"Unable to find the device information attached to the client {clientid} reply, disconnect this link now. ");
                         await client.DisconnectAsync();
                     }
                 }
             }
             else
             {
-                _logger.LogWarning($"未能找到客户端{clientid}上下文信息");
+                _logger.LogWarning($"Unable to find client {clientid} context information");
             }
             return device;
         }

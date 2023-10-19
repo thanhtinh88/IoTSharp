@@ -12,7 +12,7 @@ namespace IoTSharp.Models.FormFieldTypes
         private string _Url;
         private string _Default;
 
-        //保存的结构和设置的结构不一样 ，
+        //The saved structure is different from the set structure,
         public string Name => fileName;
 
         public string fileName

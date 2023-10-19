@@ -2,13 +2,13 @@ import { IListQueryParam } from '../iapiresult';
 import request from '/@/utils/request';
 
 /**
- * 用户api接口集合
- * @method accountList 用户列表
- * @method getAccount 获取用户
- * @method postAccount 新增用户
- * @method putAccount 修改用户
- * @method deleteAccount 删除用户
- */
+  * User api interface collection
+  * @method accountList user list
+  * @method getAccount Get the user
+  * @method postAccount new user
+  * @method putAccount Modify user
+  * @method deleteAccount delete user
+  */
 export function accountApi() {
 	return {
 		accountList: (params: CustomerQueryParam) => {

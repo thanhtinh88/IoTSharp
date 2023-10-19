@@ -17,7 +17,7 @@ using System.Security.Cryptography;
 namespace IoTSharp.Controllers
 {
     /// <summary>
-    /// 登录验证码
+    /// Login verification code
     /// </summary>
     [Route("api/[controller]/[action]")]
     public class CaptchaController : ControllerBase
@@ -30,8 +30,9 @@ namespace IoTSharp.Controllers
             _hostingEnvironment = hostingEnvironment;
             _caching = caching;
         }
+
         /// <summary>
-        /// 生成一个图形认证
+        /// Generate a graphical authentication
         /// </summary>
         /// <param name="clientid"></param>
         /// <returns></returns>
@@ -56,7 +57,7 @@ namespace IoTSharp.Controllers
 
 
         /// <summary>
-        /// 生成一个图形认证
+        /// Generate a graphical authentication
         /// </summary>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
@@ -69,7 +70,7 @@ namespace IoTSharp.Controllers
 
 
         /// <summary>
-        /// 校验图形认证
+        /// Verify graphic authentication
         /// </summary>
         /// <param name="clientid"></param>
         /// <param name="m"></param>

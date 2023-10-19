@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 namespace IoTSharp.Models
 {
     /// <summary>
-    /// 返回一页类型为<typeparamref name="T"/>的数据
+    /// Returns a page of data of type <typeparamref name="T"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class PagedData<T>
     {
         /// <summary>
-        /// 数据总量
+        ///Total amount of data
         /// </summary>
         public long total { get; set; }
         /// <summary>
-        /// 一页数据
+        /// One page of data
         /// </summary>
         public List<T> rows { get; set; }
 
