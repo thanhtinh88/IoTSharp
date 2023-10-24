@@ -1,57 +1,58 @@
 <template>
-  <div class="workflow-container">
-    <div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - 400px` }">
-      <div class="workflow">
-        <!-- 顶部工具栏 -->
-        <Tool @tool="onToolClick" />
-        <!-- 左侧导航区 -->
-        <div class="workflow-content">
-          <!-- 右侧绘画区 -->
-          <div class="workflow-right" ref="workflowRightRef">
-            <div v-for="(v, k) in state.jsplumbData.nodeList" :key="v.nodeId" :id="v.nodeId" :data-node-id="v.nodeId"
-              :class="v.nodeclass" :style="{ left: v.left, top: v.top }" @click="onItemCloneClick(k)">
-              <div :style="{ backgroundColor: v.color }" class="workflow-right-box"
-                :class="{ 'workflow-right-active': state.jsPlumbNodeIndex === k }">
-                  <div class="workflow-left-item-icon">
-                      <SvgIcon :name="v.icon" class="workflow-icon-drag" />
-                      <div class="font10 pl5 name">{{ v.name }}</div>
-                  </div>
-              </div>
+    <div class="workflow-container">
+        <div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - 400px` }">
+            <div class="workflow">
+                <!-- Top toolbar -->
+                <Tool @tool="onToolClick" />
+                <!-- Left navigation area -->
+                <div class="workflow-content">
+                    <!-- Painting area on the right -->
+                    <div class="workflow-right" ref="workflowRightRef">
+                        <div v-for="(v, k) in state.jsplumbData.nodeList" :key="v.nodeId" :id="v.nodeId" :data-node-id="v.nodeId"
+                             :class="v.nodeclass" :style="{ left: v.left, top: v.top }" @click="onItemCloneClick(k)">
+                            <div :style="{ backgroundColor: v.color }" class="workflow-right-box"
+                                 :class="{ 'workflow-right-active': state.jsPlumbNodeIndex === k }">
+                                <div class="workflow-left-item-icon">
+                                    <SvgIcon :name="v.icon" class="workflow-icon-drag" />
+                                    <div class="font10 pl5 name">{{ v.name }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+
+        <div class="workflow-bottom">
+            <el-tabs type="card" class="tabs" v-model="activeName">
+                <el-tab-pane label="timeline" name="timeline">
+                    <el-timeline>
+                        <el-timeline-item v-for="(activity, index) in state.activities" :key="index" :type="activity.type"
+                                          :timestamp="activity.timestamp">
+                            <el-card>
+                                <h4> {{ activity.content }}</h4>
+                                <p> {{ activity.data }}</p>
+                            </el-card>
+                        </el-timeline-item>
+                    </el-timeline>
+                </el-tab-pane>
+
+            </el-tabs>
+        </div>
+        <el-dialog v-model="state.dataFormVisible" title="Test data">
+            <div>
+                <monaco height="100%" width="100%" theme="vs-dark" v-model="state.content" language="json"
+                        selectOnLineNumbers="true"></monaco>
+            </div>
+
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="state.dataFormVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="submitData"> Confirm </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
-
-    <div class="workflow-bottom">
-      <el-tabs type="card" class="tabs" v-model="activeName">
-        <el-tab-pane label="timeline" name="timeline"> <el-timeline>
-            <el-timeline-item v-for="(activity, index) in state.activities" :key="index" :type="activity.type"
-              :timestamp="activity.timestamp">
-              <el-card>
-                <h4> {{ activity.content }}</h4>
-                <p> {{ activity.data }}</p>
-              </el-card>
-            </el-timeline-item>
-          </el-timeline></el-tab-pane>
-
-      </el-tabs>
-    </div>
-
-    <el-dialog v-model="state.dataFormVisible" title="测试数据">
-      <div>
-        <monaco height="100%" width="100%" theme="vs-dark" v-model="state.content" language="json"
-          selectOnLineNumbers="true"></monaco>
-      </div>
-
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="state.dataFormVisible = false">取消</el-button>
-          <el-button type="primary" @click="submitData"> 确认 </el-button>
-        </span>
-      </template>
-    </el-dialog>
-  </div>
 </template>
 
 <script lang="ts" setup>
@@ -156,22 +157,22 @@ const state = reactive<FlowState>({
 
   index: 0,
 });
-// 设置 view 的高度
+//Set the height of the view
 const setViewHeight = computed(() => {
-  let { isTagsview } = themeConfig.value;
-  if (isTagsViewCurrenFull.value) {
-    return `30px`;
-  } else {
-    if (isTagsview) return `114px`;
-    else return `80px`;
-  }
+   let { isTagsview } = themeConfig.value;
+   if (isTagsViewCurrenFull.value) {
+     return `30px`;
+   } else {
+     if (isTagsview) return `114px`;
+     else return `80px`;
+   }
 });
-// 设置 宽度小于 768
+//Set width less than 768
 const setClientWidth = () => {
-  const clientWidth = document.body.clientWidth;
-  clientWidth < 768 ? (state.isShow = true) : (state.isShow = false);
+   const clientWidth = document.body.clientWidth;
+   clientWidth < 768 ? (state.isShow = true) : (state.isShow = false);
 };
-// 右侧导航-数据初始化
+// Right navigation-data initialization
 const initRightNodeList = async () => {
   await ruleApi()
     .getDiagram(state.flowid)
@@ -187,57 +188,58 @@ const initRightNodeList = async () => {
      state.index++;
    }, 1000);
 };
-// 初始化 jsPlumb
+
+//Initialize jsPlumb
 const initJsPlumb = () => {
-  (<any>jsPlumb).ready(() => {
-    state.jsPlumb = (<any>jsPlumb).getInstance({
-      detachable: false,
-      Container: "workflow-right",
-    });
-    state.jsPlumb.fire("jsPlumbDemoLoaded", state.jsPlumb);
-    // 导入默认配置
-    state.jsPlumb.importDefaults(state.jsplumbDefaults);
-    // 会使整个jsPlumb立即重绘。
-    state.jsPlumb.setSuspendDrawing(false, true);
-    // 初始化节点、线的链接
-    initJsPlumbConnection();
-  });
+   (<any>jsPlumb).ready(() => {
+     state.jsPlumb = (<any>jsPlumb).getInstance({
+       detachable: false,
+       Container: "workflow-right",
+     });
+     state.jsPlumb.fire("jsPlumbDemoLoaded", state.jsPlumb);
+     //Import default configuration
+     state.jsPlumb.importDefaults(state.jsplumbDefaults);
+     // Will cause the entire jsPlumb to be redrawn immediately.
+     state.jsPlumb.setSuspendDrawing(false, true);
+     // Initialize the links of nodes and lines
+     initJsPlumbConnection();
+   });
 };
-// 初始化节点、线的链接
+// Initialize the links of nodes and lines
 const initJsPlumbConnection = () => {
-  state.jsplumbData.nodeList.forEach((v) => {
-    // 整个节点作为source或者target
-    state.jsPlumb.makeSource(v.nodeId, state.jsplumbMakeSource);
-    // 整个节点作为source或者target
-    state.jsPlumb.makeTarget(v.nodeId, state.jsplumbMakeTarget, jsplumbConnect);
-  });
+   state.jsplumbData.nodeList.forEach((v) => {
+     //The entire node serves as source or target
+     state.jsPlumb.makeSource(v.nodeId, state.jsplumbMakeSource);
+     //The entire node serves as source or target
+     state.jsPlumb.makeTarget(v.nodeId, state.jsplumbMakeTarget, jsplumbConnect);
+   });
 
-  // 线
-  state.jsplumbData.lineList.forEach((v) => {
-    state.jsPlumb.connect(
-      {
-        source: v.sourceId,
-        target: v.targetId,
-        label: v.linename,
-        linename: v.linename,
-        condition: v.condition,
-      },
-      state.jsplumbConnect
-    );
+   // Wire
+   state.jsplumbData.lineList.forEach((v) => {
+     state.jsPlumb.connect(
+       {
+         source: v.sourceId,
+         target: v.targetId,
+         label: v.linename,
+         linename: v.linename,
+         condition: v.condition,
+       },
+       state.jsplumbConnect
+     );
 
-  });
-  // 节点
+   });
+   // node
 };
 const onexecutorSubmit = (data: object) => { };
 
 const onscriptSubmit = (data: any) => { };
 
-// 右侧内容区-当前项点击
+// Right content area - click on the current item
 const onItemCloneClick = (k: number) => {
-  state.jsPlumbNodeIndex = k;
+   state.jsPlumbNodeIndex = k;
 };
 
-// 右侧内容区-当前项右键菜单点击回调(线)
+// Right content area-Current item right-click menu click callback (line)
 const onCurrentLineClick = (item: any, conn: any) => {
   const { contextMenuClickId } = item;
   const { endpoints } = conn;
@@ -254,7 +256,7 @@ const onCurrentLineClick = (item: any, conn: any) => {
     drawerRef.value.open(item, conn);
   }
 };
-// 设置线的 label
+//Set the label of the line
 const setLineLabel = (obj: any) => {
   const { sourceId, targetId, label, linename, condition, namespace } = obj;
   const conn = state.jsPlumb.getConnections({
@@ -276,23 +278,23 @@ const setLineLabel = (obj: any) => {
     }
   });
 };
-// 设置节点内容
+//Set node content
 const setNodeContent = (obj: any) => {
-  const { nodeId, name, icon } = obj;
+   const { nodeId, name, icon } = obj;
 
-  // 设置节点 name 与 icon
-  state.jsplumbData.nodeList.forEach((v) => {
-    if (v.nodeId === nodeId) {
-      v.name = name;
-      v.icon = icon;
-    }
-  });
-  // 重绘
-  nextTick(() => {
-    state.jsPlumb.setSuspendDrawing(false, true);
-  });
+   //Set node name and icon
+   state.jsplumbData.nodeList.forEach((v) => {
+     if (v.nodeId === nodeId) {
+       v.name = name;
+       v.icon = icon;
+     }
+   });
+   // redraw
+   nextTick(() => {
+     state.jsPlumb.setSuspendDrawing(false, true);
+   });
 };
-// 顶部工具栏-当前项点击
+//Top toolbar-Click on current item
 const onToolClick = (fnName: String) => {
   switch (fnName) {
     case "help":
@@ -312,21 +314,20 @@ const onToolClick = (fnName: String) => {
       break;
   }
 };
-
 const onReturnToList = () => {
-  emit("close", state.jsplumbData);
-  // router.push({
-  //   path: "/iot/rules/flowlist",
-  // });
+   emit("close", state.jsplumbData);
+   // router.push({
+   // path: "/iot/rules/flowlist",
+   // });
 };
 
-// 顶部工具栏-帮助
+//Top Toolbar-Help
 const onToolHelp = () => {
-  nextTick(() => {
-    helpRef.value.open();
-  });
+   nextTick(() => {
+     helpRef.value.open();
+   });
 };
-// 顶部工具栏-下载
+//Top Toolbar-Download
 const onToolDownload = () => {
   const { globalTitle } = themeConfig.value;
   const href =
@@ -334,10 +335,10 @@ const onToolDownload = () => {
     encodeURIComponent(JSON.stringify(state.jsplumbData, null, "\t"));
   const aLink = document.createElement("a");
   aLink.setAttribute("href", href);
-  aLink.setAttribute("download", `${globalTitle}设计.json`);
+  aLink.setAttribute("download", `${globalTitle}design.json`);
   aLink.click();
   aLink.remove();
-  ElMessage.success("下载成功");
+  ElMessage.success("download successful");
 };
 
 const panelclose = (data: any) => {
@@ -372,7 +373,7 @@ const panelclose = (data: any) => {
   }
 };
 
-// 顶部工具栏-提交
+//Top Toolbar-Submit
 const onToolSubmit = () => {
   openRunDialog();
 };
@@ -413,7 +414,7 @@ const submitData = (node: any) => {
        setTimeout(clearclass, res.data.length * 1000);
 
       });
-    ElMessage.success("数据提交成功");
+    ElMessage.success("Data submitted successfully");
   }
 };
 
@@ -422,7 +423,7 @@ const openRunDialog = () => {
   state.content = "";
 };
 
-// 顶部工具栏-全屏
+// Top toolbar - full screen
 const onToolFullscreen = () => {
   stores.setCurrenFullscreen(true);
 };
@@ -436,7 +437,7 @@ watch(() => props.ruleId, async () => {
   }
 
 })
-// 页面加载时
+//When the page loads
 onMounted(async () => {
   if (props.ruleId && props.ruleId !== "") {
       await initRightNodeList();
@@ -445,179 +446,178 @@ onMounted(async () => {
   }
   window.addEventListener("resize", setClientWidth);
 });
-// 页面卸载时
+//When the page is unloaded
 onUnmounted(() => {
   window.removeEventListener("resize", setClientWidth);
 });
 </script>
 
 <style scoped lang="scss">
-  
 
-.workflow-container {
-  position: relative;
-    
-    .workflow-bottom {
-        padding-top:5px;
-        min-height:286px;
-        background-color:#f7fbff;
-        height: 100%;
-        border-right: 1px solid var(--el-border-color-light, #ebeef5);
-          :v-deep(.el-timeline-item__node) {
-        background-color: #9dbdfd !important;
-        left:0px;
-    }
-    :v-deep(.el-timeline-item__tail)   {
-        border-left: 2px solid #e3ebf9 !important;
-        left: 5px;
-    }
-    :v-deep(.el-timeline-item__wrapper){
-        padding-right:15px;
-    }
-  
-    }
 
-  .workflow {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    flex-direction: column;
-
-    .workflow-content {
-      display: flex;
-      height: calc(100% - 35px);
-
-      .workflow-right {
-        flex: 1;
+    .workflow-container {
         position: relative;
-        overflow: hidden;
-        height: 100%;
-        background-image: linear-gradient(90deg,
-            rgb(156 214 255 / 15%) 10%,
-            rgba(0, 0, 0, 0) 10%),
-          linear-gradient(rgb(156 214 255 / 15%) 10%, rgba(0, 0, 0, 0) 10%);
-        background-size: 10px 10px;
 
-        .workflow-right-clone {
-          position: absolute;
+        .workflow-bottom {
+            padding-top: 5px;
+            min-height: 286px;
+            background-color: #f7fbff;
+            height: 100%;
+            border-right: 1px solid var(--el-border-color-light, #ebeef5);
 
-          .workflow-right-box {
-            height: 50px;
-            align-items: center;
-            color: black;
-            padding: 0 10px;
-            border-radius: 3px;
-            cursor: move;
-            transition: all 0.1s ease;
-            min-width: 94.5px;
-            background: var(--el-color-white);
-            border: 1px solid var(--el-border-color-light, #ebeef5);
-
-            .workflow-left-item-icon {
-              display: flex;
-              align-items: center;
-              height: 50px;
+            :v-deep(.el-timeline-item__node) {
+                background-color: #9dbdfd !important;
+                left: 0px;
             }
 
-            &:hover {
-              outline: 2px dashed var(--el-color-primary);
-              background: var(--el-color-primary-light-9);
-              //transition: all 0.3s ease;
-              color: var(--el-color-primary);
-
-              i {
-                cursor: Crosshair;
-              }
-            }
-          }
-
-          .workflow-right-active {
-            //border: 1px dashed var(--el-color-primary);
-            outline: 2px solid var(--el-color-primary);
-            background: var(--el-color-primary-light-9);
-            color: var(--el-color-primary);
-          }
-        }
-
-        .workflow-right-highlight {
-          position: absolute;
-
-          .workflow-right-box {
-            height: 50px;
-            align-items: center;
-            color: var(--el-color-white);
-            padding: 0 10px;
-            border-radius: 3px;
-            cursor: move;
-            transition: all 0.3s ease;
-            min-width: 94.5px;
-            background: #755eea;
-            border: 1px solid var(--el-border-color-light, #c95eea);
-
-            .workflow-left-item-icon {
-              display: flex;
-              align-items: center;
-              height: 50px;
+            :v-deep(.el-timeline-item__tail) {
+                border-left: 2px solid #e3ebf9 !important;
+                left: 5px;
             }
 
-            &:hover {
-              border: 1px dashed var(--el-color-primary);
-              background: var(--el-color-primary-light-9);
-              transition: all 0.3s ease;
-              color: var(--el-color-primary);
-
-              i {
-                cursor: Crosshair;
-              }
+            :v-deep(.el-timeline-item__wrapper) {
+                padding-right: 15px;
             }
-          }
-
-          .workflow-right-active {
-            border: 1px dashed var(--el-color-primary);
-            background: var(--el-color-primary-light-9);
-            color: var(--el-color-primary);
-          }
         }
 
-        :deep(.jtk-overlay):not(.aLabel) {
-          padding: 4px 10px;
-          border: 1px solid var(--el-border-color-light, #ebeef5) !important;
-          color: var(--el-text-color-secondary) !important;
-          background: var(--el-color-white) !important;
-          border-radius: 3px;
-          font-size: 10px;
+        .workflow {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+
+            .workflow-content {
+                display: flex;
+                height: calc(100% - 35px);
+
+                .workflow-right {
+                    flex: 1;
+                    position: relative;
+                    overflow: hidden;
+                    height: 100%;
+                    background-image: linear-gradient(90deg, rgb(156 214 255 / 15%) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgb(156 214 255 / 15%) 10%, rgba(0, 0, 0, 0) 10%);
+                    background-size: 10px 10px;
+
+                    .workflow-right-clone {
+                        position: absolute;
+
+                        .workflow-right-box {
+                            height: 50px;
+                            align-items: center;
+                            color: black;
+                            padding: 0 10px;
+                            border-radius: 3px;
+                            cursor: move;
+                            transition: all 0.1s ease;
+                            min-width: 94.5px;
+                            background: var(--el-color-white);
+                            border: 1px solid var(--el-border-color-light, #ebeef5);
+
+                            .workflow-left-item-icon {
+                                display: flex;
+                                align-items: center;
+                                height: 50px;
+                            }
+
+                            &:hover {
+                                outline: 2px dashed var(--el-color-primary);
+                                background: var(--el-color-primary-light-9);
+                                //transition: all 0.3s ease;
+                                color: var(--el-color-primary);
+
+                                i {
+                                    cursor: Crosshair;
+                                }
+                            }
+                        }
+
+                        .workflow-right-active {
+                            //border: 1px dashed var(--el-color-primary);
+                            outline: 2px solid var(--el-color-primary);
+                            background: var(--el-color-primary-light-9);
+                            color: var(--el-color-primary);
+                        }
+                    }
+
+                    .workflow-right-highlight {
+                        position: absolute;
+
+                        .workflow-right-box {
+                            height: 50px;
+                            align-items: center;
+                            color: var(--el-color-white);
+                            padding: 0 10px;
+                            border-radius: 3px;
+                            cursor: move;
+                            transition: all 0.3s ease;
+                            min-width: 94.5px;
+                            background: #755eea;
+                            border: 1px solid var(--el-border-color-light, #c95eea);
+
+                            .workflow-left-item-icon {
+                                display: flex;
+                                align-items: center;
+                                height: 50px;
+                            }
+
+                            &:hover {
+                                border: 1px dashed var(--el-color-primary);
+                                background: var(--el-color-primary-light-9);
+                                transition: all 0.3s ease;
+                                color: var(--el-color-primary);
+
+                                i {
+                                    cursor: Crosshair;
+                                }
+                            }
+                        }
+
+                        .workflow-right-active {
+                            border: 1px dashed var(--el-color-primary);
+                            background: var(--el-color-primary-light-9);
+                            color: var(--el-color-primary);
+                        }
+                    }
+
+                    :deep(.jtk-overlay):not(.aLabel) {
+                        padding: 4px 10px;
+                        border: 1px solid var(--el-border-color-light, #ebeef5) !important;
+                        color: var(--el-text-color-secondary) !important;
+                        background: var(--el-color-white) !important;
+                        border-radius: 3px;
+                        font-size: 10px;
+                    }
+
+                    :deep(.jtk-overlay.workflow-right-empty-label) {
+                        display: none;
+                    }
+                }
+            }
         }
 
-        :deep(.jtk-overlay.workflow-right-empty-label) {
-          display: none;
+        .workflow-mask {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+
+            &::after {
+                content: "The mobile version does not support jsPlumb operation";
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1;
+                background: rgba(255, 255, 255, 0.9);
+                color: #666666;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
-      }
     }
-  }
-
-  .workflow-mask {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    &::after {
-      content: "手机版不支持 jsPlumb 操作";
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1;
-      background: rgba(255, 255, 255, 0.9);
-      color: #666666;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-}
 
 .workflow-icon-drag {
   position: relative;

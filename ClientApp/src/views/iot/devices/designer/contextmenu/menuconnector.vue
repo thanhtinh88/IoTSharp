@@ -32,44 +32,43 @@
     ],
     sender: {}
   
-  });
-  // 父级传过来的坐标 x,y 值
-  const dropdowns = computed(() => {
-    return <any>props.dropdown;
-  });
-  // 当前项菜单点击
-  const onCurrentClick = (command: string) => {
-    emit(
-      "onconnectoropencommand",
-      { command, sender:state.sender }
-  
-    );
-  };
-  // 打开右键菜单：判断是否固定，固定则不显示关闭按钮
-  const openContextmenu = (sender: any) => {
+  });//Coordinates x,y values passed from parent
+      const dropdowns = computed(() => {
+          return <any>props.dropdown;
+      });
+      //Current item menu click
+      const onCurrentClick = (command: string) => {
+          emit(
+              "onconnectoropencommand",
+              { command, sender: state.sender }
 
-    //此处为edge对象
-    state.sender = sender;
-    state.menuitems = sender.store?.data?.bizdata?.command?.contextmenu
-    closeContextmenu();
-    setTimeout(() => {
-      state.isShow = true;
-    }, 10);
-  };
-  // 关闭右键菜单
-  const closeContextmenu = () => {
-    state.isShow = false;
-  };
-  // 监听页面监听进行右键菜单的关闭
-  onMounted(() => {
-    document.body.addEventListener("click", closeContextmenu);
-    document.body.addEventListener("contextmenu", closeContextmenu);
-  });
-  // 页面卸载时，移除右键菜单监听事件
-  onUnmounted(() => {
-    document.body.removeEventListener("click", closeContextmenu);
-    document.body.removeEventListener("contextmenu", closeContextmenu);
-  });
+          );
+      };
+      // Open the right-click menu: determine whether it is fixed. If it is fixed, the close button will not be displayed.
+      const openContextmenu = (sender: any) => {
+
+          //Here is the edge object
+          state.sender = sender;
+          state.menuitems = sender.store?.data?.bizdata?.command?.contextmenu
+          closeContextmenu();
+          setTimeout(() => {
+              state.isShow = true;
+          }, 10);
+      };
+      // Close the right-click menu
+      const closeContextmenu = () => {
+          state.isShow = false;
+      };
+      // Monitor the page to monitor the closing of the right-click menu
+      onMounted(() => {
+          document.body.addEventListener("click", closeContextmenu);
+          document.body.addEventListener("contextmenu", closeContextmenu);
+      });
+      // When the page is unloaded, remove the right-click menu listening event
+      onUnmounted(() => {
+          document.body.removeEventListener("click", closeContextmenu);
+          document.body.removeEventListener("contextmenu", closeContextmenu);
+      });
   
   defineExpose({
     openContextmenu,

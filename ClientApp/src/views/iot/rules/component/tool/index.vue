@@ -26,26 +26,25 @@ const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	toolList: [
-		{ icon: 'ele-Help', title: '帮助', fnName: 'help' },
-		{ icon: 'ele-Download', title: '下载', fnName: 'download' },
-		{ icon: 'ele-Check', title: '提交', fnName: 'submit' },
-		{ icon: 'ele-DocumentCopy', title: '复制', fnName: 'copy' },
-		{ icon: 'ele-Delete', title: '删除', fnName: 'del' },
-		{ icon: 'ele-FullScreen', title: '全屏', fnName: 'fullscreen' },
-		{ icon: 'ele-Back', title: '返回', fnName: 'return' },
+{ icon: 'ele-Help', title: 'Help', fnName: 'help' },
+{ icon: 'ele-Download', title: 'Download', fnName: 'download' },
+{ icon: 'ele-Check', title: 'submit', fnName: 'submit' },
+{ icon: 'ele-DocumentCopy', title: 'Copy', fnName: 'copy' },
+{ icon: 'ele-Delete', title: 'Delete', fnName: 'del' },
+{ icon: 'ele-FullScreen', title: 'fullscreen', fnName: 'fullscreen' },
+{ icon: 'ele-Back', title: 'return', fnName: 'return' },
 
-	],
+],
 });
-// 设置 tool 标题
+//Set tool title
 const setToolTitle = computed(() => {
-	let { globalTitle } = themeConfig.value;
-	return `${globalTitle}规则设计-`+props.ruleName;
+let { globalTitle } = themeConfig.value;
+return `${globalTitle} rule design-`+props.ruleName;
 });
-// 顶部工具栏
+//Top toolbar
 const onToolClick = (fnName: string) => {
-	emit('tool', fnName);
+emit('tool', fnName);
 };
-
 
 
 </script>

@@ -66,13 +66,13 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                         records.push(form);
                         return form;
                     } else {
-                        ElMessage.error('请输入合法邮箱');
+                        ElMessage.error('Please enter a legal email address');
                     }
                 } else {
-                    ElMessage.error('请填写邮箱');
+                    ElMessage.error('Please fill in your email');
                 }
             } else {
-                ElMessage.error('请填写用户名');
+                ElMessage.error('Please fill in the user name');
             }
         } catch (e) {
             ElMessage.error(e.response.msg);
@@ -101,26 +101,26 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                 beforeSubmit: function (subParam) {
                     var form = subParam.form;
                     if (subParam.mode == 'add') {
-                        //验证
+          //Verify username
                         var userName = form.userName;
                         var email = form.email;
                         if (userName) {
                             if (email) {
                                 const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
                                 if (regEmail.test(email)) {
-                                   //需要验证是否重复
+                                    //Need to verify whether it is duplicated
 
                                 } else {
-                                    ElMessage.error('请输入合法邮箱');
-                                    throw new Error('请输入合法邮箱');
+                                    ElMessage.error('Please enter a legal email address');
+                                    throw new Error('Please enter a valid email address');
                                 }
                             } else {
-                                ElMessage.error('请填写邮箱');
-                                throw new Error('请填写邮箱');
+                                ElMessage.error('Please fill in your email');
+                                throw new Error('Please fill in your email address');
                             }
                         } else {
-                            ElMessage.error('请填写用户名');
-                            throw new Error('请填写用户名');
+                            ElMessage.error('Please fill in the user name');
+                            throw new Error('Please fill in the user name');
                         }
                     }
                 }
@@ -145,12 +145,12 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                         icon: 'Delete',
                         ...FsButton,
                         order: 2,
-                    }, //删除按钮
+                    }, // delete button
                 },
             },
             columns: {
                 tenantName: {
-                    title: '所属租户',
+                    title: 'Owning tenant',
                     type: 'text',
                     column: { width: 140 },
                     addForm: {
@@ -161,7 +161,7 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                     },
                 },
                 customerName: {
-                    title: '所属客户',
+                    title: 'Customer',
                     type: 'text',
                     column: { width: 140 },
                     addForm: {
@@ -183,7 +183,7 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                 //	},
                 //},
                 userName: {
-                    title: '名称',
+                    title: 'user name',
                     type: 'text',
                     column: { width: 200 },
                     search: { show: true }, //显示查询
@@ -197,7 +197,7 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                     },
                 },
                 email: {
-                    title: '邮件',
+                    title: 'email',
                     column: { width: 200 },
                     type: 'text',
                     addForm: {
@@ -210,7 +210,7 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                     },
                 },
                 phoneNumber: {
-                    title: '电话',
+                    title: 'phone',
                     column: { width: 140 },
                     type: 'text',
                     addForm: {
@@ -223,7 +223,7 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                     },
                 },
                 accessFailedCount: {
-                    title: '登录失败次数',
+                    title: 'Number of login failures',
                     column: { width: 135 },
                     type: 'text',
                     addForm: {
@@ -234,7 +234,7 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                     },
                 },
                 lockoutEnabled: {
-                    title: '锁定',
+                    title: 'Lock',
                     addForm: {
                         show: false,
                     },
@@ -262,7 +262,7 @@ export const createUserListCrudOptions = function ({ expose }, customerId) {
                     addForm: {
                         show: false,
                     },
-                    title: '锁定截止时间',
+                    title: 'Lock deadline',
                     //column: { width: 150 },
                     type: 'text',
                     editForm: {

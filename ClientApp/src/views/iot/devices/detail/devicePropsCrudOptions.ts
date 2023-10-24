@@ -80,12 +80,12 @@ export const createDevicePropsCrudOptions = function ({ expose }, deviceId, stat
 						show: true,
 					},
 					custom: {
-						text: '属性修改', //fs-button组件的参数
-						show: true, //是否显示此按钮
+						text: 'Property modification', //parameters of fs-button component
+						show: true, //Whether to display this button
 						type: 'primary',
 						click() {
 							state.currentPageState = 'editprop';
-						}, //点击事件，默认打开添加对话框
+						}, //Click event, open the add dialog box by default
 					},
 				},
 			},
@@ -117,8 +117,8 @@ export const createDevicePropsCrudOptions = function ({ expose }, deviceId, stat
 				width: 100,
 				dropdown: {
 					more: {
-						//更多按钮配置
-						text: '属性',
+						//More button configurations
+						text: 'property',
 						...FsButton,
 						icon: 'operation',
 					},
@@ -130,26 +130,26 @@ export const createDevicePropsCrudOptions = function ({ expose }, deviceId, stat
 						icon: 'Delete',
 						...FsButton,
 						order: 5,
-					}, //删除按钮
+					}, //Delete button
 				},
 			},
 			columns: {
 				keyName: {
-					title: '属性名称',
+					title: 'Attribute name',
 					type: 'text',
 					column: {
 						width: 260,
 					},
 				},
 				value: {
-					title: '值',
+					title: 'value',
 					column: {
 						width: 158,
 						formatter(context) {
 							if (context.row.dataType === 'DateTime') {
 								return formatToDateTime(context.value);
 							} else {
-								//解决数值为false不显示问题
+								//Solve the problem of not displaying the value if it is false
 								if (context.value || context.value == false) {
 									return context.value.toString();
 								}
@@ -165,7 +165,7 @@ export const createDevicePropsCrudOptions = function ({ expose }, deviceId, stat
 					},
 				},
 				dataType: {
-					title: '数据类型',
+					title: 'data type',
 					type: 'dict-select',
 					dict: dict({
 						data: [
@@ -181,7 +181,7 @@ export const createDevicePropsCrudOptions = function ({ expose }, deviceId, stat
 					}),
 				},
 				dataSide: {
-					title: '数据侧',
+					title: 'data side',
 					type: 'dict-select',
 					dict: dict({
 						data: [
@@ -200,7 +200,7 @@ export const createDevicePropsCrudOptions = function ({ expose }, deviceId, stat
 					},
 				},
 				dateTime: {
-					title: '时间',
+					title: 'Time',
 					type: 'text',
 					column: {
 						width: 158,

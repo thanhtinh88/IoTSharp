@@ -1,22 +1,22 @@
 <template>
     <el-form :inline="true" class="demo-form-inline">
-        <el-input size="default" placeholder="地图中心点经度" style="max-width: 180px" v-model="state.centerX" v-if="false">
+        <el-input size="default" placeholder="Map center point longitude" style="max-width: 180px" v-model="state.centerX" v-if="false">
         </el-input>
-        <el-input size="default" placeholder="地图中心点维度" style="max-width: 180px" v-model="state.centerY" v-if="false">
+        <el-input size="default" placeholder="Map center point dimension" style="max-width: 180px" v-model="state.centerY" v-if="false">
         </el-input>
 
 
-        <el-form-item label="原始坐标系">
-            <el-select v-model="state.geoformat" placeholder="原始坐标系">
+        <el-form-item label="Original coordinate system">
+            <el-select v-model="state.geoformat" placeholder="Original coordinate system">
                 <el-option v-for="item in state.geoformats" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
         </el-form-item>
-        <el-form-item label="选择经度字段">
+        <el-form-item label="Select longitude field">
             <el-select v-model="state.longitudefield" placeholder="longitude">
                 <el-option v-for="item in state.telemetryKeys" :key="item" :label="item" :value="item" />
             </el-select>
         </el-form-item>
-        <el-form-item label="选择纬度字段">
+        <el-form-item label="Select latitude field">
             <el-select v-model="state.latitudefield" placeholder="latitude">
                 <el-option v-for="item in state.telemetryKeys" :key="item" :label="item" :value="item" />
             </el-select>
@@ -26,8 +26,9 @@
                 <el-icon>
                     <ele-Search />
                 </el-icon>
-                查询
-            </el-button> </el-form-item>
+                Inquire
+            </el-button>
+        </el-form-item>
 
     </el-form>
     <div class="layout-padding" style="height: 1000px; ">
@@ -197,76 +198,75 @@ const computercenter = (points: Point[], epsilon: number, maxIterations: number)
     return center;
 
 }
-// 初始化 echartsMap
-const initEchartsMap = (centerX: number, centerY: number) => {
-    const myChart = echarts.init(echartsMapRef.value!);
+    const initEchartsMap = (centerX: number, centerY: number) => {
+        const myChart = echarts.init(echartsMapRef.value!);
 
 
-    const option = {
-        tooltip: {
-            trigger: 'item',
-        },
-        color: ['#9a60b4', '#ea7ccc'],
-        bmap: {
-            center: [centerX, centerY],
-            zoom: 15,
-            roam: true,
-            mapStyle: {},
-        },
-        series: [
-            {
-                name: 'lines',
-                type: 'lines',
-                coordinateSystem: 'bmap',
-                data: state.lines,
-                polyline: true,
-                lineStyle: {
-                    color: 'red',
-                    opacity: 0.6,
-                    width: 5
-                }
+        const option = {
+            tooltip: {
+                trigger: 'item',
             },
-
-            {
-                name: '坐标',
-                type: 'effectScatter',
-                coordinateSystem: 'bmap',
-                data: state.dots,
-                symbolSize: 10,
-                encode: {
-                    value: 2,
-                },
-                showEffectOn: 'render',
-                rippleEffect: {
-                    brushType: 'stroke',
-                }, tooltip: {
-                    trigger: 'item',
-                    formatter: (x: any) => {
-                        return "<div>采集时间：" + x.data.name + "<br/> 经度：" + x.data.value[0] + "<br/>纬度：" + x.data.value[1] + "<br/></div> <slot></slot>"
+            color: ['#9a60b4', '#ea7ccc'],
+            bmap: {
+                center: [centerX, centerY],
+                zoom: 15,
+                roam: true,
+                mapStyle: {},
+            },
+            series: [
+                {
+                    name: 'lines',
+                    type: 'lines',
+                    coordinateSystem: 'bmap',
+                    data: state.lines,
+                    polyline: true,
+                    lineStyle: {
+                        color: 'red',
+                        opacity: 0.6,
+                        width: 5
                     }
                 },
-                hoverAnimation: true,
-                label: {
-                    formatter: x => {
-                        return x.name;
-                    },
-                    position: 'right',
-                    show: true,
-                },
-                itemStyle: {
-                    shadowBlur: 10,
-                    shadowColor: '#333',
-                },
-                zlevel: 1,
-            },
 
-        ],
+                {
+                    name: 'Coordinates',
+                    type: 'effectScatter',
+                    coordinateSystem: 'bmap',
+                    data: state.dots,
+                    symbolSize: 10,
+                    encode: {
+                        value: 2,
+                    },
+                    showEffectOn: 'render',
+                    rippleEffect: {
+                        brushType: 'stroke',
+                    }, tooltip: {
+                        trigger: 'item',
+                        formatter: (x: any) => {
+                            return "<div>Collection time:" + x.data.name + "<br/> Longitude:" + x.data.value[0] + "<br/>Latitude:" + x.data.value[1] + "<br/></div> <slot></slot>"
+                        }
+                    },
+                    hoverAnimation: true,
+                    label: {
+                        formatter: x => {
+                            return x.name;
+                        },
+                        position: 'right',
+                        show: true,
+                    },
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowColor: '#333',
+                    },
+                    zlevel: 1,
+                },
+
+            ],
+        };
+        myChart.setOption(option);
+        window.addEventListener('resize', () => {
+            myChart.resize();
+        });
     };
-    myChart.setOption(option);
-    window.addEventListener('resize', () => {
-        myChart.resize();
-    });
-};
 
 
 const create = async () => {
@@ -394,7 +394,7 @@ const gcj02towgs84 = (lng: number, lat: number) => {
 
 const bd09towgs84 = (lng: number, lat: number) => {
     const gcj02 = bd09togcj02(lng, lat)
-    // 火星坐标系转wgs84坐标系
+    // Convert Mars coordinate system to wgs84 coordinate system
     const result = gcj02towgs84(gcj02[0], gcj02[1])
     return result
 }
@@ -417,7 +417,7 @@ const transformlng = (lng: number, lat: number) => {
 
 const wgs84tobd09 = (lng: number, lat: number) => {
     const gcj02 = wgs84togcj02(lng, lat)
-    // 火星坐标系转百度坐标系
+    // Convert Mars coordinate system to Baidu coordinate system
     const result = gcj02tobd09(gcj02[0], gcj02[1])
     return result
 }
@@ -426,7 +426,7 @@ const outOfChina = (lng: number, lat: number): boolean => {
     return (lng < 72.004 || lng > 137.8347) || ((lat < 0.8293 || lat > 55.8271) || false)
 }
 
-// 页面加载时
+//When the page loads
 onMounted(() => {
     getData(props.deviceId)
 

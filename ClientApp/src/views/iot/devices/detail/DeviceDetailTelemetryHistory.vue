@@ -1,69 +1,67 @@
 <template>
-  <div>
-    <div class="search">
-      <el-form ref="formRef" :model="queryForm" label-width="120px" size="small">
-        <el-form-item prop="keys" label="遥测属性" class="z-search-keys">
-          <div class="z-checkbox-group">
-            <el-checkbox-group v-model="queryForm.keys">
-              <el-checkbox v-for="key in state.telemetryKeys" :label="key" :key="key"/>
-            </el-checkbox-group>
-          </div>
-<!--          <el-button  type="primary" @click="backToRealtime">-->
-<!--            <el-icon><ArrowLeft /></el-icon>返回实时遥测</el-button>-->
-        </el-form-item>
-        <el-form-item prop="datetimeRange" label="时间区间">
-          <div style="width:100px">
-            <el-date-picker
-                v-model="queryForm.datetimeRange"
-                type="datetimerange"
-                :shortcuts="shortcuts"
-                range-separator="To"
-                start-placeholder="Start date"
-                end-placeholder="End date"
-            />
-          </div>
-        </el-form-item>
-        <el-form-item prop="every" label="时间间隔">
-          <el-time-picker v-model="queryForm.every" placeholder="时间间隔" value-format="HH:mm:ss"/>
-        </el-form-item>
-        <el-form-item prop="aggregate" label="取值方式">
-          <el-radio-group v-model="queryForm.aggregate">
-            <el-radio-button label="None">所有值</el-radio-button>
-            <el-radio-button label="Mean">平均值</el-radio-button>
-            <el-radio-button label="Median">中值</el-radio-button>
-            <el-radio-button label="Last">末值</el-radio-button>
-            <el-radio-button label="First">首值</el-radio-button>
-            <el-radio-button label="Max">最大值</el-radio-button>
-            <el-radio-button label="Min">最小值</el-radio-button>
-            <el-radio-button label="Sum">合计</el-radio-button>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item class="z-search-button-area">
-          <div>
-            <el-button type="primary" @click="search">查询</el-button>
-            <el-button @click="resetForm(formRef)">重置</el-button>
-          </div>
-          <el-radio-group v-model="dataDisplayStatus" class="ml-12px">
-            <el-radio-button label="chart">图表</el-radio-button>
-            <el-radio-button label="dataTable">数据</el-radio-button>
-          </el-radio-group>
+    <div>
+        <div class="search">
+            <el-form ref="formRef" :model="queryForm" label-width="120px" size="small">
+                <el-form-item prop="keys" label="Telemetry Properties" class="z-search-keys">
+                    <div class="z-checkbox-group">
+                        <el-checkbox-group v-model="queryForm.keys">
+                            <el-checkbox v-for="key in state.telemetryKeys" :label="key" :key="key" />
+                        </el-checkbox-group>
+                    </div>
+                    <!-- <el-button type="primary" @click="backToRealtime">-->
+                    <!-- <el-icon><ArrowLeft /></el-icon>Return to real-time telemetry</el-button>-->
+                </el-form-item>
+                <el-form-item prop="datetimeRange" label="Time Range">
+                    <div style="width:100px">
+                        <el-date-picker v-model="queryForm.datetimeRange"
+                                        type="datetimerange"
+                                        :shortcuts="shortcuts"
+                                        range-separator="To"
+                                        start-placeholder="Start date"
+                                        end-placeholder="End date" />
+                    </div>
+                </el-form-item>
+                <el-form-item prop="every" label="time interval">
+                    <el-time-picker v-model="queryForm.every" placeholder="Time interval" value-format="HH:mm:ss" />
+                </el-form-item>
+                <el-form-item prop="aggregate" label="Value method">
+                    <el-radio-group v-model="queryForm.aggregate">
+                        <el-radio-button label="None">All values</el-radio-button>
+                        <el-radio-button label="Mean">Average</el-radio-button>
+                        <el-radio-button label="Median">Median</el-radio-button>
+                        <el-radio-button label="Last">Last value</el-radio-button>
+                        <el-radio-button label="First">First value</el-radio-button>
+                        <el-radio-button label="Max">Maximum value</el-radio-button>
+                        <el-radio-button label="Min">Minimum value</el-radio-button>
+                        <el-radio-button label="Sum">Total</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item class="z-search-button-area">
+                    <div>
+                        <el-button type="primary" @click="search">Query</el-button>
+                        <el-button @click="resetForm(formRef)">Reset</el-button>
+                    </div>
+                    <el-radio-group v-model="dataDisplayStatus" class="ml-12px">
+                        <el-radio-button label="chart">Chart</el-radio-button>
+                        <el-radio-button label="dataTable">data</el-radio-button>
+                    </el-radio-group>
 
-        </el-form-item>
-      </el-form>
+                </el-form-item>
+            </el-form>
+        </div>
+        <!-- Table data -->
+        <div v-show="dataDisplayStatus === 'dataTable'" class="z-table">
+            <el-table :data="tableData" style="width: 100%" size="small" v-loading="loading">
+                <el-table-column prop="keyName" label="name"></el-table-column>
+                <el-table-column prop="value" label="value"></el-table-column>
+                <el-table-column prop="dataType" label="type"></el-table-column>
+                <el-table-column prop="dateTime" label="Time" :formatter="formatColumnDataTime"></el-table-column>
+            </el-table>
+        </div>
+        <div v-show="dataDisplayStatus === 'chart'">
+            <div style="height: 330px" ref="messageChartRef" v-loading="loading"></div>
+        </div>
     </div>
-    <!--    表格数据 -->
-    <div v-show="dataDisplayStatus === 'dataTable'" class="z-table">
-      <el-table :data="tableData" style="width: 100%" size="small" v-loading="loading">
-        <el-table-column prop="keyName" label="名称"></el-table-column>
-        <el-table-column prop="value" label="值"></el-table-column>
-        <el-table-column prop="dataType" label="类型"></el-table-column>
-        <el-table-column prop="dateTime" label="时间" :formatter="formatColumnDataTime"></el-table-column>
-      </el-table>
-    </div>
-    <div v-show="dataDisplayStatus === 'chart'">
-      <div style="height: 330px" ref="messageChartRef" v-loading="loading"></div>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -127,7 +125,7 @@ const tableData = ref([])
 
 const search = async () => {
   if (queryForm.keys.length === 0) {
-    ElMessage.warning('请选择遥测属性')
+    ElMessage.warning('Please select telemetry properties')
     return
   }
   await getData()

@@ -1,31 +1,31 @@
 <template>
 	<div class="home-container">
-		<!-- 看板 -->
+		<!-- Kanban -->
 		<el-row :gutter="15" class="home-card-one mb15" style="row-gap: 15px">
 			<home-card-item :item="item" :index="index" v-for="(item, index) in kanbanData" :key="index"></home-card-item>
 		</el-row>
-		<!--   图表 + 健康 -->
+		<!-- Charts + Health -->
 		<el-row :gutter="15" class="mb15">
 			<el-col :span="12">
-				<card title="设备在线率" :icon="checkNetwork" style="height: 400px">
+				<card title="Device online rate" :icon="checkNetwork" style="height: 400px">
 					<div style="height: 100%" ref="onlineChartRef"></div>
 				</card>
 			</el-col>
 			<el-col :span="12">
-				<card title="设备告警率" :icon="warning" style="height: 400px">
+				<card title="Equipment Alarm Rate" :icon="warning" style="height: 400px">
 					<div style="height: 100%" ref="warningChartRef"></div>
 				</card>
 			</el-col>
 		</el-row>
-		<!--  消息 -->
+		<!-- Message -->
 		<el-row :gutter="15" class="mb15">
 			<el-col :span="16">
-				<card title="消息总线" :icon="iconChart" style="height: 400px">
+				<card title="Message Bus" :icon="iconChart" style="height: 400px">
 					<div style="height: 310px" ref="messageChartRef"></div>
 				</card>
 			</el-col>
 			<el-col :span="8">
-				<card title="健康检查" :icon="monitor">
+				<card title="Health Check" :icon="monitor">
 					<div class="pt-10px">
 						<div v-for="(item, index) in healthChecks" class="flex items-center mb-20px text-lg" :key="index">
 							<el-icon class="text-2xl mr-8px">
@@ -69,7 +69,7 @@ const { themeConfig } = storeToRefs(storesThemeConfig);
 const onlineChartRef = ref();
 const warningChartRef = ref();
 const messageChartRef = ref();
-const myCharts = reactive([]); // 页面所有图表保存在这里
+const myCharts = reactive([]); // All charts on the page are saved here
 const charts = reactive({
 	theme: '',
 	bgColor: '',
@@ -88,7 +88,7 @@ const onlineChartOption = {
 		top: 'center',
 		itemWidth: 14,
 		itemHeight: 14,
-		data: ['在线设备', '离线设备'],
+        data: ['online device', 'offline device'],
 		textStyle: {
 			rich: {
 				name: {
@@ -122,13 +122,13 @@ const onlineChartOption = {
 			},
 			label: { show: false },
 			labelLine: { show: false },
-			data: [
-				{
-					name: '在线设备',
-					value: 99,
-				},
-				{ name: '离线设备', value: 10 },
-			],
+            data: [
+                {
+                    name: 'online device',
+                    value: 99,
+                },
+                { name: 'Offline device', value: 10 },
+            ],
 		},
 	],
 };
@@ -143,7 +143,7 @@ const warningChartOption = {
 		top: 'center',
 		itemWidth: 14,
 		itemHeight: 14,
-		data: ['正常', '普通告警', '重要告警', '紧急告警'],
+        data: ['normal', 'common alarm', 'important alarm', 'emergency alarm'],
 		textStyle: {
 			rich: {
 				name: {
@@ -178,12 +178,12 @@ const warningChartOption = {
 			color: [themeConfig.value.primary, '#F6BD16', '#FF8728', '#E23711'],
 			label: { show: false },
 			labelLine: { show: false },
-			data: [
-				{ name: '正常', value: '99' },
-				{ name: '普通告警', value: '10' },
-				{ name: '重要告警', value: '10' },
-				{ name: '紧急告警', value: '10' },
-			],
+            data: [
+                { name: 'normal', value: '99' },
+                { name: 'Common alarm', value: '10' },
+                { name: 'Important alarm', value: '10' },
+                { name: 'Emergency Alarm', value: '10' },
+            ],
 		},
 	],
 };
@@ -218,7 +218,7 @@ const messageChartOption = {
 		{
 			start: 0,
 			end: 100,
-			height: 10, //这里可以设置dataZoom的尺寸
+            height: 10, //Here you can set the size of dataZoom
 			bottom: 0,
 		},
 	],
@@ -260,9 +260,9 @@ const messageChartOption = {
 const kanbanData = reactive(homeCardItemsConfig);
 /**
  *
- * @param target 在哪里显示, 是一个 Dom 元素，通过 <div ref="xxx"> 赋值到变量中
- * @param option:EChartsOption 图表参数
- * @param name:string initEchartsResizeFun 需要页面上所有图表的列表， 所以用 name 区分保存
+ * Where @param target is displayed, it is a Dom element and is assigned to a variable through <div ref="xxx">
+ * @param option:EChartsOption chart parameters
+ * @param name:string initEchartsResizeFun requires a list of all charts on the page, so use name to save them separately
  */
 const initPieChart = (target: any, option: EChartsOption, name: string) => {
 	// if (!global.dispose.some((b: any) => b === global.homeChartTwo)) global.homeChartTwo.dispose();
@@ -271,7 +271,7 @@ const initPieChart = (target: any, option: EChartsOption, name: string) => {
 	(<any>myCharts).push(global[name]);
 };
 
-// 批量设置 echarts resize
+// Batch settings echarts resize
 const initEchartsResizeFun = () => {
 	nextTick(() => {
 		for (let i = 0; i < myCharts.length; i++) {
@@ -281,22 +281,22 @@ const initEchartsResizeFun = () => {
 		}
 	});
 };
-// 批量设置 echarts resize
+// Batch settings echarts resize
 const initEchartsResize = () => {
 	window.addEventListener('resize', initEchartsResizeFun);
 };
-// 页面加载时
+// When the page loads
 onMounted(async () => {
 	await getData();
 	initEchartsResize();
 });
-// 由于页面缓存原因，keep-alive
+// due to page caching，keep-alive
 onActivated(() => {
 	initEchartsResizeFun();
 });
 
 async function getData() {
-	// 卡片数据
+	// card data
 	const res = await getKanban();
 	const { eventCount, onlineDeviceCount, attributesDataCount, deviceCount, alarmsCount, userCount, produceCount, rulesCount } = res.data;
 	kanbanData[3].zValue = eventCount;
@@ -308,7 +308,7 @@ async function getData() {
 	kanbanData[6].zValue = produceCount;
 	kanbanData[7].zValue = rulesCount;
 
-	// * 配置在线设备图表数据
+	// Configure online device chart data
 	onlineChartOption.series[0].data[0].value = onlineDeviceCount;
 	onlineChartOption.series[0].data[1].value = deviceCount - onlineDeviceCount;
 
@@ -319,7 +319,7 @@ async function getData() {
 	messageChartOption.series[1].data = publishSuccessed;
 	messageChartOption.series[2].data = subscribeFailed;
 	messageChartOption.series[3].data = subscribeSuccessed;
-	// 健康数据
+	// health data
 	const healthRes: any = await getHealthChecks();
 	Object.assign(healthChecks, healthRes[0].entries);
 }

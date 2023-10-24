@@ -1,4 +1,4 @@
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 export interface TableDataRow {
 	address?: string;
 	city?: string;

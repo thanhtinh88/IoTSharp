@@ -7,7 +7,7 @@
   import { ref, toRefs, reactive, onMounted, defineComponent } from "vue";
   import { Session } from "/@/utils/storage";
   import { useRouter } from "vue-router";
-  // 定义接口来定义对象的类型
+  //Define the interface to define the type of object
   interface TableDataRow {
     ruleId?: string;
    

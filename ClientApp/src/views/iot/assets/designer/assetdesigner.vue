@@ -2,35 +2,35 @@
     <div class="workflow-container">
       <div class="workflow-mask" v-if="state.isShow"></div>
       <div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - ${setViewHeight}` }">
-        <div class="workflow">
-  
-  
-  
-          <!-- 左侧导航区 -->
-          <div class="workflow-content">
-            <div class="workflow-left">
-              <el-scrollbar view-style="padding: 10px">
-                <div ref="leftNavRefs" v-for="val in state.leftNavList" :key="val.id"
-                  :style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }" class="workflow-left-id">
-                  <div class="workflow-left-title" @click="onTitleClick(val)">
-                    <span>{{ val.title }}</span>
-                    <SvgIcon :name="val.isOpen ? 'ele-ArrowDown' : 'ele-ArrowRight'" />
+          <div class="workflow">
+
+
+
+              <!-- Left navigation area -->
+              <div class="workflow-content">
+                  <div class="workflow-left">
+                      <el-scrollbar view-style="padding: 10px">
+                          <div ref="leftNavRefs" v-for="val in state.leftNavList" :key="val.id"
+                               :style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }" class="workflow-left-id">
+                              <div class="workflow-left-title" @click="onTitleClick(val)">
+                                  <span>{{ val.title }}</span>
+                                  <SvgIcon :name="val.isOpen ? 'ele-ArrowDown' : 'ele-ArrowRight'" />
+                              </div>
+                              <div class="workflow-left-item" v-for="(v, k) in val.children" :key="k" :data-color="val.color"
+                                   :data-name="v.name" :data-icon="v.icon" :data-id="v.id">
+                                  <div class="workflow-left-item-icon" :style="{ backgroundColor: val.color }">
+                                      <component :is="v.icon" class="workflow-icon-drag"></component>
+                                      <div class="text-sm pl5 name">{{ v.name }}</div>
+                                  </div>
+                              </div>
+                          </div>
+                      </el-scrollbar>
                   </div>
-                  <div class="workflow-left-item" v-for="(v, k) in val.children" :key="k" :data-color="val.color"
-                    :data-name="v.name" :data-icon="v.icon" :data-id="v.id">
-                    <div class="workflow-left-item-icon" :style="{ backgroundColor: val.color }">
-                      <component :is="v.icon" class="workflow-icon-drag"></component>
-                      <div class="text-sm pl5 name">{{ v.name }}</div>
-                    </div>
-                  </div>
-                </div>
-              </el-scrollbar>
-            </div>
-  
-            <!-- 右侧绘画区 -->
-            <div class="workflow-right" ref="workflowRightRef"></div>
+
+                  <!-- Painting area on the right -->
+                  <div class="workflow-right" ref="workflowRightRef"></div>
+              </div>
           </div>
-        </div>
       </div>
   
   

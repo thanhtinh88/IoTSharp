@@ -1,47 +1,47 @@
 <template>
-  <div class="workflow-container">
-    <div class="workflow-mask" v-if="state.isShow"></div>
-    <div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - ${setViewHeight}` }">
-      <div class="workflow">
+    <div class="workflow-container">
+        <div class="workflow-mask" v-if="state.isShow"></div>
+        <div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - ${setViewHeight}` }">
+            <div class="workflow">
 
 
 
-        <!-- 左侧导航区 -->
-        <div class="workflow-content">
-          <div class="workflow-left">
-            <el-scrollbar view-style="padding: 10px">
-              <div ref="leftNavRefs" v-for="val in state.leftNavList" :key="val.id"
-                :style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }" class="workflow-left-id">
-                <div class="workflow-left-title" @click="onTitleClick(val)">
-                  <span>{{ val.title }}</span>
-                  <SvgIcon :name="val.isOpen ? 'ele-ArrowDown' : 'ele-ArrowRight'" />
+                <!-- Left navigation area -->
+                <div class="workflow-content">
+                    <div class="workflow-left">
+                        <el-scrollbar view-style="padding: 10px">
+                            <div ref="leftNavRefs" v-for="val in state.leftNavList" :key="val.id"
+                                 :style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }" class="workflow-left-id">
+                                <div class="workflow-left-title" @click="onTitleClick(val)">
+                                    <span>{{ val.title }}</span>
+                                    <SvgIcon :name="val.isOpen ? 'ele-ArrowDown' : 'ele-ArrowRight'" />
+                                </div>
+                                <div class="workflow-left-item" v-for="(v, k) in val.children" :key="k" :data-color="val.color"
+                                     :data-name="v.name" :data-icon="v.icon" :data-id="v.id">
+                                    <div class="workflow-left-item-icon" :style="{ backgroundColor: val.color }">
+                                        <component :is="v.icon" class="workflow-icon-drag"></component>
+                                        <div class="text-sm pl5 name">{{ v.name }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </el-scrollbar>
+                    </div>
+
+                    <!-- Painting area on the right -->
+                    <div class="workflow-right" ref="workflowRightRef"></div>
                 </div>
-                <div class="workflow-left-item" v-for="(v, k) in val.children" :key="k" :data-color="val.color"
-                  :data-name="v.name" :data-icon="v.icon" :data-id="v.id">
-                  <div class="workflow-left-item-icon" :style="{ backgroundColor: val.color }">
-                    <component :is="v.icon" class="workflow-icon-drag"></component>
-                    <div class="text-sm pl5 name">{{ v.name }}</div>
-                  </div>
-                </div>
-              </div>
-            </el-scrollbar>
-          </div>
-
-          <!-- 右侧绘画区 -->
-          <div class="workflow-right" ref="workflowRightRef"></div>
+            </div>
         </div>
-      </div>
+
+
+        <menunode :dropdown="state.dropdownNode" ref="contextmenunodeRef" @ongatewayclickcommand="ongatewayclickcommand">
+        </menunode>
+
+        <menuconnector :dropdown="state.dropdownNode" ref="contextmenugatewayRef"
+                       @onconnectoropencommand="onconnectoropencommand">
+        </menuconnector>
+        <drawercontainer ref="drawerRef" @submit="onsubmit" />
     </div>
-
-
-    <menunode :dropdown="state.dropdownNode" ref="contextmenunodeRef" @ongatewayclickcommand="ongatewayclickcommand">
-    </menunode>
-
-    <menuconnector :dropdown="state.dropdownNode" ref="contextmenugatewayRef"
-      @onconnectoropencommand="onconnectoropencommand">
-    </menuconnector>
-    <drawercontainer ref="drawerRef" @submit="onsubmit" />
-  </div>
 </template>
 <script lang="ts" setup>
 import { GatewayDesignerState } from "./designer/models/gatewaydesignermodel";
@@ -157,27 +157,26 @@ const ongatewayclickcommand = (args: any) => {
 
 }
 onMounted(async () => {
-  state.leftNavList = [
-    {
-      title: "网关",
-      name: '',
-      // icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "t1",
-      children: [],
-    },
-    {
-      title: "设备",
-      name: '',
-      //  icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "t2",
-      children: [],
-    },
-  ];
-
+   state.leftNavList = [
+     {
+       title: "Gateway",
+       name: '',
+       // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "t1",
+       children: [],
+     },
+     {
+       title: "Equipment",
+       name: '',
+       // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "t2",
+       children: [],
+     },
+   ];
   nextTick(() => {
     initgraph();
   });
@@ -371,190 +370,189 @@ const setClientWidth = () => {
   const clientWidth = document.body.clientWidth;
   clientWidth < 768 ? (state.isShow = true) : (state.isShow = false);
 };
-
 const initgateways = () => {
-  state.leftNavList[0].children = [
-    {
-      title: "Modbus",
-      name: 'Modbus',
-      // icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "1111111",
-      profile: {
-        devnamespace: 'modbus',
-        name: 'ModBus网关',
-        shape: 'gateway',
-        baseinfoschema: {},
-        command: {
+   state.leftNavList[0].children = [
+     {
+       title: "Modbus",
+       name: 'Modbus',
+       // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "1111111",
+       profile: {
+         devnamespace: 'modbus',
+         name: 'ModBus Gateway',
+         shape: 'gateway',
+         baseinfoschema: {},
+         command: {
 
-          toolbar: [],
-          contextmenu: [
-            { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-            { command: 'editmodbusprop', txt: "属性编辑", icon: "ele-Edit" },
-            { command: 'editmodbusmapping', txt: "映射编辑", icon: "ele-Edit" },
-          ],
-        },
-        mappings: []
-      }
+           toolbar: [],
+           contextmenu: [
+             { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+             { command: 'editmodbusprop', txt: "Property Editing", icon: "ele-Edit" },
+             { command: 'editmodbusmapping', txt: "Mapping Editing", icon: "ele-Edit" },
+           ],
+         },
+         mappings: []
+       }
 
-    }, {
-      title: "Modbus",
-      name: 'Modbus',
-      // icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "12222222",
-      profile: {
-        devnamespace: 'modbus',
-        name: 'ModBus网关',
-        shape: 'gateway',
-        baseinfoschema: {},
-        command: {
+     }, {
+       title: "Modbus",
+       name: 'Modbus',
+       // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "12222222",
+       profile: {
+         devnamespace: 'modbus',
+         name: 'ModBus Gateway',
+         shape: 'gateway',
+         baseinfoschema: {},
+         command: {
 
-          toolbar: [],
-          contextmenu: [
-            { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-            { command: 'editmodbusprop', txt: "属性编辑", icon: "ele-Edit" },
-            { command: 'editmodbusmapping', txt: "映射编辑", icon: "ele-Edit" },
-          ],
-        },
-        mappings: []
-      }
+           toolbar: [],
+           contextmenu: [
+             { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+             { command: 'editmodbusprop', txt: "Property Editing", icon: "ele-Edit" },
+             { command: 'editmodbusmapping', txt: "Mapping Editing", icon: "ele-Edit" },
+           ],
+         },
+         mappings: []
+       }
 
-    }, {
-      title: "Modbus",
-      name: 'Modbus',
-      // icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "13333333",
-      profile: {
-        devnamespace: 'modbus',
-        name: 'ModBus网关',
-        shape: 'gateway',
-        baseinfoschema: {},
-        command: {
+     }, {
+       title: "Modbus",
+       name: 'Modbus',
+       // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "13333333",
+       profile: {
+         devnamespace: 'modbus',
+         name: 'ModBus Gateway',
+         shape: 'gateway',
+         baseinfoschema: {},
+         command: {
 
-          toolbar: [],
-          contextmenu: [
-            { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-            { command: 'editmodbusprop', txt: "属性编辑", icon: "ele-Edit" },
-            { command: 'editmodbusmapping', txt: "映射编辑", icon: "ele-Edit" },
-          ],
-        },
-        mappings: []
-      }
+           toolbar: [],
+           contextmenu: [
+             { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+             { command: 'editmodbusprop', txt: "Property Editing", icon: "ele-Edit" },
+             { command: 'editmodbusmapping', txt: "Mapping Editing", icon: "ele-Edit" },
+           ],
+         },
+         mappings: []
+       }
 
-    }, {
-      title: "OPCUA",
-      name: 'OPCUA',
-      // icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "2222222",
-      profile: {
-        devnamespace: 'opcua',
-        name: 'opcua网关',
-        shape: 'gateway',
-        baseinfoschema: {},
-        command: {
+     }, {
+       title: "OPCUA",
+       name: 'OPCUA',
+       // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "2222222",
+       profile: {
+         devnamespace: 'opcua',
+         name: 'opcua gateway',
+         shape: 'gateway',
+         baseinfoschema: {},
+         command: {
 
-          toolbar: [],
-          contextmenu: [
-            { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-            { command: 'editopcuaprop', txt: "编辑属性", icon: "ele-Edit" },
-            { command: 'editopcuamapping', txt: "编辑映射", icon: "ele-Edit" },
-          ]
-        },
-        mappings: []
-      }
-    },
-  ];
+           toolbar: [],
+           contextmenu: [
+             { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+             { command: 'editopcuaprop', txt: "edit properties", icon: "ele-Edit" },
+             { command: 'editopcuamapping', txt: "Edit Mapping", icon: "ele-Edit" },
+           ]
+         },
+         mappings: []
+       }
+     },
+   ];
 };
 const initdevices = () => {
 
 
-  state.leftNavList[1].children = [
-    {
-      icon: "importIcon",
-      name: "测试设备",
-      id: "33333333",
+   state.leftNavList[1].children = [
+     {
+       icon: "importIcon",
+       name: "Test Equipment",
+       id: "33333333",
 
-      profile: {
-        devnamespace: 'iot.device.test',
-        shape: 'device',
-        name: '测试设备',
-        baseinfoschema: {},
-        command: {
+       profile: {
+         devnamespace: 'iot.device.test',
+         shape: 'device',
+         name: 'Test Equipment',
+         baseinfoschema: {},
+         command: {
 
-          toolbar: [],
-          contextmenu: [
-            { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-            { command: 'editmodbusmapping', txt: "编辑属性", icon: "ele-Edit" },
-          ]
-        },
-        mappings: []
-      }
+           toolbar: [],
+           contextmenu: [
+             { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+             { command: 'editmodbusmapping', txt: "Edit properties", icon: "ele-Edit" },
+           ]
+         },
+         mappings: []
+       }
 
-    }, {
-      icon: "importIcon",
-      name: "测试设备1",
+     }, {
+       icon: "importIcon",
+       name: "Test device 1",
 
-      id: "444444444", profile: {
-        devnamespace: 'iot.device.test1',
-        name: '测试设备',
-        shape: 'device',
-        baseinfoschema: {},
-        command: {
+       id: "444444444", profile: {
+         devnamespace: 'iot.device.test1',
+         name: 'Test Equipment',
+         shape: 'device',
+         baseinfoschema: {},
+         command: {
 
-          toolbar: [],
-          contextmenu: [
-            { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-            { command: 'editmodbusmapping', txt: "编辑属性", icon: "ele-Edit" },
-          ]
-        },
-        mappings: []
-      }
-    }, {
-      icon: "importIcon",
-      name: "测试设备2",
+           toolbar: [],
+           contextmenu: [
+             { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+             { command: 'editmodbusmapping', txt: "Edit properties", icon: "ele-Edit" },
+           ]
+         },
+         mappings: []
+       }
+     }, {
+       icon: "importIcon",
+       name: "Test Equipment 2",
 
-      id: "55555555555", profile: {
-        devnamespace: 'iot.device.test2',
-        name: '测试设备',
-        shape: 'device',
-        baseinfoschema: {},
-        command: {
-          toolbar: [],
-          contextmenu: [
-            { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-            { command: 'editmodbusmapping', txt: "编辑属性", icon: "ele-Edit" },
-          ]
-        },
-        mappings: []
-      }
-    }, {
-      icon: "importIcon",
-      name: "测试设备3",
+       id: "55555555555", profile: {
+         devnamespace: 'iot.device.test2',
+         name: 'Test Equipment',
+         shape: 'device',
+         baseinfoschema: {},
+         command: {
+           toolbar: [],
+           contextmenu: [
+             { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+             { command: 'editmodbusmapping', txt: "Edit properties", icon: "ele-Edit" },
+           ]
+         },
+         mappings: []
+       }
+     }, {
+       icon: "importIcon",
+       name: "Test Equipment 3",
 
-      id: "666666666666", profile: {
-        devnamespace: 'iot.device.test3',
-        name: '测试设备',
-        shape: 'device',
-        baseinfoschema: {},
-        command: {
+       id: "666666666666", profile: {
+         devnamespace: 'iot.device.test3',
+         name: 'Test Equipment',
+         shape: 'device',
+         baseinfoschema: {},
+         command: {
 
-          toolbar: [],
-          contextmenu: [
-            { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-            { command: 'editmodbusmapping', txt: "编辑属性", icon: "ele-Edit" },
-          ]
-        },
-        mappings: []
-      }
-    },
-  ];
+           toolbar: [],
+           contextmenu: [
+             { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+             { command: 'editmodbusmapping', txt: "Edit properties", icon: "ele-Edit" },
+           ]
+         },
+         mappings: []
+       }
+     },
+   ];
 };
 const initLeftNavbar = () => {
   leftNavRefs.value.forEach((v) => {
@@ -562,110 +560,110 @@ const initLeftNavbar = () => {
   })
 };
 const initgraph: () => void = () => {
-  graph = new Graph({
+   graph = new Graph({
 
-    container: workflowRightRef.value as HTMLDivElement,
-    width: 800,
-    height: 1024,
+     container: workflowRightRef.value as HTMLDivElement,
+     width: 800,
+     height: 1024,
 
-    grid: {
-      size: 10,
-      visible: true,
-      type: 'doubleMesh',
+     grid: {
+       size: 10,
+       visible: true,
+       type: 'doubleMesh',
 
-      args: [
-        {
-          color: '#eee', // 主网格线颜色
-          thickness: 1,     // 主网格线宽度
-        },
-        {
-          color: '#ddd', // 次网格线颜色
-          thickness: 1,     // 次网格线宽度
-          factor: 4,        // 主次网格线间隔
-        },
-      ],
-    },
-    highlighting: {
-      magnetAvailable: magnetAvailabilityHighlighter,
-      magnetAdsorbed: {
-        name: "stroke",
-        args: {
-          attrs: {
-            fill: "#fff",
-            stroke: "#31d0c6",
-          },
-        },
-      },
-    },
-    connecting: {
-      snap: true,
-      allowBlank: false,
-      allowLoop: false,
-      highlight: true,
-      connector: "rounded",
-      connectionPoint: "boundary",
-      router: {
-        name: "er",
-        args: {
-          direction: "V",
-        },
-      },
-      createEdge() {
-        return new Shape.Edge({
-          bizdata: {
-            devnamespace: 'connector',
-            shape: 'connector',
-            name: '',
-            baseinfoschema: {},
-            command: {
-              toolbar: [],
-              contextmenu: [
-                { command: 'deleteconnector', txt: "删除", icon: "ele-Delete" },
-                { command: 'editconnector', txt: "编辑", icon: "ele-Edit" },
-              ]
-            },
-            incomepoint: '',
-            outgoingpoint: '',
-            incomeshape: '',
-            outgoingshape: '',
+       args: [
+         {
+           color: '#eee', // Main grid line color
+           thickness: 1, // Main grid line width
+         },
+         {
+           color: '#ddd', // secondary grid line color
+           thickness: 1, // secondary grid line width
+           factor: 4, // primary and secondary grid line spacing
+         },
+       ],
+     },
+     highlighting: {
+       magnetAvailable: magnetAvailabilityHighlighter,
+       magnetAdsorbed: {
+         name: "stroke",
+         args: {
+           attrs: {
+             fill: "#fff",
+             stroke: "#31d0c6",
+           },
+         },
+       },
+     },
+     connecting: {
+       snap: true,
+       allowBlank: false,
+       allowLoop: false,
+       highlight: true,
+       connector: "rounded",
+       connectionPoint: "boundary",
+       router: {
+         name: "er",
+         args: {
+           direction: "V",
+         },
+       },
+       createEdge() {
+         return new Shape.Edge({
+           bizdata: {
+             devnamespace: 'connector',
+             shape: 'connector',
+             name: '',
+             baseinfoschema: {},
+             command: {
+               toolbar: [],
+               contextmenu: [
+                 { command: 'deleteconnector', txt: "delete", icon: "ele-Delete" },
+                 { command: 'editconnector', txt: "edit", icon: "ele-Edit" },
+               ]
+             },
+             incomepoint: '',
+             outgoingpoint: '',
+             incomeshape: '',
+             outgoingshape: '',
 
-          },
-          attrs: {
-            line: {
-              stroke: "#a0a0a0",
-              strokeWidth: 1,
-              targetMarker: {
-                name: "classic",
-                size: 7,
-              },
-            },
-          },
-        });
-      },
-      validateConnection({ sourceView, targetView, targetMagnet }) {
-        if (!targetMagnet) {
-          return false;
-        }
+           },
+           attrs: {
+             line: {
+               stroke: "#a0a0a0",
+               strokeWidth: 1,
+               targetMarker: {
+                 name: "classic",
+                 size: 7,
+               },
+             },
+           },
+         });
+       },
+       validateConnection({ sourceView, targetView, targetMagnet }) {
+         if (!targetMagnet) {
+           return false;
+         }
 
-        if (targetMagnet.getAttribute("port-group") !== "in") {
-          return false;
-        }
+         if (targetMagnet.getAttribute("port-group") !== "in") {
+           return false;
+         }
 
-        if (targetView) {
-          const node = targetView.cell;
-          if (node instanceof Device) {
-            const portId = targetMagnet.getAttribute("port");
-            const usedInPorts = node.getUsedInPorts(this);
-            if (usedInPorts.find((port) => port && port.id === portId)) {
-              return false;
-            }
-          }
-        }
+         if (targetView) {
+           const node = targetView.cell;
+           if (node instanceof Device) {
+             const portId = targetMagnet.getAttribute("port");
+             const usedInPorts = node.getUsedInPorts(this);
+             if (usedInPorts.find((port) => port && port.id === portId)) {
+               return false;
+             }
+           }
+         }
 
-        return true;
-      },
-    },
-  });
+         return true;
+       },
+     },
+   });
 
 
   //update bizdata right here
@@ -757,7 +755,8 @@ const update: (view: NodeView) => void = (view: NodeView) => {
     //   cell.updateInPorts(  graph);
   }
 };
-// 左侧导航-菜单标题点击
+
+// Left navigation-menu title click
 const onTitleClick = (val: any) => {
   val.isOpen = !val.isOpen;
 };

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IoTSharp.TaskActions
 {
-    [DisplayName("用于消息推送的执行器")]
+    [DisplayName("Executor for message push")]
     public class MessagePullExecutor : TaskAction
     {
         public override Task<TaskActionOutput> ExecuteAsync(TaskActionInput input)

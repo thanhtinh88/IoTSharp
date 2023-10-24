@@ -38,7 +38,7 @@ import { reactive, ref, nextTick } from "vue";
 import Line from "./line.vue";
 import ExecutorPanel from "./executor.vue";
 import ScriptPanel from "./script.vue";
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 interface WorkflowDrawerState {
   isOpen: boolean;
   nodeData: {
@@ -72,72 +72,71 @@ const state = reactive<WorkflowDrawerState>({
   },
   jsplumbConn: {},
 });
-// 打开抽屉
-const open = (item: any, conn: any) => {
-  state.isOpen = true;
-  state.jsplumbConn = conn;
-  state.nodeData = item;
-  nextTick(() => {
-    if (item.type === "line") {
-      // 当前line的数据不存储在node当中，而是在conn副本当中
+    // open drawer
+    const open = (item: any, conn: any) => {
+        state.isOpen = true;
+        state.jsplumbConn = conn;
+        state.nodeData = item;
+        nextTick(() => {
+            if (item.type === "line") {
+                //The data of the current line is not stored in the node, but in the conn copy.
 
-    //  lineRef.value.getParentData(conn);
-    } else {
-      switch (item.nodetype) {
-        case "executor":
-          {
-       //     executorRef.value.getParentData(item);
-          }
-          break;
+                // lineRef.value.getParentData(conn);
+            } else {
+                switch (item.nodetype) {
+                    case "executor":
+                        {
+                            // executorRef.value.getParentData(item);
+                        }
+                        break;
 
-        case "script":
-          // {
-          //   scriptRef.value.getParentData(item);
-          // }
-          break;
-      }
-    }
-  });
-};
+                    case "script":
+                        // {
+                        // scriptRef.value.getParentData(item);
+                        // }
+                        break;
+                }
+            }
+        });
+    };
 
-// 关闭
-const drawerclose = () => {
-  //分别触发保存,node的label和line的label同时触发change事件会有名称空间冲突导致label值被覆盖，
-  if (state.nodeData.type === "line") {
-    emit("panelclose", state.jsplumbConn);
+    // closure
+    const drawerclose = () => {
+        //Trigger save separately. If the node's label and the line's label trigger the change event at the same time, there will be a namespace conflict, causing the label value to be overwritten.
+        if (state.nodeData.type === "line") {
+            emit("panelclose", state.jsplumbConn);
 
-  }
-  if (state.nodeData.type === "node") {
-    emit("panelclose", state.nodeData);
-  }
-};
+        }
+        if (state.nodeData.type === "node") {
+            emit("panelclose", state.nodeData);
+        }
+    };
 
-// 关闭
-const close = () => {
-  state.isOpen = false;
-};
-// 线 label 内容改变时
-const onLineChange = (label: any) => {
-  state.jsplumbConn.label = label.label;
-  state.jsplumbConn.linename = label.linename;
-  state.jsplumbConn.condition = label.condition;
+    // closure
+    const close = () => {
+        state.isOpen = false;
+    };
+    //When the line label content changes
+    const onLineChange = (label: any) => {
+        state.jsplumbConn.label = label.label;
+        state.jsplumbConn.linename = label.linename;
+        state.jsplumbConn.condition = label.condition;
 
-  console.log(state)
-  emit("label", state.jsplumbConn);
-};
-// 节点内容改变时
-const onNodeSubmit = (data: object) => {
-  emit("node", data);
-};
+        console.log(state)
+        emit("label", state.jsplumbConn);
+    };
+    //When the node content changes
+    const onNodeSubmit = (data: object) => {
+        emit("node", data);
+    };
 
-const onexecutorSubmit = (data: object) => {
-  emit("executor", data);
-};
+    const onexecutorSubmit = (data: object) => {
+        emit("executor", data);
+    };
 
-const onscriptSubmit = (data: object) => {
-  emit("script", data);
-};
-
+    const onscriptSubmit = (data: object) => {
+        emit("script", data);
+    };
 defineExpose({
   open,
 });

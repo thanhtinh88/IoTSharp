@@ -88,8 +88,8 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 						show: false,
 					},
 					device: {
-						text: '设备管理',
-						title: '设备管理',
+						text: 'Device Management',
+						title: 'Device Management',
 						icon: 'Cpu',
 						order: 1,
 						type: 'default',
@@ -104,8 +104,8 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 						},
 					},
 					custom: {
-						text: '用户管理',
-						title: '用户管理',
+						text: 'User Management',
+						title: 'User Management',
 						icon: 'User',
 						order: 1,
 						type: 'info',
@@ -133,7 +133,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 			},
 			columns: {
 				name: {
-					title: '名称',
+					title: 'name',
 					type: 'text',
 					column: { width: 200 },
 					search: { show: true },
@@ -147,7 +147,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 					},
 				},
 				email: {
-					title: '邮件',
+					title: 'email',
 					type: 'text',
 					column: { width: 180 },
 					addForm: {
@@ -160,7 +160,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 					},
 				},
 				phone: {
-					title: '电话',
+					title: 'phone',
 					column: { width: 150 },
 					type: 'text',
 					addForm: {
@@ -173,7 +173,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 					},
 				},
 				country: {
-					title: '国家',
+					title: 'country',
 					column: { width: 80 },
 					type: 'text',
 					addForm: {
@@ -186,7 +186,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 					},
 				},
 				province: {
-					title: '省',
+					title: 'provice',
 					type: 'text',
 					column: { width: 80 },
 					addForm: {
@@ -199,7 +199,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 					},
 				},
 				city: {
-					title: '市',
+					title: 'city',
 					type: 'text',
 					column: { width: 100 },
 					addForm: {
@@ -212,7 +212,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 					},
 				},
 				street: {
-					title: '街道',
+					title: 'street',
 					column: { width: 180 },
 					type: 'text',
 					addForm: {
@@ -225,7 +225,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 					},
 				},
 				address: {
-					title: '地址',
+					title: 'address',
 					column: { width: 180 },
 					type: 'text',
 					addForm: {
@@ -238,7 +238,7 @@ export const createCustomerListCrudOptions = function ({ expose }, tenantId) {
 					},
 				},
 				zipCode: {
-					title: '邮编',
+					title: 'zipcode',
 					column: { width: 150 },
 					type: 'text',
 					addForm: {

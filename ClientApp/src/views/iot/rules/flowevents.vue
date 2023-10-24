@@ -1,86 +1,87 @@
 <template>
-  <div class="system-list-container">
-    <component :is="wrapper">
-      <div class="system-dept-search ">
-        <el-form size="default" label-width="100px">
-          <el-row :gutter="35">
-            <el-form-item label="创建对象">
-              <el-select v-model="query.Creator" filterable remote reserve-keyword placeholder="请输入创建对象名称"
-                         :remote-method="getCreators" :loading="state.creatorloading">
-                <el-option v-for="item in state.creators" :key="item.value" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="规则">
-              <el-select v-model="query.RuleId" placeholder="请选择规则">
-                <el-option v-for="item in state.rules" :key="item.value" :label="item.label" :value="item.value"
-                           :disabled="item.disabled" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="事件名称">
-              <el-input v-model="query.Name" placeholder="请输入事件名称" />
-            </el-form-item>
-            <el-form-item>
-              <el-button size="default" type="primary" @click="getData()">
-                <el-icon>
-                  <ele-Search />
-                </el-icon>
-                查询
-              </el-button>
-              <el-button size="default"  @click="expandAll()">
-                {{ state.expandAll ? '收缩全部' : '展开全部'}}
-              </el-button>
-            </el-form-item>
-          </el-row>
-        </el-form>
+    <div class="system-list-container">
+        <component :is="wrapper">
+            <div class="system-dept-search">
+                <el-form size="default" label-width="100px">
+                    <el-row :gutter="35">
+                        <el-form-item label="Create object">
+                            <el-select v-model="query.Creator" filterable remote reserve-keyword placeholder="Please enter the name of the created object"
+                                       :remote-method="getCreators" :loading="state.creatorloading">
+                                <el-option v-for="item in state.creators" :key="item.value" :label="item.label" :value="item.value" />
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="Rules">
+                            <el-select v-model="query.RuleId" placeholder="Please select a rule">
+                                <el-option v-for="item in state.rules" :key="item.value" :label="item.label" :value="item.value"
+                                           :disabled="item.disabled" />
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="Event name">
+                            <el-input v-model="query.Name" placeholder="Please enter the event name" />
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button size="default" type="primary" @click="getData()">
+                                <el-icon>
+                                    <ele-Search />
+                                </el-icon>
+                                Inquire
+                            </el-button>
+                            <el-button size="default" @click="expandAll()">
+                                {{ state.expandAll ? 'Collapse all' : 'Expand all'}}
+                            </el-button>
+                        </el-form-item>
+                    </el-row>
+                </el-form>
 
-      </div>
+            </div>
 
-      <el-table :data="state.tableData.rows" style="width: 100%"
-                row-key="eventId"
-                table-layout="auto"
-                :expand-row-keys="state.expandRowKeys"
-                v-loading="loading">
-        <el-table-column type="expand">
-          <template #default="props">
-            <el-card class="box-card" style="margin: 3px;">
-              <template #header>
-                <div class="card-header">
-                  <span>描述</span>
-                </div>
-              </template>
-              <p m="t-0 b-2">{{ props.row.eventDesc }}</p>
-            </el-card>
-            <el-card class="box-card" style="margin: 3px;">
-              <template #header>
-                <div class="card-header">
-                  <span>输入值</span>
-                </div>
-              </template>
-              <p m="t-0 b-2"> {{ props.row.mataData }}</p>
-            </el-card>
-          </template>
-        </el-table-column>
-        <el-table-column prop="eventName" label="事件名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="type" label="类型" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="name" label="触发规则" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="createrDateTime" label="创建时间" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" show-overflow-tooltip>
-          <template #default="scope">
-            <el-button size="small" text type="primary" v-if="
-              scope.row.alarmStatus === 'Active_UnAck' ||
-              scope.row.alarmStatus === 'Cleared_UnAck'
-            " @click="replay(scope.row)">回放
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-pagination @size-change="onHandleSizeChange" @current-change="onHandleCurrentChange" class="mt15"
-                     :pager-count="5" :page-sizes="[10, 20, 30,50,100]" v-model:current-page="state.tableData.param.pageNum" background
-                     v-model:page-size="state.tableData.param.pageSize" layout="total, sizes, prev, pager, next, jumper"
-                     :total="state.tableData.total">
-      </el-pagination>
-    </component>
-  </div>
+            <el-table :data="state.tableData.rows" style="width: 100%"
+                      row-key="eventId"
+                      table-layout="auto"
+                      :expand-row-keys="state.expandRowKeys"
+                      v-loading="loading">
+                <el-table-column type="expand">
+                    <template #default="props">
+                        <el-card class="box-card" style="margin: 3px;">
+                            <template #header>
+                                <div class="card-header">
+                                    <span>Description</span>
+                                </div>
+                            </template>
+                            <p m="t-0 b-2">{{ props.row.eventDesc }}</p>
+                        </el-card>
+                        <el-card class="box-card" style="margin: 3px;">
+                            <template #header>
+                                <div class="card-header">
+                                    <span>Enter value</span>
+                                </div>
+                            </template>
+                            <p m="t-0 b-2"> {{ props.row.mataData }}</p>
+                        </el-card>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="eventName" label="Event Name" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="type" label="type" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="name" label="Trigger rule" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="createrDateTime" label="Creation Time" show-overflow-tooltip></el-table-column>
+                <el-table-column label="Operation" show-overflow-tooltip>
+                    <template #default="scope">
+                        <el-button size="small" text type="primary" v-if="
+               scope.row.alarmStatus === 'Active_UnAck' ||
+               scope.row.alarmStatus === 'Cleared_UnAck'
+             " @click="replay(scope.row)">
+                            Replay
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-pagination @size-change="onHandleSizeChange" @current-change="onHandleCurrentChange" class="mt15"
+                           :pager-count="5" :page-sizes="[10, 20, 30,50,100]" v-model:current-page="state.tableData.param.pageNum" background
+                           v-model:page-size="state.tableData.param.pageSize" layout="total, sizes, prev, pager, next, jumper"
+                           :total="state.tableData.total">
+            </el-pagination>
+        </component>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -100,7 +101,7 @@ import {
 import { Session } from "/@/utils/storage";
 import { ruleApi } from "/@/api/flows";
 import { deviceApi } from "/@/api/devices";
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 
 const props = defineProps({
   creator: {
@@ -144,8 +145,8 @@ interface TableDataRow {
 }
 
 interface TableDataState {
-  expandAll: boolean // 是否展开全部状态
-  expandRowKeys: Array<any>; // 已展开行的 id 合集
+    expandAll: boolean // Whether to expand all states
+    expandRowKeys: Array<any>; // Collection of ids of expanded rows
   creatorloading: boolean;
   creators: Array<any>;
   rules: Array<any>
@@ -229,7 +230,7 @@ const onHandleSizeChange = (val: number) => {
 
   getData();
 };
-// 分页改变
+//Page changes
 const onHandleCurrentChange = (val: number) => {
   state.tableData.param.pageNum = val;
   getData();
@@ -267,7 +268,7 @@ const getData = async () => {
   }
 
 };
-// 初始化表格数据
+//Initialize table data
 const initTableData = () => {
   getData();
 };

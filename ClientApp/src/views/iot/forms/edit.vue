@@ -34,24 +34,24 @@ const editorInit = () => {
         });
         
         !editor ? editor = monaco.editor.create(document.getElementById('codeEditBox') as HTMLElement, {
-            value:text.value, // 编辑器初始显示文字
-            language: 'go', // 语言支持自行查阅demo
-            automaticLayout: true, // 自适应布局  
-            theme: 'vs-dark', // 官方自带三种主题vs, hc-black, or vs-dark
-            foldingStrategy: 'indentation',
-            renderLineHighlight: 'all', // 行亮
-            selectOnLineNumbers: true, // 显示行号
-            minimap:{
-                enabled: false,
-            },
-            readOnly: false, // 只读
-            fontSize: 16, // 字体大小
-            scrollBeyondLastLine: false, // 取消代码后面一大段空白 
-            overviewRulerBorder: false, // 不要滚动条的边框  
-        }) : 
+         value:text.value, // Editor initial display text
+         language: 'go', // Check the demo for language support
+         automaticLayout: true, // adaptive layout
+         theme: 'vs-dark', // There are three official themes vs, hc-black, or vs-dark
+         foldingStrategy: 'indentation',
+         renderLineHighlight: 'all', // line light
+         selectOnLineNumbers: true, // Display line numbers
+         minimap:{
+             enabled: false,
+         },
+         readOnly: false, // read only
+         fontSize: 16, // font size
+         scrollBeyondLastLine: false, // A large blank space after the cancellation code
+         overviewRulerBorder: false, // No scroll bar border
+        }):
         editor.setValue("");
         // console.log(editor)
-        // 监听值的变化
+        // Monitor value changes
         editor.onDidChangeModelContent((val:any) => {
             text.value = editor.getValue();
              
@@ -69,7 +69,7 @@ const editorInit = () => {
 </script>
 <style lang="scss">
 body {
-  margin: 0;  /* 如果页面出现垂直滚动条，则加入此行CSS以消除之 */
+  margin: 0;  /* If a vertical scroll bar appears on the page, add this line of CSS to eliminate it */
 }
 
 </style>

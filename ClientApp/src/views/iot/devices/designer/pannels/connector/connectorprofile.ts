@@ -1,18 +1,18 @@
-export const connectorprofile={
-    devnamespace:'iot.connector',   
-    shape:'connector', 
-    name:'连接属性',
-    baseinfoschema:{},
-    command:{
-      toolbar:[],
-      contextmenu:[
-        { command: 'deleteconnector', txt: "删除", icon: "ele-Delete" },
-        { command: 'editconnector', txt: "编辑", icon: "ele-Edit" },
-      ]
+export const connectorprofile = {
+    devnamespace: 'iot.connector',
+    shape: 'connector',
+    name: 'Connection Properties',
+    baseinfoschema: {},
+    command: {
+        toolbar: [],
+        contextmenu: [
+            { command: 'deleteconnector', txt: "delete", icon: "ele-Delete" },
+            { command: 'editconnector', txt: "edit", icon: "ele-Edit" },
+        ]
     },
-    incomepoint:'',
-    outgoingpoint:'',
-    incomeshape:'',
-    outgoingshape:'',
+    incomepoint: '',
+    outgoingpoint: '',
+    incomeshape: '',
+    outgoingshape: '',
 
-    }
+}

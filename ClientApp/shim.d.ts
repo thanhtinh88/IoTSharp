@@ -1,13 +1,13 @@
 /* eslint-disable */
 
-// 声明文件，*.vue 后缀的文件交给 vue 模块来处理
+// Declaration file, files with *.vue suffix are handed over to the vue module for processing
 declare module '*.vue' {
-	import type { DefineComponent } from 'vue';
-	const component: DefineComponent<{}, {}, any>;
-	export default component;
+    import type { DefineComponent } from 'vue';
+    const component: DefineComponent<{}, {}, any>;
+    export default component;
 }
 
-// 声明文件，定义全局变量。其它 app.config.globalProperties.xxx，使用 getCurrentInstance() 来获取
+//Declare the file and define global variables. For other app.config.globalProperties.xxx, use getCurrentInstance() to obtain
 interface Window {
-	nextLoading: boolean;
+    nextLoading: Boolean;
 }

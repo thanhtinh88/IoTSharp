@@ -39,16 +39,16 @@ namespace IoTSharp.Controllers
             var sysmenu = new List<MenuItem>();
             if (User.IsInRole(nameof(UserRole.SystemAdmin)))
             {
-                sysmenu.Add(new() { text = "Certificate Management", i18n = "", vi18n = "iot.certmnt", routename = "certmnt", link = "/iot/settings/certmgr", vpath = "/iot /settings/certmgr", });
-                sysmenu.Add(new() { text = "tenant list", i18n = "", vi18n = "iot.tenantlist", routename = "tenantlist", link = "/iot/settings/tenantlist", vpath = "/iot /settings/tenantlist" });
+                sysmenu.Add(new() { text = "Certificate Management", i18n = "", vi18n = "iot.certmnt", routename = "certmnt", link = "/iot/settings/certmgr", vpath = "/iot/settings/certmgr", });
+                sysmenu.Add(new() { text = "tenant list", i18n = "", vi18n = "iot.tenantlist", routename = "tenantlist", link = "/iot/settings/tenantlist", vpath = "/iot/settings/tenantlist" });
             }
             if (User.IsInRole(nameof(UserRole.TenantAdmin)))
             {
-                sysmenu.Add(new() { text = "Customer List", i18n = "", vi18n = "iot.customerlist", routename = "customerlist", link = "/iot/settings/customerlist", vpath = "/iot /settings/customerlist", });
+                sysmenu.Add(new() { text = "Customer List", i18n = "", vi18n = "iot.customerlist", routename = "customerlist", link = "/iot/settings/customerlist", vpath = "/iot/settings/customerlist", });
             }
             if (User.IsInRole(nameof(UserRole.CustomerAdmin)))
             {
-                sysmenu.Add(new() { text = "userlist", i18n = "", vi18n = "iot.userlist", routename = "userlist", link = "/iot/settings/userlist", vpath = "/iot /settings/userlist", });
+                sysmenu.Add(new() { text = "userlist", i18n = "", vi18n = "iot.userlist", routename = "userlist", link = "/iot/settings/userlist", vpath = "/iot/settings/userlist", });
             }
 
             var _user_menu = new List<MenuItem>
@@ -81,9 +81,9 @@ namespace IoTSharp.Controllers
                      children = new MenuItem[]
                          {
                              new() { text = "Device Management", i18n = "", vi18n="iot.devicelist", routename="devicelist", link = "/iot/devices/devicelist", vpath="/iot/devices/devicelist"},
-                             new() { text = "Device Alarm", i18n = "", vi18n="iot.alarmlist", routename="alarmlist", link = "/iot/alarms/alarmlist", vpath = "/iot/alarms/alarmlist ", },
-                             new() { text = "Rule chain design", i18n = "", vi18n="iot.flowlist", routename="flowlist", link = "/iot/rules/flowlist", vpath = "/iot/rules/ flowlist", },
-                             new() { text = "Rule Chain Audit", i18n = "", vi18n="iot.flowevents", routename="flowevents", link = "/iot/rules/flowevents", vpath = "/iot/rules/ flowevents", },
+                             new() { text = "Device Alarm", i18n = "", vi18n="iot.alarmlist", routename="alarmlist", link = "/iot/alarms/alarmlist", vpath = "/iot/alarms/alarmlist", },
+                             new() { text = "Rule chain design", i18n = "", vi18n="iot.flowlist", routename="flowlist", link = "/iot/rules/flowlist", vpath = "/iot/rules/flowlist", },
+                             new() { text = "Rule Chain Audit", i18n = "", vi18n="iot.flowevents", routename="flowevents", link = "/iot/rules/flowevents", vpath = "/iot/rules/flowevents", },
                            // new() { text = "Gateway Configurator", i18n = "", vi18n="iot.devicegraph", routename="devicegraph", link = "/iot/devices/devicegraph", vpath="/iot/ devices/devicegraph", },
                          }
                  });

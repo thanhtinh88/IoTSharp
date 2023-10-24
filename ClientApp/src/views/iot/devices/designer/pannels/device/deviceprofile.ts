@@ -1,16 +1,16 @@
 import { opcuamapping } from "../../models/opcuamapping";
-export const deviceprofile={
-devnamespace:'iot.device.test',   
-shape:'device', 
-name:'测试设备',
-baseinfoschema:{},
-command:{
+export const deviceprofile = {
+    devnamespace: 'iot.device.test',
+    shape: 'device',
+    name: 'Test Equipment',
+    baseinfoschema: {},
+    command: {
 
-  toolbar:[],
-  contextmenu:[
-    { command: 'deletegateway', txt: "删除", icon: "ele-Delete" },
-    { command: 'editmodbusmapping', txt: "编辑", icon: "ele-Edit" },
-  ]
-},
-mappings:[]
+        toolbar: [],
+        contextmenu: [
+            { command: 'deletegateway', txt: "delete", icon: "ele-Delete" },
+            { command: 'editmodbusmapping', txt: "edit", icon: "ele-Edit" },
+        ]
+    },
+    mappings: []
 }

@@ -1,4 +1,4 @@
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 export interface NodeListState {
     id: string | number;
     nodeId: string | undefined;
@@ -11,7 +11,7 @@ export interface NodeListState {
     nodenamespace?: string;
     mata?: string;
     content?: string;
-    color: string; // 节点背景颜色
+    color: string; //Node background color
 }
 export interface LineListState {
     sourceId: string;

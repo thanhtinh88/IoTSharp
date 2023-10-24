@@ -27,12 +27,12 @@ export default defineComponent({
 				
 			],
 		});
-		// 设置 tool 标题
+		// Set tool title
 		const setToolTitle = computed(() => {
 			let { globalTitle } = themeConfig.value;
-			return `${globalTitle}规则设计器`;
+			return `${globalTitle} Rule Designer`;
 		});
-		// 顶部工具栏
+		// top toolbar
 		const onToolClick = (fnName: string) => {
 			emit('tool', fnName);
 		};

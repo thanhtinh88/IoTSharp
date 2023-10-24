@@ -39,8 +39,8 @@ const emit = defineEmits(["click", "contextmenu", "currentline"]);
 const state = reactive({
   isShow: false,
   dropdownList: [
-    { contextMenuClickId: 0, txt: "删除", icon: "ele-Delete" },
-    { contextMenuClickId: 1, txt: "编辑", icon: "ele-Edit" },
+      { contextMenuClickId: 0, txt: "Delete", icon: "ele-Delete" },
+      { contextMenuClickId: 1, txt: "Edit", icon: "ele-Edit" },
   ],
   item: {
     type: "node",
@@ -48,11 +48,11 @@ const state = reactive({
   },
   conn: {},
 });
-// 父级传过来的坐标 x,y 值
+//Coordinates x,y values passed from parent
 const dropdowns = computed(() => {
   return <any>props.dropdown;
 });
-// 当前项菜单点击
+//Current item menu click
 const onCurrentClick = (contextMenuClickId: number) => {
   emit(
     "currentline",
@@ -60,7 +60,7 @@ const onCurrentClick = (contextMenuClickId: number) => {
     state.conn
   );
 };
-// 打开右键菜单：判断是否固定，固定则不显示关闭按钮
+// Open the right-click menu: determine whether it is fixed. If it is fixed, the close button will not be displayed.
 const openContextmenu = (item: any, conn = {}) => {
   state.item = item;
   state.conn = conn;
@@ -69,16 +69,16 @@ const openContextmenu = (item: any, conn = {}) => {
     state.isShow = true;
   }, 10);
 };
-// 关闭右键菜单
-const closeContextmenu = () => {
-  state.isShow = false;
-};
-// 监听页面监听进行右键菜单的关闭
-onMounted(() => {
-  document.body.addEventListener("click", closeContextmenu);
-  document.body.addEventListener("contextmenu", closeContextmenu);
-});
-// 页面卸载时，移除右键菜单监听事件
+    // Close the right-click menu
+    const closeContextmenu = () => {
+        state.isShow = false;
+    };
+    // Monitor the page to monitor the closing of the right-click menu
+    onMounted(() => {
+        document.body.addEventListener("click", closeContextmenu);
+        document.body.addEventListener("contextmenu", closeContextmenu);
+    });
+// When the page is unloaded, remove the right-click menu listening event
 onUnmounted(() => {
   document.body.removeEventListener("click", closeContextmenu);
   document.body.removeEventListener("contextmenu", closeContextmenu);

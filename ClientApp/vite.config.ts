@@ -34,7 +34,6 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 				resolvers: [
 					ElementPlusResolver(),
 					// Auto import icon components
-					// 自动导入图标组件
 					IconsResolver({
 						prefix: 'Icon',
 					}),
@@ -44,7 +43,6 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 			Components({
 				resolvers: [
 					// Auto register icon components
-					// 自动注册图标组件
 					IconsResolver({
 						prefix: 'icon',
 					}),

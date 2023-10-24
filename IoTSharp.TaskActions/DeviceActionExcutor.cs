@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IoTSharp.TaskActions
 {
-    [DisplayName("用于设备行为推送的执行器")]
+    [DisplayName("Executor for device behavior push")]
     public class DeviceActionExcutor : TaskAction
     {
         public override async Task<TaskActionOutput> ExecuteAsync(TaskActionInput input)

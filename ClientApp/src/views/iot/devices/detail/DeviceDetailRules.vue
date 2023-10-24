@@ -1,51 +1,50 @@
 <template>
-  <div class="z-crud">
-    <fs-crud ref="crudRef" v-bind="crudBinding"/>
-  </div>
+    <div class="z-crud">
+        <fs-crud ref="crudRef" v-bind="crudBinding" />
+    </div>
 </template>
 
 <script setup lang="ts">
-import {useCrud} from "@fast-crud/fast-crud";
-import {useExpose} from "@fast-crud/fast-crud";
-import {createDeviceRulesCrudOptions} from "/@/views/iot/devices/detail/deviceRulesCrudOptions";
-import {ruleApi} from "/@/api/flows";
+    import { useCrud } from "@fast-crud/fast-crud";
+    import { useExpose } from "@fast-crud/fast-crud";
+    import { createDeviceRulesCrudOptions } from "/@/views/iot/devices/detail/deviceRulesCrudOptions";
+    import { ruleApi } from "/@/api/flows";
 
-const props = defineProps({
-  deviceId: {
-    type: String,
-    default: ''
-  }
-})
-// crud组件的ref
-const crudRef = ref();
-// crud 配置的ref
-const crudBinding = ref();
-// 暴露的方法
-const {crudExpose} = useExpose({crudRef, crudBinding});
-// 你的crud配置
-let {crudOptions} = createDeviceRulesCrudOptions({expose: crudExpose}, props.deviceId);
-// 初始化crud配置
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
-const {resetCrudOptions} = useCrud({expose: crudExpose, crudOptions});
-// 你可以调用此方法，重新初始化crud配置
-// resetCrudOptions(options)
-watch(() => props.deviceId, () => {
-  // watch deviceId , 根据Device id 重新配置 crud， 再进行刷新
-  const res =  createDeviceRulesCrudOptions({expose: crudExpose}, props.deviceId);
-  crudOptions = res.crudOptions
-  // console.log(`%c@DeviceDetailProps:32`, 'color:white;font-size:16px;background:green;font-weight: bold;', res)
-  resetCrudOptions(crudOptions)
-  crudExpose.doRefresh();
-})
-// 页面打开后获取列表数据
-onMounted(async () => {
-  crudExpose.doRefresh();
-});
+    const props = defineProps({
+        deviceId: {
+            type: String,
+            default: ''
+        }
+    })// ref of crud component
+    const crudRef = ref();
+    // crud configured ref
+    const crudBinding = ref();
+    //Exposed method
+    const { crudExpose } = useExpose({ crudRef, crudBinding });
+    //Your crud configuration
+    let { crudOptions } = createDeviceRulesCrudOptions({ expose: crudExpose }, props.deviceId);
+    //Initialize crud configuration
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
+    const { resetCrudOptions } = useCrud({ expose: crudExpose, crudOptions });
+    // You can call this method to reinitialize the crud configuration
+    // resetCrudOptions(options)
+    watch(() => props.deviceId, () => {
+        // watch deviceId, reconfigure crud according to Device id, and then refresh
+        const res = createDeviceRulesCrudOptions({ expose: crudExpose }, props.deviceId);
+        crudOptions = res.crudOptions
+        // console.log(`%c@DeviceDetailProps:32`, 'color:white;font-size:16px;background:green;font-weight: bold;', res)
+        resetCrudOptions(crudOptions)
+        crudExpose.doRefresh();
+    })
+    // Get the list data after the page is opened
+    onMounted(async () => {
+        crudExpose.doRefresh();
+    });
 
 </script>
 
 <style scoped lang="scss">
-.z-crud {
-  height: calc(100vh - 160px);
-}
+    .z-crud {
+        height: calc(100vh - 160px);
+    }
 </style>

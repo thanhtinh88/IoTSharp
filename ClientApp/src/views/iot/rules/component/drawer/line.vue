@@ -1,32 +1,32 @@
 <template>
-  <div class="pt15 pr15 pb15 pl15">
-    <el-form :model="state.line" size="default" label-width="50px">
-      <el-form-item label="来往">
-        <el-input v-model="state.line.contact" placeholder="来往" clearable disabled></el-input>
-      </el-form-item>
-      <el-form-item label="类型">
-        <el-input v-model="state.line.type" placeholder="类型" clearable disabled></el-input>
-      </el-form-item>
-      <el-form-item label="名称">
-        <el-input v-model="state.line.linename" placeholder="请输入名称" clearable></el-input>
-      </el-form-item>
+    <div class="pt15 pr15 pb15 pl15">
+        <el-form :model="state.line" size="default" label-width="50px">
+            <el-form-item label="Back and forth">
+                <el-input v-model="state.line.contact" placeholder="contact" clearable disabled></el-input>
+            </el-form-item>
+            <el-form-item label="type">
+                <el-input v-model="state.line.type" placeholder="type" clearable disabled></el-input>
+            </el-form-item>
+            <el-form-item label="name">
+                <el-input v-model="state.line.linename" placeholder="Please enter a name" clearable></el-input>
+            </el-form-item>
 
-      <el-form-item label="条件">
-        <el-input v-model="state.line.condition" placeholder="请输入条件" clearable></el-input>
-      </el-form-item>
-    </el-form>
-    <div class="codeTip">
-        <div>线节点上可以设置名称显示在线段上方，条件字段输入时需要注意，Node节点取数方式为input.Name来获取节点Json传值：</div>
+            <el-form-item label="condition">
+                <el-input v-model="state.line.condition" placeholder="Please enter the condition" clearable></el-input>
+            </el-form-item>
+        </el-form>
+        <div class="codeTip">
+            <div>On the line node, you can set the name to be displayed above the line segment. You need to pay attention when entering the condition field. The Node node fetching method is input.Name to get the node Json value: </div>
 <pre>
 {
-   "Name":"张三",
-   "Age":18
+    "Name":"Zhang San",
+    "Age":18
 }
 </pre>
-        <div>但线节点接收Json传值时，直接使用字段，条件写为：</div>
-        <el-tag type="Info">Age>18</el-tag>即可，不能拼接input.
+            <div>But when the line node receives the Json value, the field is used directly, and the condition is written as: </div>
+            <el-tag type="Info">Age>18</el-tag> is sufficient, but input cannot be spliced.
+        </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts" setup>
@@ -38,33 +38,33 @@ const props = defineProps({
     default: {},
   },
 });
-// 定义接口来定义对象的类型
+//Define the interface to define the type of object
 interface WorkflowDrawerLineState {
-  line: any;
+   line: any;
 }
 
 const emit = defineEmits(["linechange", "close"]);
 const state = reactive<WorkflowDrawerLineState>({
-  line: props.modelValue,
+   line: props.modelValue,
 });
 watch(
-  () => props.modelValue,
-  () => {
-    state.line = props.modelValue
-  }
+   () => props.modelValue,
+   () => {
+     state.line = props.modelValue
+   }
 );
 
-// 获取父组件数据
+// Get parent component data
 // const getParentData = (linedata: any) => {
-//   state.line.linename = linedata.linename ?? "";
-//   state.line.condition = linedata.condition ?? "";
-//   state.line.namespace = linedata.namespace ?? "";
+// state.line.linename = linedata.linename ?? "";
+// state.line.condition = linedata.condition ?? "";
+// state.line.namespace = linedata.namespace ?? "";
 // };
-// 重置
+// reset
 const onLineTextReset = () => {
-  state.line.linename = "";
+   state.line.linename = "";
 };
-// 保存
+// save
 const onLineTextChange = () => {
   emit("linechange", state.line);
   emit("close");

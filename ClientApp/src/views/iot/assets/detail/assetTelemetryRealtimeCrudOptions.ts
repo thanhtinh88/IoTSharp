@@ -52,8 +52,8 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, as
 				show: false,
 				dropdown: {
 					more: {
-						//更多按钮配置
-						text: '属性',
+						//More button configurations
+						text: 'Attributes',
 						...FsButton,
 						icon: 'operation',
 					},
@@ -61,12 +61,12 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, as
 				buttons: {
 					view: { show: false },
 					edit: { show: false },
-					remove: { show: false }, //删除按钮
+					remove: { show: false }, // delete button
 				},
 			},
 			columns: {
 				keyName: {
-					title: '属性名称',
+					title: 'Key name',
 					type: 'text',
 					column: {
 						width: 260,
@@ -89,7 +89,7 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, as
 				// 	}),
 				// },
 				dateTime: {
-					title: '时间',
+					title: 'Date time',
 					type: 'text',
 					column: {
 						formatter: formatColumnDataTime,
@@ -102,7 +102,7 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, as
 					},
 				},
 				value: {
-					title: '值',
+					title: 'Value',
 					type: 'text',
 					addForm: {
 						show: false,

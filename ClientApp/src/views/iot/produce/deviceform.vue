@@ -1,36 +1,32 @@
 <template>
-  <div>
-    <el-drawer v-model="state.drawer" :title="state.dialogtitle" size="75%">
-      <div class="add-form-container">
-        <el-form
-          size="default"
-          :model="state.dataForm"
-          label-width="150px"
-          :rules="rules"
-          ref="dataFormRef"
-        >
-          <el-row :gutter="35">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
-              <el-form-item label="设备名称" prop="name">
-                <el-input
-                  v-model="state.dataForm.name"
-                  placeholder="请输入设备名称"
-                  clearable
-                ></el-input>
-              </el-form-item>
-            </el-col>
+    <div>
+        <el-drawer v-model="state.drawer" :title="state.dialogtitle" size="75%">
+            <div class="add-form-container">
+                <el-form size="default"
+                         :model="state.dataForm"
+                         label-width="150px"
+                         :rules="rules"
+                         ref="dataFormRef">
+                    <el-row :gutter="35">
+                        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+                            <el-form-item label="Device name" prop="name">
+                                <el-input v-model="state.dataForm.name"
+                                          placeholder="Please enter the device name"
+                                          clearable></el-input>
+                            </el-form-item>
+                        </el-col>
 
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
-              <el-form-item>
-                <el-button type="primary" @click="onSubmit(dataFormRef)">保存</el-button>
-                <el-button @click="closeDialog">取消</el-button>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
-    </el-drawer>
-  </div>
+                        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+                            <el-form-item>
+                                <el-button type="primary" @click="onSubmit(dataFormRef)">Save</el-button>
+                                <el-button @click="closeDialog">Cancel</el-button>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+        </el-drawer>
+    </div>
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted, watchEffect } from "vue";
@@ -50,49 +46,49 @@ interface produceformdata {
 const emit = defineEmits(["close", "submit"]);
 const dataFormRef = ref();
 const rules = reactive<FormRules>({
-  name: [
-    { required: true, type: "string", message: "请输入设备名称", trigger: "blur" },
-    { min: 2, message: "设备名称长度应大于1", trigger: "blur" },
-  ],
+   name: [
+     { required: true, type: "string", message: "Please enter the device name", trigger: "blur" },
+     { min: 2, message: "The length of the device name should be greater than 1", trigger: "blur" },
+   ],
 });
 const state = reactive<produceformdata>({
-  drawer: false,
-  dialogtitle: "",
-  dataForm: {
-    name: "",
-  },
-  produceid: "",
+   drawer: false,
+   dialogtitle: "",
+   dataForm: {
+     name: "",
+   },
+   produceid: "",
 });
 
 const openDialog = (produceid: string) => {
-  state.produceid = produceid;
-  state.drawer = true;
+   state.produceid = produceid;
+   state.drawer = true;
 };
-// 关闭弹窗
+//Close pop-up window
 const closeDialog = () => {
-  state.drawer = false;
-  emit("close", { sender: "", args: state.dataForm });
+   state.drawer = false;
+   emit("close", { sender: "", args: state.dataForm });
 };
 
 watchEffect(() => {});
 
 onMounted(() => {});
 const onSubmit = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  await formEl.validate(async (valid, fields) => {
-    if (valid) {
-      var result = await createDevice(state.produceid, state.dataForm);
-      if (result["code"] === 10000) {
-        ElMessage.success("新增成功");
-        state.drawer = false;
-        emit("close", { sender: "deviceform", args: state.dataForm });
-      } else {
-        ElMessage.warning("新增失败:" + result["msg"]);
-        emit("close", state.dataForm);
-      }
-    } else {
-    }
-  });
+   if (!formEl) return;
+   await formEl.validate(async (valid, fields) => {
+     if (valid) {
+       var result = await createDevice(state.produceid, state.dataForm);
+       if (result["code"] === 10000) {
+         ElMessage.success("Add successfully");
+         state.drawer = false;
+         emit("close", { sender: "deviceform", args: state.dataForm });
+       } else {
+         ElMessage.warning("Add failed:" + result["msg"]);
+         emit("close", state.dataForm);
+       }
+     } else {
+     }
+   });
 };
 
 defineExpose({

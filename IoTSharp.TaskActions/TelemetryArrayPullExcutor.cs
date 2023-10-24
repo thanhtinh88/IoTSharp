@@ -10,7 +10,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace IoTSharp.TaskActions
 {
-    [DisplayName("用于遥测数组推送的执行器")]
+    [DisplayName("Executor for telemetry array push")]
     public class TelemetryArrayPullExcutor : TaskAction
     {
         public TelemetryArrayPullExcutor()

@@ -101,8 +101,8 @@ export const createDeviceCrudOptions = function ({ expose }, customerId, deviceD
 				width: 180,
 				dropdown: {
 					more: {
-						//更多按钮配置
-						text: '属性',
+						//More button configurations
+						text: 'property',
 						...FsButton,
 						icon: 'operation',
 					},
@@ -116,30 +116,30 @@ export const createDeviceCrudOptions = function ({ expose }, customerId, deviceD
 						icon: 'editPen',
 						...FsButton,
 						order: 1,
-					}, //编辑按钮
+					}, //Edit button
 					remove: {
 						icon: 'Delete',
 						...FsButton,
 						order: 5,
-					}, //删除按钮
+					}, //Delete button
 				},
 			},
 			columns: {
 				$checked: {
-					title: '选择',
+					title: 'Select',
 					form: { show: false },
 					column: {
 						type: 'selection',
 						align: 'center',
 						width: '55px',
-						columnSetDisabled: false, //禁止在列设置中选择
+						columnSetDisabled: false, //Disable selection in column settings
 						selectable(row, index) {
 							return true;
 						},
 					},
 				},
 				name: {
-					title: '设备名称',
+					title: 'Device name',
 					type: 'button',
 					search: { show: true },
 					column: {
@@ -155,13 +155,13 @@ export const createDeviceCrudOptions = function ({ expose }, customerId, deviceD
 					},
 				},
 				deviceType: {
-					title: '设备类型',
+					title: 'Device type',
 					type: 'dict-select',
 					search: { show: false },
 					dict: dict({
 						data: [
-							{ value: 'Gateway', label: '网关' },
-							{ value: 'Device', label: '设备', color: 'warning' },
+							{ value: 'Gateway', label: 'Gateway' },
+							{ value: 'Device', label: 'Device', color: 'warning' },
 						],
 					}),
 
@@ -169,13 +169,13 @@ export const createDeviceCrudOptions = function ({ expose }, customerId, deviceD
 				},
 
 				active: {
-					title: '活动状态',
+					title: 'Activity status',
 					type: 'dict-switch',
 					search: { show: true },
 					dict: dict({
 						data: [
-							{ value: true, label: '活动' },
-							{ value: false, label: '静默', color: 'danger' },
+							{ value: true, label: 'Activity' },
+							{ value: false, label: 'silent', color: 'danger' },
 						],
 					}),
 					column: { width: '80px' },
@@ -193,17 +193,17 @@ export const createDeviceCrudOptions = function ({ expose }, customerId, deviceD
 					},
 				},
 				lastActivityDateTime: {
-					title: '最后活动时间',
+					title: 'Last activity time',
 					type: 'datetime',
 
 					column: {
 						formatter: (context) => {
-							if(context.value){
-								return	dayjs.tz(context.value, "Asia/Shanghai").add(8, 'hour').format('YYYY-MM-DD HH:mm:ss');
-							}else{
+							if (context.value) {
+								return dayjs.tz(context.value, "Asia/Shanghai").add(8, 'hour').format('YYYY-MM-DD HH:mm:ss');
+							} else {
 								return '';
 							}
-				
+
 						},
 						show: false,
 					},
@@ -216,7 +216,7 @@ export const createDeviceCrudOptions = function ({ expose }, customerId, deviceD
 					},
 				},
 				identityType: {
-					title: '认证方式',
+					title: 'Authentication method',
 					type: 'dict-select',
 					search: { show: false },
 					column: { width: '120px' },
@@ -248,7 +248,7 @@ export const createDeviceCrudOptions = function ({ expose }, customerId, deviceD
 					column: {
 						show: false,
 					},
-					title: '超时',
+					title: 'Timeout',
 					form: {
 						value: 300,
 					},

@@ -16,7 +16,7 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, de
 
 
 
-		state.telemetryKeys = res.data.filter((x) => typeof x.value === 'number').map((c) => c.keyName); // DeviceDetailTelemetry 组件状态， 要传到遥测历史组件
+		state.telemetryKeys = res.data.filter((x) => typeof x.value === 'number').map((c) => c.keyName); // DeviceDetailTelemetry component status, to be passed to the telemetry history component
 		records = res.data;
 		return {
 			total:records.length,
@@ -62,8 +62,8 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, de
 				show: false,
 				dropdown: {
 					more: {
-						//更多按钮配置
-						text: '属性',
+						//More button configurations
+						text: 'property',
 						...FsButton,
 						icon: 'operation',
 					},
@@ -71,26 +71,26 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, de
 				buttons: {
 					view: { show: false },
 					edit: { show: false },
-					remove: { show: false }, //删除按钮
+					remove: { show: false }, //Delete button
 				},
 			},
 			columns: {
 				keyName: {
-					title: '属性名称',
+					title: 'Attribute name',
 					type: 'text',
 					column: {
 						width: 260,
 					},
-				},value: {
-					title: '值',
+				}, value: {
+					title: 'value',
 					type: 'text',
-					column:{
+					column: {
 
 						formatter(context) {
 							if (context.row.dataType === 'DateTime') {
 								return formatToDateTime(context.value);
 							} else {
-								//解决数值为false不显示问题
+								//Solve the problem of not displaying the value if it is false
 								if (context.value || context.value == false) {
 									return context.value.toString();
 								}
@@ -107,7 +107,7 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, de
 					},
 				},
 				dataType: {
-					title: '数据类型',
+					title: 'data type',
 					type: 'dict-select',
 					dict: dict({
 						data: [
@@ -123,7 +123,7 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, de
 					}),
 				},
 				dateTime: {
-					title: '时间',
+					title: 'Time',
 					type: 'text',
 					column: {
 						formatter: formatColumnDataTime,
@@ -135,7 +135,7 @@ export const createDeviceTelemetryRealtimeCrudOptions = function ({ expose }, de
 						show: false,
 					},
 				},
-				
+
 			},
 		},
 	};

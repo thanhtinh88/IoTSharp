@@ -61,7 +61,7 @@ export interface LeftNavItemChild {
 
 const leftNavList: LeftNavItem[] = [
     {
-        title: "基本",
+        title: "Basic",
         icon: "iconfont icon-shouye",
         color: '#F1F0FF',
         isOpen: true,
@@ -69,7 +69,7 @@ const leftNavList: LeftNavItem[] = [
         children: [
             {
                 icon: 'importIcon',
-                name: "开始",
+                name: "start",
                 nodetype: "basic",
                 nodenamespace: "bpmn:StartEvent",
                 mata: "begin",
@@ -78,24 +78,24 @@ const leftNavList: LeftNavItem[] = [
             {
                 icon: 'stopIcon',
                 nodetype: "basic",
-                nodenamespace: "bpmn:EndEvent",    
+                nodenamespace: "bpmn:EndEvent",
                 mata: "end",
-                name: "结束",
+                name: "End",
                 id: "end",
             },
         ],
     },
     {
         color: '#E6F7FF',
-        title: "执行器",
+        title: "executor",
         icon: "iconfont icon-shouye",
         isOpen: true,
         id: "1",
         children: [],
     },
     {
-        color: '#FFFBE6',
-        title: "脚本",
+        color: '#FFFFE6',
+        title: "Script",
         icon: "iconfont icon-shouye",
         isOpen: true,
         id: "1",

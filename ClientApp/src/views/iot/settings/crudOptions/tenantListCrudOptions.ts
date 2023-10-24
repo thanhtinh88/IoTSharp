@@ -88,8 +88,8 @@ export const createTenantListCrudOptions = function ({ expose }) {
 						order: 2,
 					},
 					custom: {
-						text: '客户管理',
-						title: '客户管理',
+						text: 'Customer Management',
+						title: 'Customer Management',
 						icon: 'User',
 						order: 1,
 						type: 'info',
@@ -112,7 +112,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 			},
 			columns: {
 				name: {
-					title: '名称',
+					title: 'name',
 					type: 'text',
 					column: { width: 200 },
 					search: { show: true },
@@ -126,7 +126,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 					},
 				},
 				email: {
-					title: '邮件',
+					title: 'Mail',
 					type: 'text',
 					column: { width: 180 },
 					addForm: {
@@ -139,7 +139,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 					},
 				},
 				phone: {
-					title: '电话',
+					title: 'Telephone',
 					column: { width: 150 },
 					type: 'text',
 					addForm: {
@@ -152,7 +152,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 					},
 				},
 				country: {
-					title: '国家',
+					title: 'Country',
 					column: { width: 80 },
 					type: 'text',
 					addForm: {
@@ -165,7 +165,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 					},
 				},
 				province: {
-					title: '省',
+					title: 'province',
 					type: 'text',
 					column: { width: 80 },
 					addForm: {
@@ -178,7 +178,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 					},
 				},
 				city: {
-					title: '市',
+					title: 'city',
 					type: 'text',
 					column: { width: 100 },
 					addForm: {
@@ -191,7 +191,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 					},
 				},
 				street: {
-					title: '街道',
+					title: 'street',
 					column: { width: 180 },
 					type: 'text',
 					addForm: {
@@ -204,7 +204,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 					},
 				},
 				address: {
-					title: '地址',
+					title: 'address',
 					column: { width: 180 },
 					type: 'text',
 					addForm: {
@@ -217,7 +217,7 @@ export const createTenantListCrudOptions = function ({ expose }) {
 					},
 				},
 				zipCode: {
-					title: '邮编',
+					title: 'Postcode',
 					column: { width: 150 },
 					type: 'text',
 					addForm: {

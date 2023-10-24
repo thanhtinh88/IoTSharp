@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace IoTSharp.TaskActions
 {
-    [DisplayName("用于增加范围属性的执行器")]
+    [DisplayName("Executor for adding range properties")]
     public class   RangerCheckExcutor : TaskAction
     {
         public override Task<TaskActionOutput> ExecuteAsync(TaskActionInput _input)

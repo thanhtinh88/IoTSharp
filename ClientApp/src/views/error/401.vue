@@ -34,14 +34,14 @@ export default defineComponent({
 		const storesTagsViewRoutes = useTagsViewRoutes();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
-		const onSetAuth = () => {
-			// https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS
-			// 清除缓存/token等
-			Session.clear();
-			// 使用 reload 时，不需要调用 resetRoute() 重置路由
-			window.location.reload();
-		};
-		// 设置主内容的高度
+        const onSetAuth = () => {
+            // https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS
+            // Clear cache/token, etc.
+            Session.clear();
+            // When using reload, there is no need to call resetRoute() to reset the route
+            window.location.reload();
+        };
+		//Set the height of the main content
 		const initTagViewHeight = computed(() => {
 			let { isTagsview } = themeConfig.value;
 			if (isTagsViewCurrenFull.value) {

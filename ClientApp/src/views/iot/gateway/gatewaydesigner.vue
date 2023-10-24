@@ -5,53 +5,45 @@
       class="layout-view-bg-white flex"
       :style="{ height: `calc(100vh - ${setViewHeight}` }"
     >
-      <div class="workflow">
+        <div class="workflow">
 
 
 
-        <!-- 左侧导航区 -->
-        <div class="workflow-content">
-          <div class="workflow-left">
-            <el-scrollbar view-style="padding: 10px">
-              <div
-                ref="leftNavRefs"
-                v-for="val in state.leftNavList"
-                :key="val.id"
-                :style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }"
-                class="workflow-left-id"
-              >
-                <div class="workflow-left-title" @click="onTitleClick(val)">
-                  <span>{{ val.title }}</span>
-                  <SvgIcon :name="val.isOpen ? 'ele-ArrowDown' : 'ele-ArrowRight'" />
+            <!-- Left navigation area -->
+            <div class="workflow-content">
+                <div class="workflow-left">
+                    <el-scrollbar view-style="padding: 10px">
+                        <div ref="leftNavRefs"
+                             v-for="val in state.leftNavList"
+                             :key="val.id"
+                             :style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }"
+                             class="workflow-left-id">
+                            <div class="workflow-left-title" @click="onTitleClick(val)">
+                                <span>{{ val.title }}</span>
+                                <SvgIcon :name="val.isOpen ? 'ele-ArrowDown' : 'ele-ArrowRight'" />
+                            </div>
+                            <div class="workflow-left-item"
+                                 v-for="(v, k) in val.children"
+                                 :key="k"
+                                 :data-color="val.color"
+                                 :data-name="v.name"
+                                 :data-icon="v.icon"
+                                 :data-id="v.id">
+                                <div class="workflow-left-item-icon"
+                                     :style="{ backgroundColor: val.color }">
+                                    <component :is="v.icon"
+                                               class="workflow-icon-drag"></component>
+                                    <div class="text-sm pl5 name">{{ v.name }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </el-scrollbar>
                 </div>
-                <div
-                  class="workflow-left-item"
-                  v-for="(v, k) in val.children"
-                  :key="k"
-                  :data-color="val.color"
-                  :data-name="v.name"
-                  :data-icon="v.icon"
-                  :data-id="v.id"
-                >
-                <div
-                    class="workflow-left-item-icon"
-                    :style="{ backgroundColor: val.color }"
-                  >
-                    <component
-                      :is="v.icon"
-                      class="workflow-icon-drag"
-                    ></component>
-                    <div class="text-sm pl5 name">{{ v.name }}</div>
-                  </div>
-                </div>
-              </div>
-            </el-scrollbar>
-          </div>
 
-          <!-- 右侧绘画区 -->
-          <div class="workflow-right" ref="workflowRightRef"></div>
+                <!-- Painting area on the right -->
+                <div class="workflow-right" ref="workflowRightRef"></div>
+            </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -87,26 +79,26 @@ const magnetAvailabilityHighlighter = {
   },
 };
 onMounted(async () => {
-  state.leftNavList = [
-    {
-      title: "网关",
-      name:'',
-    //  icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "1",
-      children: [],
-    },
-    {
-      title: "设备",     
+   state.leftNavList = [
+     {
+       title: "Gateway",
        name:'',
-   //   icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "1",
-      children: [],
-    },
-  ];
+     // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "1",
+       children: [],
+     },
+     {
+       title: "Equipment",
+        name:'',
+    // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "1",
+       children: [],
+     },
+   ];
 
   nextTick(() => {
     initgraph();
@@ -123,46 +115,44 @@ const setClientWidth = () => {
 };
 
 const initgateways = () => {
-  state.leftNavList[0].children = [
-    {
-      title: "网关1",
-      name:'网关1',
-//      icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "1111111",
-    },  {
-      title: "网关2",
-      name:'网关2',
- //     icon: "iconfont icon-shouye",
-      color: "#F1F0FF",
-      isOpen: true,
-      id: "2222222",
-    },
-  ];
+   state.leftNavList[0].children = [
+     {
+       title: "Gateway 1",
+       name:'Gateway 1',
+// icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "1111111",
+     }, {
+       title: "Gateway 2",
+       name:'Gateway 2',
+  // icon: "iconfont icon-shouye",
+       color: "#F1F0FF",
+       isOpen: true,
+       id: "2222222",
+     },
+   ];
 };
 const initdevices = () => {
-
-
-  state.leftNavList[1].children = [
-    {
-      icon: "importIcon",
-      name: "网关1",
-      id: "111",
-    },{
-      icon: "importIcon",
-      name: "网关2",
-      id: "222",
-    },{
-      icon: "importIcon",
-      name: "网关3",
-      id: "333",
-    },{
-      icon: "importIcon",
-      name: "网关4",
-      id: "4444",
-    },
-  ];
+    state.leftNavList[1].children = [
+     {
+       icon: "importIcon",
+       name: "Gateway 1",
+       id: "111",
+     },{
+       icon: "importIcon",
+       name: "Gateway 2",
+       id: "222",
+     },{
+       icon: "importIcon",
+       name: "Gateway 3",
+       id: "333",
+     },{
+       icon: "importIcon",
+       name: "Gateway 4",
+       id: "4444",
+     },
+   ];
 };
 const initLeftNavbar = () => {
 
@@ -184,55 +174,55 @@ const initLeftNavbar = () => {
 
 
   // leftNavRefs.value.forEach((v.value) => {
-  //   console.log(v)
-  //   Sortable.create(v as HTMLDivElement, {
-  //     group: {
-  //       name: "vue-next-admin-1",
-  //       pull: "clone",
-  //       put: false,
-  //     },
-  //     animation: 0,
-  //     sort: false,
-  //     draggable: ".workflow-left-item",
-  //     forceFallback: true,
-  //     onEnd: function (evt: any) {
+// console.log(v)
+// Sortable.create(v as HTMLDivElement, {
+// group: {
+// name: "vue-next-admin-1",
+// pull: "clone",
+// put: false,
+// },
+// animation: 0,
+// sort: false,
+// draggable: ".workflow-left-item",
+// forceFallback: true,
+// onEnd: function (evt: any) {
 
-  //       console.log(evt)
-  //       const { name, icon, id, color } = evt.clone.dataset;
-  //       const { layerX, layerY, clientX, clientY } = evt.originalEvent;
-  //       const el = workflowRightRef.value!;
-  //       console.log(
-  //         `%conEnd@flowdesigner:217`,
-  //         "color:black;font-size:16px;background:yellow;font-weight: bold;",
-  //         el
-  //       );
-  //       const { x, y, width, height } = el.getBoundingClientRect();
+// console.log(evt)
+// const { name, icon, id, color } = evt.clone.dataset;
+// const { layerX, layerY, clientX, clientY } = evt.originalEvent;
+// const el = workflowRightRef.value!;
+// console.log(
+// `%conEnd@flowdesigner:217`,
+// "color:black;font-size:16px;background:yellow;font-weight: bold;",
+//el
+// );
+// const { x, y, width, height } = el.getBoundingClientRect();
 
-  //       if (clientX < x || clientX > width + x || clientY < y || y > y + height) {
-  //         ElMessage.warning("请把节点拖入到画布中");
-  //       } else {
-  //         // 节点id（唯一）
-  //         const nodeId = Math.random().toString(36).substr(2, 12);
-  //         // 处理节点数据
-  //         const node = {
-  //           nodeId,
-  //           color,
-  //           left: `${layerX - 40}px`,
-  //           top: `${layerY - 15}px`,
-  //           nodeclass: "workflow-right-clone",
-  //           name,
-  //           icon,
-  //           id,
-  //         };
-      
-  //         nextTick(() => {
+// if (clientX < x || clientX > width + x || clientY < y || y > y + height) {
+// ElMessage.warning("Please drag the node into the canvas");
+// } else {
+// // Node id (unique)
+// const nodeId = Math.random().toString(36).substr(2, 12);
+// // Process node data
+// const node = {
+// nodeId,
+// color,
+// left: `${layerX - 40}px`,
+// top: `${layerY - 15}px`,
+// nodeclass: "workflow-right-clone",
+// name,
+// icon,
+//id,
+// };
+    
+// nextTick(() => {
 
-          
-  //         });
-  //       }
-  //     },
-  //   });
-  // });
+        
+// });
+// }
+// },
+// });
+// });
 
 };
 const initgraph: () => void = () => {
@@ -480,7 +470,7 @@ const update: (view: NodeView) => void = (view: NodeView) => {
     //   cell.updateInPorts(  graph);
   }
 };
-// 左侧导航-菜单标题点击
+// Left navigation-menu title click
 const onTitleClick = (val: any) => {
   val.isOpen = !val.isOpen;
 };

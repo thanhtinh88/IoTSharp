@@ -15,7 +15,7 @@ using RestSharp;
 namespace IoTSharp.TaskActions
 {
 
-    [DisplayName("用于自定义的告警推送的执行器")]
+    [DisplayName("Executor for customized alarm push")]
     public class CustomeAlarmPullExcutor : TaskAction
     {
 

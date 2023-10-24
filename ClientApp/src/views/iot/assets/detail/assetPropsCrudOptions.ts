@@ -51,8 +51,8 @@ export const createAssetPropsCrudOptions = function ({ expose }, assetId) {
 				show: false,
 				dropdown: {
 					more: {
-						//更多按钮配置
-						text: '属性',
+						//More button configurations
+						text: 'Attributes',
 						...FsButton,
 						icon: 'operation',
 					},
@@ -60,19 +60,19 @@ export const createAssetPropsCrudOptions = function ({ expose }, assetId) {
 				buttons: {
 					view: { show: false },
 					edit: { show: false },
-					remove: { show: false }, //删除按钮
+					remove: { show: false }, // delete button
 				},
 			},
 			columns: {
 				keyName: {
-					title: '属性名称',
+					title: 'Property name',
 					type: 'text',
 					column: {
 						width: 260,
 					},
 				},
 				dataType: {
-					title: '数据类型',
+					title: 'type of data',
 					type: 'dict-select',
 					dict: dict({
 						data: [
@@ -88,7 +88,7 @@ export const createAssetPropsCrudOptions = function ({ expose }, assetId) {
 					}),
 				},
 				dataSide: {
-					title: '数据侧',
+					title: 'data side',
 					type: 'dict-select',
 					dict: dict({
 						data: [
@@ -107,7 +107,7 @@ export const createAssetPropsCrudOptions = function ({ expose }, assetId) {
 					},
 				},
 				dateTime: {
-					title: '时间',
+					title: 'Date time',
 					type: 'text',
 					addForm: {
 						show: false,
@@ -117,7 +117,7 @@ export const createAssetPropsCrudOptions = function ({ expose }, assetId) {
 					},
 				},
 				value: {
-					title: '值',
+					title: 'Value',
 					type: 'text',
 					addForm: {
 						show: false,

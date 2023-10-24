@@ -29,7 +29,7 @@ export const telemetryHistoryChartOptions = {
 		{
 			start: 0,
 			end: 100,
-			height: 10, //这里可以设置dataZoom的尺寸
+			height: 10, //Here you can set the size of dataZoom
 			bottom: 0,
 		},
 	],

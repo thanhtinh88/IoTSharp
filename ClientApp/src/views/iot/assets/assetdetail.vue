@@ -2,17 +2,17 @@
 	<div>
 		<el-drawer v-model="drawer" :title="dialogTitle" size="70%">
 			<el-tabs v-model="activeTabName" class="demo-tabs" stretch>
-				<el-tab-pane label="详情" name="basic">
+				<el-tab-pane label="Details" name="basic">
 					<div class="z-tab-container">
 						<AdvancedKeyValue :obj="assetRef" :config="columns" :label-width="160"></AdvancedKeyValue>
 					</div>
 				</el-tab-pane>
-				<el-tab-pane label="属性" name="props">
+				<el-tab-pane label="properties" name="props">
 					<div class="z-tab-container">
 						<AssetDetailProps :assetId="assetRef.id"></AssetDetailProps>
 					</div>
 				</el-tab-pane>
-				<el-tab-pane label="遥测" name="telemetry">
+				<el-tab-pane label="telemetry" name="telemetry">
 					<div class="z-tab-container">
 						<AssetDetailTelemetry :assetId="assetRef.id"></AssetDetailTelemetry>
 					</div>
@@ -28,7 +28,7 @@ import AssetDetailProps from '/@/views/iot/assets/detail/AssetDetailProps.vue';
 import AssetDetailTelemetry from '/@/views/iot/assets/detail/AssetDetailTelemetry.vue';
 
 const drawer = ref(false);
-const dialogTitle = ref(`资产详情`);
+const dialogTitle = ref('Asset details');
 const activeTabName = ref('basic');
 const assetRef = ref();
 const {

@@ -1,67 +1,66 @@
 <template>
-  <div>
-    <el-drawer v-model="drawer" :title="dialogTitle" size="70%">
-      <el-tabs v-model="activeTabName" class="demo-tabs" stretch>
-        <el-tab-pane label="详情" name="basic">
-          <div class="z-tab-container">
-  
-            <el-button :icon="RefreshLeft" circle  class="btn-refresh el-button--primary" @click="reloadbaseinfo" />
+    <div>
+        <el-drawer v-model="drawer" :title="dialogTitle" size="70%">
+            <el-tabs v-model="activeTabName" class="demo-tabs" stretch>
+                <el-tab-pane label="Details" name="basic">
+                    <div class="z-tab-container">
 
-            <AdvancedKeyValue
-                :obj="deviceRef"
-                :config="columns"
-                :hide-key-list="['owner', 'identityValue', 'tenantName', 'customerName', 'tenantId', 'customerId']"
-                :label-width="160">
-              <template #footer v-if="deviceRef.identityType==='X509Certificate'">
-                <div class="z-row">
-                  <div class="z-key" style="width: 160px">证书:</div>
-                  <div class="z-value"><ElButton @click="downloadCert">下载证书</ElButton></div>
-                </div>
-              </template>
-            </AdvancedKeyValue>
+                        <el-button :icon="RefreshLeft" circle class="btn-refresh el-button--primary" @click="reloadbaseinfo" />
 
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="属性" name="props">
-          <div class="z-tab-container">
-            <DeviceDetailProps :deviceId="deviceRef.id"></DeviceDetailProps>
-          </div>
+                        <AdvancedKeyValue :obj="deviceRef"
+                                          :config="columns"
+                                          :hide-key-list="['owner', 'identityValue', 'tenantName', 'customerName', 'tenantId', 'customerId']"
+                                          :label-width="160">
+                            <template #footer v-if="deviceRef.identityType==='X509Certificate'">
+                                <div class="z-row">
+                                    <div class="z-key" style="width: 160px">Certificate:</div>
+                                    <div class="z-value"><ElButton @click="downloadCert">Download certificate</ElButton></div>
+                                </div>
+                            </template>
+                        </AdvancedKeyValue>
 
-        </el-tab-pane>
-        <el-tab-pane label="遥测" name="telemetry">
-          <div class="z-tab-container">
-            <DeviceDetailTelemetry :deviceId="deviceRef.id"></DeviceDetailTelemetry>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="遥测历史" name="telemetryHistory" :lazy="true">
-          <div class="z-tab-container">
-            <DeviceDetailTelemetryHistory :deviceId="deviceRef.id"></DeviceDetailTelemetryHistory>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="告警" name="alarm">
-          <div class="z-tab-container">
-            <alarmlist :originator="deviceRef" wrapper="div"></alarmlist>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="规则" name="rules">
-          <div class="z-tab-container">
-            <DeviceDetailRules :deviceId="deviceRef.id"></DeviceDetailRules>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="规则历史" name="rulesHistory">
-          <div class="z-tab-container">
-            <flowevents :creator="deviceRef.id" :creatorname="deviceRef.name"  wrapper="div"></flowevents>
-          </div>
-        </el-tab-pane>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="properties" name="props">
+                    <div class="z-tab-container">
+                        <DeviceDetailProps :deviceId="deviceRef.id"></DeviceDetailProps>
+                    </div>
 
-        <el-tab-pane label="地图" name="map">
-          <div class="z-tab-container">
-        <BMap :deviceId="deviceRef.id"></BMap>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
-    </el-drawer>
-  </div>
+                </el-tab-pane>
+                <el-tab-pane label="telemetry" name="telemetry">
+                    <div class="z-tab-container">
+                        <DeviceDetailTelemetry :deviceId="deviceRef.id"></DeviceDetailTelemetry>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="telemetry history" name="telemetryHistory" :lazy="true">
+                    <div class="z-tab-container">
+                        <DeviceDetailTelemetryHistory :deviceId="deviceRef.id"></DeviceDetailTelemetryHistory>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="Alarm" name="alarm">
+                    <div class="z-tab-container">
+                        <alarmlist :originator="deviceRef" wrapper="div"></alarmlist>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="rules" name="rules">
+                    <div class="z-tab-container">
+                        <DeviceDetailRules :deviceId="deviceRef.id"></DeviceDetailRules>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="Rules History" name="rulesHistory">
+                    <div class="z-tab-container">
+                        <flowevents :creator="deviceRef.id" :creatorname="deviceRef.name" wrapper="div"></flowevents>
+                    </div>
+                </el-tab-pane>
+
+                <el-tab-pane label="map" name="map">
+                    <div class="z-tab-container">
+                        <BMap :deviceId="deviceRef.id"></BMap>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
+        </el-drawer>
+    </div>
 </template>
 <script lang="ts" setup>
 import { RefreshLeft } from '@element-plus/icons-vue'

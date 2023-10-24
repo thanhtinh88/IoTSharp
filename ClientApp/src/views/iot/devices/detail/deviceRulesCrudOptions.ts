@@ -84,8 +84,8 @@ export const createDeviceRulesCrudOptions = function ({ expose }, deviceId) {
 				width: 100,
 				dropdown: {
 					more: {
-						//更多按钮配置
-						text: '属性',
+						//More button configurations
+						text: 'property',
 						...FsButton,
 						icon: 'operation',
 					},
@@ -97,12 +97,12 @@ export const createDeviceRulesCrudOptions = function ({ expose }, deviceId) {
 						icon: 'Delete',
 						...FsButton,
 						order: 5,
-					}, //删除按钮
+					}, //Delete button
 				},
 			},
 			columns: {
 				ruleId: {
-					title: '规则名称',
+					title: 'Rule name',
 					type: 'dict-select',
 					dict: dict({
 						cloneable: true,
@@ -126,7 +126,7 @@ export const createDeviceRulesCrudOptions = function ({ expose }, deviceId) {
 					},
 				},
 				ruleDesc: {
-					title: '备注',
+					title: 'Remarks',
 					type: 'text',
 					addForm: {
 						show: false,

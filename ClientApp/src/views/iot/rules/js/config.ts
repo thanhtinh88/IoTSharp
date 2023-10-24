@@ -1,99 +1,99 @@
-// jsplumb 默认配置
+// jsplumb default configuration
 export const jsplumbDefaults = {
-	// 多个锚点 [源锚点，目标锚点]
-	Anchors: [
-		'Top',
-		'TopCenter',
-		'TopRight',
-		'TopLeft',
-		'Right',
-		'RightMiddle',
-		'Bottom',
-		'BottomCenter',
-		'BottomRight',
-		'BottomLeft',
-		'Left',
-		'LeftMiddle',
-	],
-	// 连线的容器id
-	Container: 'workflow-right',
-	// 设置链接线的形状，如直线或者曲线之类的。anchor可以去设置锚点的位置。可选值"<Bezier|Flowchart|StateMachine|Straight>"
-	Connector: ['Bezier', { curviness: 100 }],
-	// 节点是否可以用鼠标拖动使其断开，默认为true。即用鼠标链接上的连线，也可以使用鼠标拖动让其断开。设置成false，可以让其拖动也不会自动断开
-	ConnectionsDetachable: false,
-	// 删除线的时候节点不删除
-	DeleteEndpointsOnDetach: false,
-	//  每当添加或以其他方式创建 Endpoint 并且 jsPlumb 尚未给出任何明确的 Endpoint 定义时将使用
-	Endpoint: ['Blank', { Overlays: '' }],
-	// 连接中源和目标端点的默认外观
-	EndpointStyle: { fill: '#1879ffa1', outlineWidth: 1 },
-	// jsPlumb 的内部日志记录是否打开
-	LogEnabled: true,
-	// 连接器的默认外观
-	PaintStyle: {
-		stroke: '#BFB6DC',
-		strokeWidth: 2,
-		outlineStroke: 'transparent',
-		outlineWidth: 10,
-	},
-	// 用于配置任何可拖动元素的默认选项jsPlumb.draggable
-	DragOptions: { cursor: 'pointer', zIndex: 2000 },
-	// 添加到连接器和端点的默认叠加层。已弃用：从 4.x 开始，将不支持此功能。并非所有叠加层都可以连接到连接器和端点。
-	Overlays: [
-		[
-			'Arrow',
-			{
-				width: 10, // 箭头尾部的宽度
-				length: 8, // 从箭头的尾部到头部的距离
-				location: 1, // 位置，建议使用0～1之间
-				direction: 1, // 方向，默认值为1（表示向前），可选-1（表示向后）
-				foldback: 0.623, // 折回，也就是尾翼的角度，默认0.623，当为1时，为正三角
-			},
-		],
-		[
-			'Label',
-			{
-				label: '',
-				location: 0.5,
-				cssClass: 'aLabel',
-			},
-		],
-	],
-	// 默认渲染模式 svg、canvas
-	RenderMode: 'svg',
-	// 悬停状态下连接的默认外观
-	HoverPaintStyle: { stroke: '#b0b2b5', strokeWidth: 1 },
-	// 悬停状态下端点的默认外观
-	EndpointHoverStyle: { fill: 'red' },
-	// 端点和连接的默认范围。范围提供了对哪些端点可以连接到哪些其他端点的基本控制
-	Scope: 'jsPlumb_DefaultScope',
+    // Multiple anchor points [source anchor point, target anchor point]
+    Anchors: [
+        'Top',
+        'TopCenter',
+        'TopRight',
+        'TopLeft',
+        'Right',
+        'RightMiddle',
+        'Bottom',
+        'BottomCenter',
+        'BottomRight',
+        'BottomLeft',
+        'Left',
+        'LeftMiddle',
+    ],
+    //Container id of the connection
+    Container: 'workflow-right',
+    //Set the shape of the link line, such as straight line or curve. Anchor can set the position of the anchor point. Optional value "<Bezier|Flowchart|StateMachine|Straight>"
+    Connector: ['Bezier', { curviness: 100 }],
+    // Whether the node can be disconnected by dragging it with the mouse, the default is true. You can use the mouse to link a connection, or you can use the mouse to drag it to disconnect it. Set to false to allow dragging without automatically disconnecting.
+    ConnectionsDetachable: false,
+    //Nodes are not deleted when deleting lines
+    DeleteEndpointsOnDetach: false,
+    // Will be used whenever an Endpoint is added or otherwise created and jsPlumb has not yet given any explicit Endpoint definition
+    Endpoint: ['Blank', { Overlays: '' }],
+    //Default appearance of the source and target endpoints in the connection
+    EndpointStyle: { fill: '#1879ffa1', outlineWidth: 1 },
+    // Whether jsPlumb's internal logging is turned on
+    LogEnabled: true,
+    //Default appearance of the connector
+    PaintStyle: {
+        stroke: '#BFB6DC',
+        strokeWidth: 2,
+        outlineStroke: 'transparent',
+        outlineWidth: 10,
+    },
+    // Default options for configuring any draggable element jsPlumb.draggable
+    DragOptions: { cursor: 'pointer', zIndex: 2000 },
+    // Default overlay added to connectors and endpoints. Deprecated: Starting in 4.x, this feature will not be supported. Not all overlays can be connected to connectors and endpoints.
+    Overlays: [
+        [
+            'Arrow',
+            {
+                width: 10, // width of arrow tail
+                length: 8, //The distance from the tail to the head of the arrow
+                location: 1, // Location, it is recommended to use a value between 0 and 1
+                direction: 1, // Direction, the default value is 1 (meaning forward), optional -1 (meaning backward)
+                foldback: 0.623, // foldback, which is the angle of the tail, defaults to 0.623, when it is 1, it is a right triangle
+            },
+        ],
+        [
+            'Label',
+            {
+                label: '',
+                location: 0.5,
+                cssClass: 'aLabel',
+            },
+        ],
+    ],
+    //Default rendering mode svg, canvas
+    RenderMode: 'svg',
+    //Default appearance of connections in hover state
+    HoverPaintStyle: { stroke: '#b0b2b5', strokeWidth: 1 },
+    //Default appearance of endpoints in hover state
+    EndpointHoverStyle: { fill: 'red' },
+    //Default scope for endpoints and connections. Scopes provide basic control over which endpoints can connect to which other endpoints
+    Scope: 'jsPlumb_DefaultScope',
 };
 
-// 整个节点作为source或者target
+//The entire node serves as source or target
 export const jsplumbMakeSource = {
-	// 设置可以拖拽的类名，只要鼠标移动到该类名上的DOM，就可以拖拽连线
-	filter: '.workflow-icon-drag',
-	filterExclude: false,
-	anchor: 'Continuous',
-	// 是否允许自己连接自己
-	allowLoopback: false,
-	maxConnections: -1,
+    //Set the class name that can be dragged and dropped. As long as the mouse moves to the DOM on the class name, the connection can be dragged and dropped.
+    filter: '.workflow-icon-drag',
+    filterExclude: false,
+    anchor: 'Continuous',
+    // Whether to allow myself to connect to myself
+    allowLoopback: false,
+    maxConnections: -1,
 };
 
-// 整个节点作为source或者target
+//The entire node serves as source or target
 export const jsplumbMakeTarget = {
-	filter: '.workflow-icon-drag',
-	filterExclude: false,
-	// 是否允许自己连接自己
-	anchor: 'Continuous',
-	allowLoopback: true,
-	dropOptions: { hoverClass: 'ef-drop-hover' },
+    filter: '.workflow-icon-drag',
+    filterExclude: false,
+    // Whether to allow myself to connect to myself
+    anchor: 'Continuous',
+    allowLoopback: true,
+    dropOptions: { hoverClass: 'ef-drop-hover' },
 };
 
-// 连线参数
+//Connection parameters
 export const jsplumbConnect = {
-	isSource: true,
-	isTarget: true,
-	// 动态锚点、提供了4个方向 Continuous、AutoDefault
-	anchor: 'Continuous',
+    isSource: true,
+    isTarget: true,
+    // Dynamic anchor point, provides 4 directions Continuous, AutoDefault
+    anchor: 'Continuous',
 };

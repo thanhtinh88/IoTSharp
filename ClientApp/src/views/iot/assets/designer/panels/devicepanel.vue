@@ -1,20 +1,20 @@
 <template>
- <div class="workflow-drawer-node">
-    <el-tabs type="border-card" >
-      <!-- 扩展表单 -->
-      <el-tab-pane label="基本信息" name="1">
-       
-      </el-tab-pane>
-      <!-- 节点编辑 -->
-      <el-tab-pane label="遥测" name="2">
-     
-      </el-tab-pane>
+    <div class="workflow-drawer-node">
+        <el-tabs type="border-card">
+            <!-- Extended form -->
+            <el-tab-pane label="Basic information" name="1">
 
-	  <el-tab-pane label="属性" name="3">
-     
-	</el-tab-pane> 
-    </el-tabs>
-  </div>
+            </el-tab-pane>
+            <!-- Node editing -->
+            <el-tab-pane label="Telemetry" name="2">
+
+            </el-tab-pane>
+
+            <el-tab-pane label="property" name="3">
+
+            </el-tab-pane>
+        </el-tabs>
+    </div>
 
 </template>
 

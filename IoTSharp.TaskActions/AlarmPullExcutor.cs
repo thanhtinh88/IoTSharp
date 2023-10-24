@@ -11,7 +11,7 @@ using RestSharp;
 
 namespace IoTSharp.TaskActions
 {
-    [DisplayName("用于告警推送的执行器")]
+    [DisplayName("Executor for alarm push")]
     public class AlarmPullExcutor : TaskAction
     {
         public override Task<TaskActionOutput> ExecuteAsync(TaskActionInput input)

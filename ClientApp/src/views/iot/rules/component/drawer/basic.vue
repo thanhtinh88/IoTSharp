@@ -1,177 +1,160 @@
 <template>
-  <div class="workflow-drawer-node">
-    <el-tabs type="border-card" v-model="state.tabsActive">
-      <!-- 扩展表单 -->
-      <el-tab-pane label="扩展表单" name="1"> </el-tab-pane>
-      <!-- 节点编辑 -->
-      <el-tab-pane label="节点编辑" name="2">
-        <el-scrollbar>
-          <el-form
-            :model="state.node"
-            :rules="state.nodeRules"
-            ref="nodeFormRef"
-            size="default"
-            label-width="80px"
-            class="pt15 pr15 pb15 pl15"
-          >
-            <el-form-item label="数据id" prop="id">
-              <el-input
-                v-model="state.node.id"
-                placeholder="请输入数据id"
-                clearable
-                disabled
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="节点id" prop="nodeId">
-              <el-input
-                v-model="state.node.nodeId"
-                placeholder="请输入节点id"
-                clearable
-                disabled
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="类型" prop="type">
-              <el-input
-                v-model="state.node.type"
-                placeholder="请输入类型"
-                clearable
-                disabled
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="left坐标" prop="left">
-              <el-input
-                v-model="state.node.left"
-                placeholder="请输入left坐标"
-                clearable
-                disabled
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="top坐标" prop="top">
-              <el-input
-                v-model="state.node.top"
-                placeholder="请输入top坐标"
-                clearable
-                disabled
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="icon图标" prop="icon">
-              <el-input
-                v-model="state.node.icon"
-                placeholder="请输入icon图标"
-                clearable
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="名称" prop="name">
-              <el-input
-                v-model="state.node.name"
-                placeholder="请输入名称"
-                clearable
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button class="mb15" @click="onNodeRefresh">
-                <SvgIcon name="ele-RefreshRight" />
-                重置
-              </el-button>
-              <el-button type="primary" class="mb15" @click="onNodeSubmit">
-                <SvgIcon name="ele-Check" />
-                保存
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </el-scrollbar>
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+    <div class="workflow-drawer-node">
+        <el-tabs type="border-card" v-model="state.tabsActive">
+            <!-- Extended form -->
+            <el-tab-pane label="Extended form" name="1"> </el-tab-pane>
+            <!-- Node editing -->
+            <el-tab-pane label="Node Edit" name="2">
+                <el-scrollbar>
+                    <el-form :model="state.node"
+                             :rules="state.nodeRules"
+                             ref="nodeFormRef"
+                             size="default"
+                             label-width="80px"
+                             class="pt15 pr15 pb15 pl15">
+                        <el-form-item label="data id" prop="id">
+                            <el-input v-model="state.node.id"
+                                      placeholder="Please enter data id"
+                                      clearable
+                                      disabled></el-input>
+                        </el-form-item>
+                        <el-form-item label="node id" prop="nodeId">
+                            <el-input v-model="state.node.nodeId"
+                                      placeholder="Please enter node id"
+                                      clearable
+                                      disabled></el-input>
+                        </el-form-item>
+                        <el-form-item label="type" prop="type">
+                            <el-input v-model="state.node.type"
+                                      placeholder="Please enter the type"
+                                      clearable
+                                      disabled></el-input>
+                        </el-form-item>
+                        <el-form-item label="left coordinate" prop="left">
+                            <el-input v-model="state.node.left"
+                                      placeholder="Please enter the left coordinate"
+                                      clearable
+                                      disabled></el-input>
+                        </el-form-item>
+                        <el-form-item label="top coordinates" prop="top">
+                            <el-input v-model="state.node.top"
+                                      placeholder="Please enter top coordinates"
+                                      clearable
+                                      disabled></el-input>
+                        </el-form-item>
+                        <el-form-item label="icon icon" prop="icon">
+                            <el-input v-model="state.node.icon"
+                                      placeholder="Please enter icon"
+                                      clearable></el-input>
+                        </el-form-item>
+                        <el-form-item label="name" prop="name">
+                            <el-input v-model="state.node.name"
+                                      placeholder="Please enter name"
+                                      clearable></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button class="mb15" @click="onNodeRefresh">
+                                <SvgIcon name="ele-RefreshRight" />
+                                reset
+                            </el-button>
+                            <el-button type="primary" class="mb15" @click="onNodeSubmit">
+                                <SvgIcon name="ele-Check" />
+                                save
+                            </el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-scrollbar>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
 </template>
 
 <script lang="ts" setup>
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  ref,
-  nextTick,
-  getCurrentInstance,
-} from "vue";
-import { ElMessage } from "element-plus";
+    import {
+        defineComponent,
+        reactive,
+        toRefs,
+        ref,
+        nextTick,
+        getCurrentInstance,
+    } from "vue";
+    import { ElMessage } from "element-plus";
 
-const emit = defineEmits(["close", "submit"]);
-// 定义接口来定义对象的类型
-interface WorkflowDrawerNodeState {
-  node: { [key: string]: any };
-  nodeRules: any;
-  form: any;
-  tabsActive: string;
-  loading: {
-    extend: boolean;
-  };
-}
+    const emit = defineEmits(["close", "submit"]);
+    //Define the interface to define the type of object
+    interface WorkflowDrawerNodeState {
+        node: { [key: string]: any };
+        nodeRules: any;
+        form: any;
+        tabsActive: string;
+        loading: {
+            extend: boolean;
+        };
+    }
 
-const { proxy } = <any>getCurrentInstance();
-const nodeFormRef = ref();
-const extendFormRef = ref();
-const chartsMonitorRef = ref();
-const state = reactive<WorkflowDrawerNodeState>({
-  node: {},
-  nodeRules: {
-    id: [{ required: true, message: "请输入数据id", trigger: "blur" }],
-    nodeId: [{ required: true, message: "请输入节点id", trigger: "blur" }],
-    type: [{ required: true, message: "请输入类型", trigger: "blur" }],
-    left: [{ required: true, message: "请输入left坐标", trigger: "blur" }],
-    top: [{ required: true, message: "请输入top坐标", trigger: "blur" }],
-    icon: [{ required: true, message: "请输入icon图标", trigger: "blur" }],
-    name: [{ required: true, message: "请输入名称", trigger: "blur" }],
-  },
-  form: {
-    module: [],
-  },
-  tabsActive: "1",
-  loading: {
-    extend: false,
-  },
-});
-// 获取父组件数据
-const getParentData = (data: object) => {
-  state.tabsActive = "1";
-  state.node = data;
-};
-// 节点编辑-重置
-const onNodeRefresh = () => {
-  state.node.icon = "";
-  state.node.name = "";
-};
-// 节点编辑-保存
-const onNodeSubmit = () => {
-  nodeFormRef.value.validate((valid: boolean) => {
-    if (valid) {
-      emit("submit", state.node);
-      emit("close");
-    } else {
-      return false;
-    }
-  });
-};
-// 扩展表单-重置
-const onExtendRefresh = () => {
-  extendFormRef.value.resetFields();
-};
-// 扩展表单-保存
-const onExtendSubmit = () => {
-  extendFormRef.value.validate((valid: boolean) => {
-    if (valid) {
-      state.loading.extend = true;
-      setTimeout(() => {
-        state.loading.extend = false;
-        ElMessage.success("保存成功");
-        emit("close");
-      }, 1000);
-    } else {
-      return false;
-    }
-  });
-};
-// 图表可视化-初始化
+    const { proxy } = <any>getCurrentInstance();
+    const nodeFormRef = ref();
+    const extendFormRef = ref();
+    const chartsMonitorRef = ref();
+    const state = reactive<WorkflowDrawerNodeState>({
+        node: {},
+        nodeRules: {
+            id: [{ required: true, message: "Please enter the data id", trigger: "blur" }],
+            nodeId: [{ required: true, message: "Please enter the node id", trigger: "blur" }],
+            type: [{ required: true, message: "Please enter the type", trigger: "blur" }],
+            left: [{ required: true, message: "Please enter the left coordinate", trigger: "blur" }],
+            top: [{ required: true, message: "Please enter top coordinates", trigger: "blur" }],
+            icon: [{ required: true, message: "Please enter the icon icon", trigger: "blur" }],
+            name: [{ required: true, message: "Please enter a name", trigger: "blur" }],
+        },
+        form: {
+            module: [],
+        },
+        tabsActive: "1",
+        loading: {
+            extend: false,
+        },
+    });// Get parent component data
+    const getParentData = (data: object) => {
+        state.tabsActive = "1";
+        state.node = data;
+    };
+    //Node edit-reset
+    const onNodeRefresh = () => {
+        state.node.icon = "";
+        state.node.name = "";
+    };
+    //Node edit-save
+    const onNodeSubmit = () => {
+        nodeFormRef.value.validate((valid: boolean) => {
+            if (valid) {
+                emit("submit", state.node);
+                emit("close");
+            } else {
+                return false;
+            }
+        });
+    };
+    //Extended form-reset
+    const onExtendRefresh = () => {
+        extendFormRef.value.resetFields();
+    };
+    //Extended form-save
+    const onExtendSubmit = () => {
+        extendFormRef.value.validate((valid: boolean) => {
+            if (valid) {
+                state.loading.extend = true;
+                setTimeout(() => {
+                    state.loading.extend = false;
+                    ElMessage.success("Save successfully");
+                    emit("close");
+                }, 1000);
+            } else {
+                return false;
+            }
+        });
+    };
+//Chart visualization-initialization
 </script>
 
 <style scoped lang="scss">
